@@ -1,6 +1,9 @@
 # 雾刃 AI 自动化渗透测试平台（WRAPT）
 
 研发单位：玄坤信安科技有限公司
+所有单位：玄坤信安科技有限公司
+公司官网：https://www.apateam.top
+产品下载：https://www.apateam.top
 
 ---
 
