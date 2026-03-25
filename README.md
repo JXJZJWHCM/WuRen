@@ -264,7 +264,7 @@ sequenceDiagram
 
 ### 4.7 OpenAI SDK 兼容层（多 Provider）
 
-- **用途**：对接 DeepSeek 及兼容 OpenAI 协议的模型提供方。
+- **用途**：对接 DeepSeek 、 GLM 、 MiniMax 、 千问及兼容 OpenAI 协议的模型提供方。
 - **关键职责**：
   - 统一对话调用参数
   - 汇总 token usage
