@@ -1,0 +1,21 @@
+{
+  "RuleId": "d1515a68-3858-4e93-8161-27a1de17f115",
+  "RuleName": "DebugMode",
+  "Title": "Detect DebugMode",
+  "TitleZh": "检测 DebugMode",
+  "Language": "generic",
+  "Severity": "HIGH",
+  "Type": "static_analysis",
+  "StaticConfig": {
+    "patterns": [
+      "(?i)debug\\s*=\\s*true",
+      "(?i)ShowExceptions\\s*=\\s*true",
+      "(?i)app\\.run\\(.*debug\\s*=\\s*True.*\\)"
+    ],
+    "sources": [],
+    "sinks": []
+  },
+  "Description": "Auto-converted rule for DebugMode",
+  "Content": "# auto-filled empty content for Detect DebugMode\n",
+  "_web_lang_hint": false
+}

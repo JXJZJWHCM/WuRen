@@ -1,0 +1,16 @@
+[
+  {
+    "name": "go_LDAP_Injection",
+    "Severity": "HIGH",
+    "Description": "Detects LDAP injection vulnerabilities where user-controlled data is directly used in LDAP filter strings without sanitization.",
+    "sources": [
+      "Query().Get",
+      "FormValue",
+      "PostFormValue"
+    ],
+    "sinks": [
+      "ldap.NewSearchRequest"
+    ],
+    "patterns": []
+  }
+]

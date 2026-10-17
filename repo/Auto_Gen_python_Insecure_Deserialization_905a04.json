@@ -1,0 +1,23 @@
+[
+  {
+    "name": "python_Insecure_Deserialization",
+    "Severity": "CRITICAL",
+    "Description": "Detects insecure deserialization of untrusted data using pickle.loads or similar methods, which can lead to arbitrary code execution.",
+    "sources": [
+      "untrusted_data",
+      "request.data",
+      "input",
+      "sys.argv",
+      "file.read"
+    ],
+    "sinks": [
+      "pickle.loads",
+      "pickle.load",
+      "cPickle.loads",
+      "cPickle.load",
+      "marshal.loads",
+      "marshal.load"
+    ],
+    "patterns": []
+  }
+]

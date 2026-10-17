@@ -1,0 +1,23 @@
+[
+  {
+    "name": "c_NoSQL_Injection",
+    "Severity": "HIGH",
+    "Description": "Detects potential NoSQL injection vulnerabilities where user-controlled input is unsafely concatenated into a NoSQL query string.",
+    "sources": [
+      "fgets",
+      "scanf",
+      "getenv",
+      "argv",
+      "stdin"
+    ],
+    "sinks": [
+      "snprintf",
+      "sprintf",
+      "strcat",
+      "strcpy",
+      "printf",
+      "fprintf"
+    ],
+    "patterns": []
+  }
+]

@@ -1,0 +1,24 @@
+[
+  {
+    "name": "java_XXE",
+    "Severity": "HIGH",
+    "Description": "Detects XML parsing without disabling external entity processing, which can lead to XXE attacks.",
+    "sources": [
+      "request.getParameter",
+      "request.getInputStream",
+      "request.getReader",
+      "StringReader",
+      "File",
+      "InputSource"
+    ],
+    "sinks": [
+      "DocumentBuilder.parse",
+      "SAXParser.parse",
+      "XMLReader.parse",
+      "Transformer.transform",
+      "SchemaFactory.newSchema",
+      "Validator.validate"
+    ],
+    "patterns": []
+  }
+]

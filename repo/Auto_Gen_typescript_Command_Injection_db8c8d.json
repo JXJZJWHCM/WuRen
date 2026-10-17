@@ -1,0 +1,29 @@
+[
+  {
+    "name": "typescript_Command_Injection",
+    "Severity": "CRITICAL",
+    "Description": "Detects command injection vulnerabilities where user-controlled input flows into shell execution functions without proper sanitization.",
+    "sources": [
+      "process.argv",
+      "process.env",
+      "window.location",
+      "document.URL",
+      "document.referrer",
+      "document.cookie",
+      "request.query",
+      "request.body",
+      "request.params",
+      "request.headers"
+    ],
+    "sinks": [
+      "exec",
+      "execSync",
+      "spawn",
+      "spawnSync",
+      "execFile",
+      "execFileSync",
+      "fork"
+    ],
+    "patterns": []
+  }
+]

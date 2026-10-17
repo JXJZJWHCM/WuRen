@@ -1,0 +1,19 @@
+[
+  {
+    "name": "php_XSS",
+    "Severity": "HIGH",
+    "Description": "Direct output of untrusted user input without proper sanitization, leading to Cross-Site Scripting vulnerabilities.",
+    "sources": [
+      "$_GET",
+      "$_POST",
+      "$_REQUEST",
+      "$_COOKIE"
+    ],
+    "sinks": [
+      "echo",
+      "print",
+      "printf"
+    ],
+    "patterns": []
+  }
+]

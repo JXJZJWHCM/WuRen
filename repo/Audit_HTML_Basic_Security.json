@@ -1,0 +1,42 @@
+[
+  {
+    "name": "HTML_Dangerous_Inline_Event",
+    "patterns": [
+      "(?i)<[^>]+on(error|load|click|mouseover|mouseout|focus|blur)\\s*="
+    ],
+    "Severity": "MEDIUM",
+    "Description": "Dangerous inline event handler detected. Potential XSS risk.",
+    "sources": [],
+    "sinks": []
+  },
+  {
+    "name": "HTML_Javascript_Protocol",
+    "patterns": [
+      "(?i)href\\s*=\\s*['\"]javascript:"
+    ],
+    "Severity": "HIGH",
+    "Description": "Use of 'javascript:' protocol in href. Potential XSS risk.",
+    "sources": [],
+    "sinks": []
+  },
+  {
+    "name": "HTML_Unsafe_Target_Blank",
+    "patterns": [
+      "(?i)<a[^>]+target=['\"]_blank['\"](?!.*rel=['\"]noopener noreferrer['\"])"
+    ],
+    "Severity": "LOW",
+    "Description": "Link with target='_blank' missing rel='noopener noreferrer'. Risk of reverse tabnabbing.",
+    "sources": [],
+    "sinks": []
+  },
+  {
+    "name": "HTML_Meta_Refresh",
+    "patterns": [
+      "(?i)<meta\\s+http-equiv=['\"]refresh['\"]"
+    ],
+    "Severity": "LOW",
+    "Description": "Use of meta refresh. Can be used for phishing or annoying users.",
+    "sources": [],
+    "sinks": []
+  }
+]

@@ -1,0 +1,28 @@
+[
+  {
+    "name": "php_Command_Injection",
+    "Severity": "CRITICAL",
+    "Description": "Detects potential command injection vulnerabilities where user-controlled data flows into shell execution functions.",
+    "sources": [
+      "$_GET",
+      "$_POST",
+      "$_REQUEST",
+      "$_COOKIE",
+      "$_SERVER",
+      "$_FILES",
+      "php://input",
+      "fopen",
+      "file_get_contents"
+    ],
+    "sinks": [
+      "shell_exec",
+      "exec",
+      "system",
+      "passthru",
+      "popen",
+      "proc_open",
+      "backtick_operator"
+    ],
+    "patterns": []
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {
+    "name": "php_Insecure_Direct_Object_References_(IDOR)",
+    "Severity": "HIGH",
+    "Description": "Detects potential insecure direct object references where user input is directly used to access array elements without proper authorization checks.",
+    "patterns": [
+      "\\$\\w+\\s*=\\s*\\$_(GET|POST|REQUEST|COOKIE)\\[.*\\]\\s*;",
+      "\\$\\w+\\s*=\\s*\\$\\w+\\[\\s*\\$\\w+\\s*\\]\\s*;"
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]

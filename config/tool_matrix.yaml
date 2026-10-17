@@ -1,0 +1,1729 @@
+schema_version: 1
+matrix_id: wrapt-unified-tool-matrix
+updated_at: 2026-03-27
+baselines:
+  core:
+    description: 用户确认的核心工具基线
+  c2:
+    description: 用户确认的 C2 与控制框架基线
+  auxiliary:
+    description: 为离线检索、装载依赖和集成联动补充的辅助模块
+tools:
+  nmap:
+    standard_name: nmap
+    display_name: Nmap
+    baseline: core
+    category: recon
+    subcategory: network_scan
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: package_manager
+      automated: true
+      providers:
+        apt: nmap
+        dnf: nmap
+        brew: nmap
+        choco: nmap
+      dependencies: []
+    execution:
+      entry_type: system_binary
+      entrypoint: nmap
+      path_hint: system_path
+    healthcheck:
+      type: command
+      command_template: [nmap, --version]
+      success_exit_codes: [0]
+
+  curl:
+    standard_name: curl
+    display_name: Curl
+    baseline: auxiliary
+    category: recon
+    subcategory: http_request
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: package_manager
+      automated: true
+      providers:
+        apt: curl
+        dnf: curl
+        brew: curl
+        choco: curl
+      dependencies: []
+    execution:
+      entry_type: system_binary
+      entrypoint: curl
+      path_hint: system_path
+    healthcheck:
+      type: command
+      command_template: [curl, --version]
+      success_exit_codes: [0]
+
+  nikto:
+    standard_name: nikto
+    display_name: Nikto
+    baseline: core
+    category: vuln_analysis
+    subcategory: web_vuln_scan
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: limited
+      preferred_platforms:
+        - linux
+    install:
+      mode: package_manager
+      automated: true
+      providers:
+        apt: nikto
+        dnf: nikto
+        brew: nikto
+        choco: null
+      dependencies: []
+    execution:
+      entry_type: system_binary
+      entrypoint: nikto
+      path_hint: system_path
+    healthcheck:
+      type: command
+      command_template: [nikto, -Version]
+      success_exit_codes: [0]
+
+  masscan:
+    standard_name: masscan
+    display_name: Masscan
+    baseline: core
+    category: recon
+    subcategory: network_scan
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: limited
+        windows: limited
+      preferred_platforms:
+        - linux
+    install:
+      mode: package_manager
+      automated: true
+      providers:
+        apt: masscan
+        dnf: masscan
+        brew: masscan
+        choco: null
+      dependencies: []
+    execution:
+      entry_type: system_binary
+      entrypoint: masscan
+      path_hint: system_path
+    healthcheck:
+      type: command
+      command_template: [masscan, --version]
+      success_exit_codes: [0]
+
+  rustscan:
+    standard_name: rustscan
+    display_name: RustScan
+    baseline: core
+    category: recon
+    subcategory: network_scan
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: release_archive
+      automated: true
+      providers:
+        github: bee-san/RustScan
+        system_packages:
+          apt: rustscan
+        asset_templates:
+          linux_amd64: "*x86_64-linux-rustscan*.zip"
+          darwin_amd64: "*x86_64-macos-rustscan*.zip"
+          windows_amd64: "*x86_64-windows-rustscan*.zip"
+      dependencies: []
+    execution:
+      entry_type: binary
+      entrypoint: rustscan
+      path_hint: tools/tools/rustscan
+    healthcheck:
+      type: command
+      command_template: [rustscan, --version]
+      success_exit_codes: [0]
+
+  nuclei:
+    standard_name: nuclei
+    display_name: Nuclei
+    baseline: core
+    category: recon
+    subcategory: vulnerability_scan
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: release_archive
+      automated: true
+      providers:
+        github: projectdiscovery/nuclei
+        version: 3.2.0
+        system_packages:
+          apt: nuclei
+        asset_templates:
+          linux_amd64: nuclei_3.2.0_linux_amd64.zip
+          darwin_amd64: nuclei_3.2.0_darwin_amd64.zip
+          windows_amd64: nuclei_3.2.0_windows_amd64.zip
+      dependencies: []
+    execution:
+      entry_type: binary
+      entrypoint: nuclei
+      path_hint: tools/tools/nuclei
+    healthcheck:
+      type: command
+      command_template: [nuclei, -version]
+      success_exit_codes: [0]
+
+  subfinder:
+    standard_name: subfinder
+    display_name: Subfinder
+    baseline: core
+    category: recon
+    subcategory: subdomain_discovery
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: release_archive
+      automated: true
+      providers:
+        github: projectdiscovery/subfinder
+        version: 2.6.5
+        system_packages:
+          apt: subfinder
+        asset_templates:
+          linux_amd64: subfinder_2.6.5_linux_amd64.zip
+          darwin_amd64: subfinder_2.6.5_darwin_amd64.zip
+          windows_amd64: subfinder_2.6.5_windows_amd64.zip
+      dependencies: []
+    execution:
+      entry_type: binary
+      entrypoint: subfinder
+      path_hint: tools/tools/subfinder
+    healthcheck:
+      type: command
+      command_template: [subfinder, -version]
+      success_exit_codes: [0]
+
+  amass:
+    standard_name: amass
+    display_name: Amass
+    baseline: core
+    category: recon
+    subcategory: subdomain_discovery
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: package_or_release
+      automated: true
+      providers:
+        apt: amass
+        dnf: amass
+        brew: amass
+        choco: amass
+        github: oam-dev/amass
+      dependencies: []
+    execution:
+      entry_type: binary
+      entrypoint: amass
+      path_hint: system_path
+    healthcheck:
+      type: command
+      command_template: [amass, version]
+      success_exit_codes: [0]
+
+  dirsearch:
+    standard_name: dirsearch
+    display_name: Dirsearch
+    baseline: core
+    category: recon
+    subcategory: content_discovery
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: git_clone
+      automated: true
+      providers:
+        git: https://github.com/maurosoria/dirsearch.git
+        target_dir: tools/tools/dirsearch
+      dependencies: [python3]
+    execution:
+      entry_type: python_script
+      entrypoint: tools/tools/dirsearch/dirsearch.py
+      path_hint: bundled_directory
+    healthcheck:
+      type: command
+      command_template: [python3, tools/tools/dirsearch/dirsearch.py, --help]
+      success_exit_codes: [0]
+
+  ffuf:
+    standard_name: ffuf
+    display_name: ffuf
+    baseline: core
+    category: recon
+    subcategory: content_discovery
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: release_archive
+      automated: true
+      providers:
+        github: ffuf/ffuf
+        system_packages:
+          apt: ffuf
+        asset_templates:
+          linux_amd64: ffuf_*_linux_amd64.tar.gz
+          darwin_amd64: ffuf_*_darwin_amd64.tar.gz
+          windows_amd64: ffuf_*_windows_amd64.zip
+      dependencies: []
+    execution:
+      entry_type: binary
+      entrypoint: ffuf
+      path_hint: tools/tools/ffuf
+    healthcheck:
+      type: command
+      command_template: [ffuf, -V]
+      success_exit_codes: [0]
+
+  httpx:
+    standard_name: httpx
+    display_name: HTTPX
+    baseline: core
+    category: recon
+    subcategory: http_probe
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: release_archive
+      automated: true
+      providers:
+        github: projectdiscovery/httpx
+        version: 1.6.0
+        system_packages:
+          apt: httpx-toolkit
+        asset_templates:
+          linux_amd64: httpx_1.6.0_linux_amd64.zip
+          darwin_amd64: httpx_1.6.0_darwin_amd64.zip
+          windows_amd64: httpx_1.6.0_windows_amd64.zip
+      dependencies: []
+    execution:
+      entry_type: binary
+      entrypoint: httpx
+      path_hint: tools/tools/httpx
+    healthcheck:
+      type: command
+      command_template: [httpx, -version]
+      success_exit_codes: [0]
+
+  whatweb:
+    standard_name: whatweb
+    display_name: WhatWeb
+    baseline: core
+    category: recon
+    subcategory: fingerprinting
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: limited
+      preferred_platforms:
+        - linux
+    install:
+      mode: package_or_git
+      automated: true
+      providers:
+        apt: whatweb
+        dnf: whatweb
+        brew: whatweb
+        git: https://github.com/urbanadventurer/WhatWeb.git
+      dependencies: [ruby]
+    execution:
+      entry_type: system_binary
+      entrypoint: whatweb
+      path_hint: system_path
+    healthcheck:
+      type: command
+      command_template: [whatweb, --version]
+      success_exit_codes: [0]
+
+  wafw00f:
+    standard_name: wafw00f
+    display_name: WAFW00F
+    baseline: core
+    category: recon
+    subcategory: waf_detection
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: pip
+      automated: true
+      providers:
+        pip: wafw00f
+      dependencies: [python3]
+    execution:
+      entry_type: python_module
+      entrypoint: wafw00f
+      path_hint: venv_or_system_python
+    healthcheck:
+      type: command
+      command_template: [python3, -m, wafw00f, --version]
+      success_exit_codes: [0]
+
+  katana:
+    standard_name: katana
+    display_name: Katana
+    baseline: core
+    category: recon
+    subcategory: crawler
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: release_archive
+      automated: true
+      providers:
+        github: projectdiscovery/katana
+        version: 1.1.0
+        system_packages:
+          apt: katana
+        asset_templates:
+          linux_amd64: katana_1.1.0_linux_amd64.zip
+          darwin_amd64: katana_1.1.0_darwin_amd64.zip
+          windows_amd64: katana_1.1.0_windows_amd64.zip
+      dependencies: []
+    execution:
+      entry_type: binary
+      entrypoint: katana
+      path_hint: tools/tools/katana
+    healthcheck:
+      type: command
+      command_template: [katana, -version]
+      success_exit_codes: [0]
+
+  trufflehog:
+    standard_name: trufflehog
+    display_name: TruffleHog
+    baseline: core
+    category: recon
+    subcategory: secret_scan
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: release_archive
+      automated: true
+      providers:
+        github: trufflesecurity/trufflehog
+        version: 3.70.5
+        asset_templates:
+          linux_amd64: trufflehog_3.70.5_linux_amd64.tar.gz
+          darwin_amd64: trufflehog_3.70.5_darwin_amd64.tar.gz
+          windows_amd64: trufflehog_3.70.5_windows_amd64.zip
+      dependencies: []
+    execution:
+      entry_type: binary
+      entrypoint: trufflehog
+      path_hint: tools/tools/trufflehog
+    healthcheck:
+      type: command
+      command_template: [trufflehog, --version]
+      success_exit_codes: [0]
+
+  wpscan:
+    standard_name: wpscan
+    display_name: WPScan
+    baseline: core
+    category: recon
+    subcategory: cms_scan
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: limited
+      preferred_platforms:
+        - linux
+    install:
+      mode: gem
+      automated: true
+      providers:
+        gem: wpscan
+      dependencies: [ruby]
+    execution:
+      entry_type: system_binary
+      entrypoint: wpscan
+      path_hint: system_path
+    healthcheck:
+      type: command
+      command_template: [wpscan, --version]
+      success_exit_codes: [0]
+
+  dalfox:
+    standard_name: dalfox
+    display_name: Dalfox
+    baseline: core
+    category: recon
+    subcategory: xss_scan
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: release_archive
+      automated: true
+      providers:
+        github: hahwul/dalfox
+        version: 2.9.2
+        asset_templates:
+          linux_amd64: dalfox_2.9.2_linux_amd64.tar.gz
+          darwin_amd64: dalfox_2.9.2_darwin_amd64.tar.gz
+          windows_amd64: dalfox_2.9.2_windows_amd64.zip
+      dependencies: []
+    execution:
+      entry_type: binary
+      entrypoint: dalfox
+      path_hint: tools/tools/dalfox
+    healthcheck:
+      type: command
+      command_template: [dalfox, version]
+      success_exit_codes: [0]
+
+  "testssl.sh":
+    standard_name: testssl.sh
+    display_name: testssl.sh
+    baseline: core
+    category: recon
+    subcategory: tls_assessment
+    aliases: [testssl]
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: limited
+      preferred_platforms:
+        - linux
+    install:
+      mode: git_clone
+      automated: true
+      providers:
+        git: https://github.com/testssl/testssl.sh.git
+        target_dir: tools/tools/testssl.sh
+      dependencies: [bash, openssl]
+    execution:
+      entry_type: shell_script
+      entrypoint: tools/tools/testssl.sh/testssl.sh
+      path_hint: bundled_directory
+    healthcheck:
+      type: command
+      command_template: [bash, tools/tools/testssl.sh/testssl.sh, --help]
+      success_exit_codes: [0]
+
+  jaeles:
+    standard_name: jaeles
+    display_name: Jaeles
+    baseline: core
+    category: recon
+    subcategory: template_scan
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: release_archive
+      automated: true
+      providers:
+        github: jaeles-project/jaeles
+        asset_templates:
+          linux_amd64: jaeles_*_linux_amd64.zip
+          darwin_amd64: jaeles_*_macOS_amd64.zip
+          windows_amd64: jaeles_*_windows_amd64.zip
+      dependencies: []
+    execution:
+      entry_type: binary
+      entrypoint: jaeles
+      path_hint: tools/tools/jaeles
+    healthcheck:
+      type: command
+      command_template: [jaeles, version]
+      success_exit_codes: [0]
+
+  sqlmap:
+    standard_name: sqlmap
+    display_name: SQLMap
+    baseline: core
+    category: exploit
+    subcategory: sql_injection
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: git_clone
+      automated: true
+      providers:
+        git: https://github.com/sqlmapproject/sqlmap.git
+        target_dir: tools/tools/sqlmap
+      dependencies: [python3, git]
+    execution:
+      entry_type: python_script
+      entrypoint: tools/tools/sqlmap/sqlmap.py
+      path_hint: bundled_directory
+    healthcheck:
+      type: command
+      command_template: [python3, tools/tools/sqlmap/sqlmap.py, --version]
+      success_exit_codes: [0]
+
+  searchsploit:
+    standard_name: searchsploit
+    display_name: SearchSploit
+    baseline: core
+    category: exploit
+    subcategory: exploit_research
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: limited
+        windows: limited
+      preferred_platforms:
+        - linux
+    install:
+      mode: system_package
+      automated: true
+      providers:
+        apt: exploitdb
+      dependencies: []
+    execution:
+      entry_type: system_binary
+      entrypoint: searchsploit
+      path_hint: system_path
+    healthcheck:
+      type: command
+      command_template: [searchsploit, -h]
+      success_exit_codes: [0]
+
+  msfconsole:
+    standard_name: msfconsole
+    display_name: Metasploit Framework Console
+    baseline: core
+    category: exploit
+    subcategory: framework
+    aliases: [metasploit-framework]
+    support:
+      platforms:
+        linux: supported
+        darwin: limited
+        windows: limited
+      preferred_platforms:
+        - linux
+    install:
+      mode: system_package
+      automated: true
+      providers:
+        apt: metasploit-framework
+      dependencies: [postgresql]
+    execution:
+      entry_type: system_binary
+      entrypoint: msfconsole
+      path_hint: system_path
+    healthcheck:
+      type: command
+      command_template: [msfconsole, -v]
+      success_exit_codes: [0]
+
+  commix:
+    standard_name: commix
+    display_name: Commix
+    baseline: core
+    category: exploit
+    subcategory: command_injection
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: git_clone
+      automated: true
+      providers:
+        git: https://github.com/commixproject/commix.git
+        target_dir: tools/tools/commix
+      dependencies: [python3, git]
+    execution:
+      entry_type: python_script
+      entrypoint: tools/tools/commix/commix.py
+      path_hint: bundled_directory
+    healthcheck:
+      type: command
+      command_template: [python3, tools/tools/commix/commix.py, --version]
+      success_exit_codes: [0]
+
+  xsstrike:
+    standard_name: xsstrike
+    display_name: XSStrike
+    baseline: core
+    category: exploit
+    subcategory: xss
+    aliases: [XSStrike]
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: git_clone
+      automated: true
+      providers:
+        git: https://github.com/s0md3v/XSStrike.git
+        target_dir: tools/tools/XSStrike
+      dependencies: [python3, git]
+    execution:
+      entry_type: python_script
+      entrypoint: tools/tools/XSStrike/xsstrike.py
+      path_hint: bundled_directory
+    healthcheck:
+      type: command
+      command_template: [python3, tools/tools/XSStrike/xsstrike.py, --help]
+      success_exit_codes: [0]
+
+  tplmap:
+    standard_name: tplmap
+    display_name: Tplmap
+    baseline: core
+    category: exploit
+    subcategory: ssti
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: git_clone
+      automated: true
+      providers:
+        git: https://github.com/epinna/tplmap.git
+        target_dir: tools/tools/tplmap
+      dependencies: [python3, git]
+    execution:
+      entry_type: python_script
+      entrypoint: tools/tools/tplmap/tplmap.py
+      path_hint: bundled_directory
+    healthcheck:
+      type: command
+      command_template: [python3, tools/tools/tplmap/tplmap.py, --help]
+      success_exit_codes: [0]
+
+  hydra:
+    standard_name: hydra
+    display_name: Hydra
+    baseline: core
+    category: exploit
+    subcategory: credential_attack
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: limited
+      preferred_platforms:
+        - linux
+    install:
+      mode: package_manager
+      automated: true
+      providers:
+        apt: hydra
+        dnf: hydra
+        brew: hydra
+        choco: hydra
+      dependencies: []
+    execution:
+      entry_type: system_binary
+      entrypoint: hydra
+      path_hint: system_path
+    healthcheck:
+      type: command
+      command_template: [hydra, -h]
+      success_exit_codes: [0]
+
+  john:
+    standard_name: john
+    display_name: John the Ripper
+    baseline: core
+    category: exploit
+    subcategory: password_cracking
+    aliases: [john-the-ripper]
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: package_manager
+      automated: true
+      providers:
+        apt: john
+        dnf: john
+        brew: john-jumbo
+        choco: john
+      dependencies: []
+    execution:
+      entry_type: system_binary
+      entrypoint: john
+      path_hint: system_path
+    healthcheck:
+      type: command
+      command_template: [john, --version]
+      success_exit_codes: [0, 1]
+
+  hashcat:
+    standard_name: hashcat
+    display_name: Hashcat
+    baseline: core
+    category: exploit
+    subcategory: password_cracking
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: limited
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: package_or_release
+      automated: true
+      providers:
+        apt: hashcat
+        dnf: hashcat
+        brew: hashcat
+        choco: hashcat
+      dependencies: []
+    execution:
+      entry_type: system_binary
+      entrypoint: hashcat
+      path_hint: system_path
+    healthcheck:
+      type: command
+      command_template: [hashcat, --version]
+      success_exit_codes: [0]
+
+  linpeas:
+    standard_name: linpeas
+    display_name: LinPEAS
+    baseline: core
+    category: post_exploit
+    subcategory: privilege_escalation
+    aliases: [linpeas.sh]
+    support:
+      platforms:
+        linux: supported
+        darwin: limited
+        windows: unsupported
+      preferred_platforms:
+        - linux
+    install:
+      mode: release_file
+      automated: true
+      providers:
+        github: peass-ng/PEASS-ng
+        asset_path: linPEAS/linpeas.sh
+      dependencies: [bash]
+    execution:
+      entry_type: shell_script
+      entrypoint: tools/tools/linpeas.sh
+      path_hint: bundled_file
+    healthcheck:
+      type: file_exists
+      path: tools/tools/linpeas.sh
+
+  beroot:
+    standard_name: beroot
+    display_name: BeRoot
+    baseline: core
+    category: post_exploit
+    subcategory: privilege_escalation
+    aliases: [BeRoot]
+    support:
+      platforms:
+        linux: supported
+        darwin: limited
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: git_clone
+      automated: true
+      providers:
+        git: https://github.com/AlessandroZ/BeRoot.git
+        target_dir: tools/tools/BeRoot
+      dependencies: [python3, git]
+    execution:
+      entry_type: python_script
+      entrypoint: tools/tools/BeRoot/beRoot.py
+      path_hint: bundled_directory
+    healthcheck:
+      type: command
+      command_template: [python3, tools/tools/BeRoot/beRoot.py, -h]
+      success_exit_codes: [0]
+
+  fscan:
+    standard_name: fscan
+    display_name: fscan
+    baseline: core
+    category: post_exploit
+    subcategory: internal_recon
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: limited
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: release_binary
+      automated: true
+      providers:
+        github: shadow1ng/fscan
+        linux_amd64: fscan_amd64
+        windows_amd64: fscan.exe
+      dependencies: []
+    execution:
+      entry_type: binary
+      entrypoint: fscan
+      path_hint: tools/tools/fscan
+    healthcheck:
+      type: command
+      command_template: [fscan, -h]
+      success_exit_codes: [0]
+
+  proxychains-ng:
+    standard_name: proxychains-ng
+    display_name: Proxychains-NG
+    baseline: core
+    category: post_exploit
+    subcategory: pivoting
+    aliases: [proxychains]
+    support:
+      platforms:
+        linux: supported
+        darwin: limited
+        windows: unsupported
+      preferred_platforms:
+        - linux
+    install:
+      mode: package_manager
+      automated: true
+      providers:
+        apt: proxychains4
+        dnf: proxychains-ng
+        brew: null
+        choco: null
+      dependencies: []
+    execution:
+      entry_type: system_binary
+      entrypoint: proxychains4
+      path_hint: system_path
+    healthcheck:
+      type: command
+      command_template: [proxychains4, -h]
+      success_exit_codes: [0]
+
+  chisel:
+    standard_name: chisel
+    display_name: Chisel
+    baseline: core
+    category: post_exploit
+    subcategory: pivoting
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: release_archive
+      automated: true
+      providers:
+        github: jpillora/chisel
+        version: 1.9.1
+        system_packages:
+          apt: chisel
+        asset_templates:
+          linux_amd64: chisel_1.9.1_linux_amd64.gz
+          darwin_amd64: chisel_1.9.1_darwin_amd64.gz
+          windows_amd64: chisel_1.9.1_windows_amd64.gz
+      dependencies: []
+    execution:
+      entry_type: binary
+      entrypoint: chisel
+      path_hint: tools/tools/chisel
+    healthcheck:
+      type: command
+      command_template: [chisel, --help]
+      success_exit_codes: [0]
+
+  impacket:
+    standard_name: impacket
+    display_name: Impacket
+    baseline: core
+    category: post_exploit
+    subcategory: lateral_movement
+    aliases: [secretsdump.py, psexec.py, wmiexec.py, smbexec.py]
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: git_clone
+      automated: true
+      providers:
+        git: https://github.com/fortra/impacket.git
+        target_dir: tools/tools/impacket
+      dependencies: [python3, git]
+    execution:
+      entry_type: python_module
+      entrypoint: impacket
+      path_hint: bundled_directory
+    healthcheck:
+      type: command
+      command_template: [python3, tools/tools/impacket/examples/secretsdump.py, -h]
+      success_exit_codes: [0]
+
+  netexec:
+    standard_name: netexec
+    display_name: NetExec
+    baseline: auxiliary
+    category: post_exploit
+    subcategory: lateral_movement
+    aliases: [NetExec, crackmapexec, cme]
+    support:
+      platforms:
+        linux: supported
+        darwin: limited
+        windows: limited
+      preferred_platforms:
+        - linux
+    install:
+      mode: git_clone
+      automated: true
+      providers:
+        git: https://github.com/Pennyw0rth/NetExec.git
+        target_dir: tools/tools/NetExec
+      dependencies: [python3, git]
+    execution:
+      entry_type: python_module
+      entrypoint: nxc
+      path_hint: bundled_directory
+    healthcheck:
+      type: command
+      command_template: [python3, -m, nxc, --version]
+      success_exit_codes: [0]
+
+  frp:
+    standard_name: frp
+    display_name: FRP
+    baseline: core
+    category: post_exploit
+    subcategory: pivoting
+    aliases: [frpc, frps]
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: release_archive
+      automated: true
+      providers:
+        github: fatedier/frp
+        system_packages:
+          apt: frp
+        asset_templates:
+          linux_amd64: frp_*_linux_amd64.tar.gz
+          darwin_amd64: frp_*_darwin_amd64.tar.gz
+          windows_amd64: frp_*_windows_amd64.zip
+      dependencies: []
+    execution:
+      entry_type: binary_bundle
+      entrypoint: frpc
+      path_hint: tools/tools/frp
+    healthcheck:
+      type: command
+      command_template: [frpc, -v]
+      success_exit_codes: [0]
+
+  mimikatz:
+    standard_name: mimikatz
+    display_name: Mimikatz
+    baseline: core
+    category: post_exploit
+    subcategory: credential_access
+    aliases: []
+    support:
+      platforms:
+        linux: unsupported
+        darwin: unsupported
+        windows: supported
+      preferred_platforms:
+        - windows
+    install:
+      mode: manual_download
+      automated: false
+      providers:
+        github: gentilkiwi/mimikatz
+      dependencies: []
+    execution:
+      entry_type: native_binary
+      entrypoint: tools/tools/mimikatz/mimikatz.exe
+      path_hint: vendor_drop
+    healthcheck:
+      type: file_exists
+      path: tools/tools/mimikatz/mimikatz.exe
+
+  pypykatz:
+    standard_name: pypykatz
+    display_name: pypykatz
+    baseline: core
+    category: post_exploit
+    subcategory: credential_access
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: pip
+      automated: true
+      providers:
+        pip: pypykatz
+      dependencies: [python3]
+    execution:
+      entry_type: python_module
+      entrypoint: pypykatz
+      path_hint: venv_or_system_python
+    healthcheck:
+      type: command
+      command_template: [python3, -m, pypykatz, -h]
+      success_exit_codes: [0]
+
+  ghidra:
+    standard_name: ghidra
+    display_name: Ghidra
+    baseline: core
+    category: analysis
+    subcategory: reverse_engineering
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: manual_archive
+      automated: false
+      providers:
+        official_site: https://ghidra-sre.org
+      dependencies: [java]
+    execution:
+      entry_type: launcher_script
+      entrypoint: tools/tools/ghidra/ghidraRun
+      path_hint: vendor_drop
+    healthcheck:
+      type: file_exists
+      path: tools/tools/ghidra/ghidraRun
+
+  radare2:
+    standard_name: radare2
+    display_name: radare2
+    baseline: core
+    category: analysis
+    subcategory: reverse_engineering
+    aliases: [r2]
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: package_manager
+      automated: true
+      providers:
+        apt: radare2
+        dnf: radare2
+        brew: radare2
+        choco: radare2
+      dependencies: []
+    execution:
+      entry_type: system_binary
+      entrypoint: r2
+      path_hint: system_path
+    healthcheck:
+      type: command
+      command_template: [r2, -v]
+      success_exit_codes: [0]
+
+  checksec:
+    standard_name: checksec
+    display_name: checksec
+    baseline: core
+    category: analysis
+    subcategory: binary_assessment
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: limited
+        windows: unsupported
+      preferred_platforms:
+        - linux
+    install:
+      mode: release_file
+      automated: true
+      providers:
+        raw_url: https://raw.githubusercontent.com/slimm609/checksec.sh/master/checksec
+      dependencies: [bash]
+    execution:
+      entry_type: shell_script
+      entrypoint: tools/tools/checksec
+      path_hint: bundled_file
+    healthcheck:
+      type: command
+      command_template: [bash, tools/tools/checksec, --help]
+      success_exit_codes: [0]
+
+  binwalk:
+    standard_name: binwalk
+    display_name: Binwalk
+    baseline: core
+    category: analysis
+    subcategory: binary_assessment
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: limited
+      preferred_platforms:
+        - linux
+    install:
+      mode: package_or_pip
+      automated: true
+      providers:
+        apt: binwalk
+        dnf: binwalk
+        brew: binwalk
+        pip: binwalk
+      dependencies: [python3]
+    execution:
+      entry_type: system_binary
+      entrypoint: binwalk
+      path_hint: system_path
+    healthcheck:
+      type: command
+      command_template: [binwalk, --help]
+      success_exit_codes: [0]
+
+  steghide:
+    standard_name: steghide
+    display_name: Steghide
+    baseline: core
+    category: analysis
+    subcategory: steganography
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: limited
+        windows: unsupported
+      preferred_platforms:
+        - linux
+    install:
+      mode: package_manager
+      automated: true
+      providers:
+        apt: steghide
+        dnf: steghide
+        brew: null
+        choco: null
+      dependencies: []
+    execution:
+      entry_type: system_binary
+      entrypoint: steghide
+      path_hint: system_path
+    healthcheck:
+      type: command
+      command_template: [steghide, --version]
+      success_exit_codes: [0]
+
+  zsteg:
+    standard_name: zsteg
+    display_name: zsteg
+    baseline: core
+    category: analysis
+    subcategory: steganography
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: limited
+      preferred_platforms:
+        - linux
+    install:
+      mode: gem
+      automated: true
+      providers:
+        gem: zsteg
+      dependencies: [ruby]
+    execution:
+      entry_type: system_binary
+      entrypoint: zsteg
+      path_hint: system_path
+    healthcheck:
+      type: command
+      command_template: [zsteg, --help]
+      success_exit_codes: [0]
+
+  exiftool:
+    standard_name: exiftool
+    display_name: ExifTool
+    baseline: core
+    category: analysis
+    subcategory: metadata
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: archive_or_package
+      automated: true
+      providers:
+        apt: libimage-exiftool-perl
+        dnf: perl-Image-ExifTool
+        brew: exiftool
+        manual_archive: https://exiftool.org
+      dependencies: [perl]
+    execution:
+      entry_type: system_binary
+      entrypoint: exiftool
+      path_hint: system_path_or_tools/tools/exiftool
+    healthcheck:
+      type: command
+      command_template: [exiftool, -ver]
+      success_exit_codes: [0]
+
+  cyberchef:
+    standard_name: cyberchef
+    display_name: CyberChef
+    baseline: core
+    category: analysis
+    subcategory: data_transform
+    aliases: [CyberChef]
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: static_bundle
+      automated: true
+      providers:
+        github: gchq/CyberChef
+        version: 10.19.2
+        asset_templates:
+          universal: CyberChef_v10.19.2.zip
+      dependencies: []
+    execution:
+      entry_type: static_site
+      entrypoint: tools/tools/CyberChef/index.html
+      path_hint: bundled_directory
+    healthcheck:
+      type: file_exists
+      path: tools/tools/CyberChef/index.html
+
+  sliver:
+    standard_name: sliver
+    display_name: Sliver
+    baseline: c2
+    category: c2
+    subcategory: framework
+    aliases: [sliver-server, sliver-client]
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: release_archive
+      automated: true
+      providers:
+        github: BishopFox/sliver
+        version: 1.5.42
+        system_packages:
+          apt: sliver
+        asset_templates:
+          linux_server: sliver-server_linux
+          darwin_server: sliver-server_macos
+          windows_server: sliver-server_windows.exe
+      dependencies: []
+    execution:
+      entry_type: binary
+      entrypoint: sliver-server
+      path_hint: tools/tools/sliver-server
+    healthcheck:
+      type: command
+      command_template: [sliver-server, version]
+      success_exit_codes: [0]
+
+  havoc:
+    standard_name: havoc
+    display_name: Havoc
+    baseline: c2
+    category: c2
+    subcategory: framework
+    aliases: [Havoc]
+    support:
+      platforms:
+        linux: supported
+        darwin: limited
+        windows: limited
+      preferred_platforms:
+        - linux
+    install:
+      mode: git_clone
+      automated: false
+      providers:
+        git: https://github.com/HavocFramework/Havoc.git
+        target_dir: tools/tools/Havoc
+      dependencies: [git, go, cmake]
+    execution:
+      entry_type: source_build
+      entrypoint: tools/tools/Havoc/teamserver
+      path_hint: bundled_directory
+    healthcheck:
+      type: file_exists
+      path: tools/tools/Havoc
+
+  mythic:
+    standard_name: mythic
+    display_name: Mythic
+    baseline: c2
+    category: c2
+    subcategory: framework
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: limited
+        windows: unsupported
+      preferred_platforms:
+        - linux
+    install:
+      mode: docker_compose
+      automated: false
+      providers:
+        git: https://github.com/its-a-feature/Mythic.git
+      dependencies: [docker, docker-compose]
+    execution:
+      entry_type: docker_service
+      entrypoint: docker compose up -d
+      path_hint: tools/tools/Mythic
+    healthcheck:
+      type: command
+      command_template: [docker, compose, version]
+      success_exit_codes: [0]
+
+  pupy:
+    standard_name: pupy
+    display_name: Pupy
+    baseline: c2
+    category: c2
+    subcategory: framework
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: limited
+        windows: limited
+      preferred_platforms:
+        - linux
+    install:
+      mode: git_clone
+      automated: false
+      providers:
+        git: https://github.com/n1nj4sec/pupy.git
+        target_dir: tools/tools/pupy
+      dependencies: [python3, git]
+    execution:
+      entry_type: python_script
+      entrypoint: tools/tools/pupy/pupysh.py
+      path_hint: bundled_directory
+    healthcheck:
+      type: file_exists
+      path: tools/tools/pupy/pupysh.py
+
+  behinder:
+    standard_name: behinder
+    display_name: Behinder
+    baseline: c2
+    category: c2
+    subcategory: webshell_manager
+    aliases: [冰蝎]
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - windows
+    install:
+      mode: manual_download
+      automated: false
+      providers:
+        acquisition: manual_vendor_drop
+      dependencies: [java]
+    execution:
+      entry_type: java_archive
+      entrypoint: tools/tools/behinder/Behinder.jar
+      path_hint: vendor_drop
+    healthcheck:
+      type: file_exists
+      path: tools/tools/behinder/Behinder.jar
+
+  godzilla:
+    standard_name: godzilla
+    display_name: Godzilla
+    baseline: c2
+    category: c2
+    subcategory: webshell_manager
+    aliases: [哥斯拉]
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - windows
+    install:
+      mode: manual_download
+      automated: false
+      providers:
+        acquisition: manual_vendor_drop
+      dependencies: [java]
+    execution:
+      entry_type: java_archive
+      entrypoint: tools/tools/godzilla/godzilla.jar
+      path_hint: vendor_drop
+    healthcheck:
+      type: file_exists
+      path: tools/tools/godzilla/godzilla.jar
+
+  yak:
+    standard_name: yak
+    display_name: Yak
+    baseline: auxiliary
+    category: auxiliary
+    subcategory: audit_runtime
+    aliases: []
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: vendor_installer
+      automated: true
+      providers:
+        official_install: https://yaklang.com
+      dependencies: []
+    execution:
+      entry_type: system_binary
+      entrypoint: yak
+      path_hint: system_path
+    healthcheck:
+      type: command
+      command_template: [yak, version]
+      success_exit_codes: [0]
+
+  exploitdb-offline:
+    standard_name: exploitdb-offline
+    display_name: Offline Exploit-DB
+    baseline: auxiliary
+    category: auxiliary
+    subcategory: offline_dataset
+    aliases: [search_exploitdb_offline]
+    support:
+      platforms:
+        linux: supported
+        darwin: supported
+        windows: supported
+      preferred_platforms:
+        - linux
+    install:
+      mode: data_sync
+      automated: true
+      providers:
+        source_path: vuldb/exploit-db
+        sync_script: tools/exploitdb_sync.py
+      dependencies: [python3]
+    execution:
+      entry_type: local_dataset
+      entrypoint: vuldb/exploit-db
+      path_hint: repository_data
+    healthcheck:
+      type: file_exists
+      path: vuldb/exploit-db
+
+  hexstrike-ai:
+    standard_name: hexstrike-ai
+    display_name: Hexstrike-AI
+    baseline: auxiliary
+    category: auxiliary
+    subcategory: external_service
+    aliases: []
+    support:
+      platforms:
+        linux: limited
+        darwin: limited
+        windows: limited
+      preferred_platforms:
+        - linux
+    install:
+      mode: external_service
+      automated: false
+      providers:
+        acquisition: mcp_or_vendor_managed
+      dependencies: []
+    execution:
+      entry_type: service_endpoint
+      entrypoint: external_mcp_service
+      path_hint: external_dependency
+    healthcheck:
+      type: manual_confirmation

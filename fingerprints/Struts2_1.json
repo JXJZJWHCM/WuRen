@@ -1,0 +1,1 @@
+{"ID":0,"DeletedAt":null,"part":"","vendor":"","product":"","version":"","update":"","edition":"","language":"","指纹名称":"Struts2","web路径":"","ExtInfo":"","指纹规则":"header=\"jsessionid\"||body=\"struts problem report\"||body=\"there is no action mapped for namespace\"||body=\"no result defined for action and result input\"||header=\"servlet\"||header=\"jboss\"","Groups":null}

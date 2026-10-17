@@ -1,0 +1,191 @@
+system:
+  name: WuRen AI Pentest Platform
+  version: 1.0.4
+  debug: false
+  concurrency:
+    max_workers: 50
+    timeout: 1200
+server:
+  host: 127.0.0.1
+  port: 8000
+  access_log: true
+ai:
+  default_provider: deepseek
+  provider_failover_order:
+  - deepseek
+  - minimax
+  - zhipu
+  - qwen
+  - xiaomi
+  - moonshot
+  - openai
+  - gemini
+  - claude
+  - ollama
+  - custom
+  providers:
+    deepseek:
+      api_key: ''
+      endpoint_key: official
+      model: deepseek-v4-pro
+      reasoner_model: deepseek-v4-pro
+      failover_models:
+      - deepseek-flash
+      - deepseek-v4-flash
+      temperature: 0.0
+      max_tokens: 32768
+      timeout: 0
+      max_tokens_chat: 8192
+      max_tokens_reasoner: 32768
+      thinking_default: true
+      thinking_type: enabled
+      reasoning_effort: high
+      context_max_chars: 180000
+      context_keep_recent_blocks: 8
+      context_message_max_chars: 24000
+    minimax:
+      api_key: ''
+      endpoint_key: cn
+      model: MiniMax-M3
+      reasoner_model: MiniMax-M3
+      failover_models:
+      - MiniMax-M2.7
+      - MiniMax-M2.7-highspeed
+      temperature: 0.0
+      max_tokens: 32768
+      timeout: 0
+    zhipu:
+      api_key: ''
+      endpoint_key: official
+      model: glm-5.3
+      reasoner_model: glm-5.3
+      failover_models:
+      - glm-5.3-flash
+      - glm-5.2
+      temperature: 0.0
+      max_tokens: 32768
+      timeout: 0
+    qwen:
+      api_key: ''
+      endpoint_key: cn_beijing
+      model: qwen3.8-max
+      reasoner_model: qwen3.8-max
+      failover_models:
+      - qwen3.7-plus
+      - qwen3.6-plus
+      - qwen3.8-flash
+      temperature: 0.0
+      max_tokens: 32768
+      timeout: 0
+    xiaomi:
+      api_key: ''
+      endpoint_key: official
+      model: mimo-v2.6-pro
+      reasoner_model: mimo-v2.6-pro
+      failover_models:
+      - mimo-v2.6-flash
+      - mimo-v2.6
+      temperature: 0.0
+      max_tokens: 32768
+      timeout: 0
+    moonshot:
+      api_key: ''
+      endpoint_key: official
+      model: kimi-k3
+      reasoner_model: kimi-k3
+      failover_models:
+      - kimi-k2.7-code
+      - kimi-k2.6
+      - kimi-k2.5
+      temperature: 0.0
+      max_tokens: 32768
+      timeout: 0
+    openai:
+      api_key: ''
+      endpoint_key: official
+      model: gpt-6-astra
+      reasoner_model: gpt-6-astra
+      failover_models:
+      - gpt-6.1-sol
+      - gpt-6-luna
+      - gpt-5.5
+      temperature: 0.0
+      max_tokens: 32768
+      timeout: 0
+    gemini:
+      api_key: ''
+      endpoint_key: official
+      model: gemini-4-argon
+      reasoner_model: gemini-4-argon
+      failover_models:
+      - gemini-3.8-flash
+      - gemini-3.6-flash
+      - gemini-3.1-pro-preview
+      temperature: 0.0
+      max_tokens: 32768
+      timeout: 0
+    claude:
+      api_key: ''
+      endpoint_key: official
+      model: claude-opus-5-5
+      reasoner_model: claude-opus-5-5
+      failover_models:
+      - claude-sonnet-5-5
+      - claude-fable-5-1
+      - claude-haiku-5-5
+      temperature: 0.0
+      max_tokens: 32768
+      timeout: 0
+      anthropic_version: '2023-06-01'
+    ollama:
+      api_key: ''
+      endpoint_key: local
+      base_url: http://127.0.0.1:11434/v1
+      model: ''
+      reasoner_model: ''
+      failover_models: []
+      temperature: 0.0
+      max_tokens: 32768
+      context_max_chars: 60000
+      context_keep_recent_blocks: 6
+      context_message_max_chars: 16000
+      timeout: 0
+    custom:
+      api_key: ''
+      endpoint_key: manual
+      base_url: ''
+      protocol: openai-compatible
+      model: ''
+      reasoner_model: ''
+      failover_models: []
+      temperature: 0.0
+      max_tokens: 32768
+      timeout: 0
+  runtime:
+    agent_max_retries: 2
+    agent_stuck_detection_seconds: 3600
+paths:
+  output: ./output
+  vuldb: ./vuldb
+  poc_exp: ./poc_exp
+  knowledge_base: ./knowledge
+  skills: ./skills
+  logs: ./output/logs
+  plugins: ./plugins
+  fingerprints: ./fingerprints
+  custom_tools: ./mtools
+  audit_rules: ./repo
+modules:
+  fmaps:
+    enabled: true
+    threads: 5
+  vulscan:
+    enabled: true
+    risk_level: high
+report:
+  reference_evaluation_enabled: true
+  reference_walkthrough_path: ./NexGen_CyberRange_WP.md
+logging:
+  level: INFO
+  format: '{time} | {level} | {message}'
+  rotation: 10 MB

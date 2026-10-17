@@ -1,0 +1,50 @@
+---
+name: xss-testing
+description: Cross-site scripting testing baseline across reflected, stored, and DOM contexts.
+version: 2.1
+source: curated-internal
+source_type: curated
+cve: N/A
+product: generic
+vuln_type: methodology
+severity: medium
+tags:
+  - curated
+  - security-testing
+  - xss-testing
+references:
+  - N/A
+trust_level: high
+created_at: 2026-03-11T11:17:11.773251+00:00
+updated_at: 2026-03-11T11:17:11.773251+00:00
+---
+
+> [!NOTE] 雾刃自动化渗透测试平台技能库 (WuRen Skill Base)
+> 类别: 自动化渗透测试专属技能包
+> 用途: 扩展 AI 智能体的实战能力与外部工具调用规范。
+
+## Overview
+Cross-site scripting testing baseline across reflected, stored, and DOM contexts.
+
+## Applicability
+Use only for authorized security testing and approved environments.
+
+## Environment Preparation
+1. Define legal scope and target boundaries.
+2. Prepare evidence collection (command summary, output, timestamp).
+3. Confirm rollback and incident response contacts.
+
+## Detection Steps
+1. Identify exposed attack surface and trust boundaries.
+2. Execute low-impact validation sequence.
+3. Correlate response behavior with security expectations.
+
+## Exploitation Validation
+Validate only what is required to prove risk and avoid destructive behavior.
+
+## Evidence
+Capture request/response traces, execution context, and confidence annotations.
+
+## Risk and Mitigation
+Risk focus: Context-aware encoding, CSP effectiveness, and sink/source tracing.
+Mitigation baseline: input hardening, least privilege, patching, and continuous monitoring.

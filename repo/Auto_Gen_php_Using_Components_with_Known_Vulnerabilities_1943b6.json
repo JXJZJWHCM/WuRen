@@ -1,0 +1,58 @@
+[
+  {
+    "name": "php_Using_Components_with_Known_Vulnerabilities_Log4j",
+    "Severity": "CRITICAL",
+    "Description": "Detects usage of known vulnerable components like log4j 2.x (CVE-2021-44228) via shell commands.",
+    "patterns": [
+      "log4j.*\\.jar",
+      "CVE-2021-44228"
+    ],
+    "sources": [],
+    "sinks": []
+  },
+  {
+    "name": "php_Using_Components_with_Known_Vulnerabilities_PDO",
+    "Severity": "HIGH",
+    "Description": "Detects potential SQL injection due to outdated or vulnerable PDO drivers with improper input filtering.",
+    "sources": [
+      "$_GET",
+      "$_POST",
+      "$_REQUEST",
+      "$_COOKIE",
+      "$_SERVER"
+    ],
+    "sinks": [
+      "PDO::query",
+      "PDO::exec",
+      "PDO::prepare"
+    ],
+    "patterns": []
+  },
+  {
+    "name": "php_Using_Components_with_Known_Vulnerabilities_Unserialize",
+    "Severity": "HIGH",
+    "Description": "Detects unsafe deserialization with known vulnerable libraries (e.g., glibc CVE-2015-0235).",
+    "sources": [
+      "$_GET",
+      "$_POST",
+      "$_REQUEST",
+      "$_COOKIE",
+      "$_SERVER"
+    ],
+    "sinks": [
+      "unserialize"
+    ],
+    "patterns": []
+  },
+  {
+    "name": "php_Using_Components_with_Known_Vulnerabilities_Smarty",
+    "Severity": "MEDIUM",
+    "Description": "Detects usage of outdated Smarty template engine versions that may lack auto-escaping for XSS.",
+    "patterns": [
+      "new Smarty\\(\\)",
+      "Smarty::display"
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]

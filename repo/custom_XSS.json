@@ -1,0 +1,44 @@
+{
+  "RuleId": "a1e8228b-4c1f-40bc-9037-844aa7a75486",
+  "RuleName": "XSS",
+  "Title": "Detect XSS",
+  "TitleZh": "检测 XSS",
+  "Language": "generic",
+  "Severity": "HIGH",
+  "Type": "static_analysis",
+  "StaticConfig": {
+    "patterns": [],
+    "sources": [
+      "request",
+      "input",
+      "url_param",
+      "req",
+      "c.Query",
+      "c.PostForm",
+      "c.Param",
+      "r.URL.Query",
+      "r.FormValue"
+    ],
+    "sinks": [
+      "echo",
+      "print",
+      "res.send",
+      "document.write",
+      "innerHTML",
+      "c.HTML",
+      "c.String",
+      "w.Write",
+      "fmt.Fprintf",
+      "template.HTML",
+      "response.write",
+      "out.print",
+      "out.println",
+      "v-html",
+      "dangerouslySetInnerHTML",
+      "React.createElement"
+    ]
+  },
+  "Description": "Auto-converted rule for XSS",
+  "Content": "# auto-filled empty content for Detect XSS\n",
+  "_web_lang_hint": false
+}

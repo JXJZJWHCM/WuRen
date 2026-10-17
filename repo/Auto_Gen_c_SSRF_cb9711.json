@@ -1,0 +1,18 @@
+[
+  {
+    "name": "c_SSRF",
+    "Severity": "HIGH",
+    "Description": "Detects potential Server-Side Request Forgery (SSRF) where user-controlled input flows into libcurl's CURLOPT_URL without validation.",
+    "sources": [
+      "argv",
+      "getenv",
+      "fgets",
+      "scanf",
+      "read"
+    ],
+    "sinks": [
+      "curl_easy_setopt"
+    ],
+    "patterns": []
+  }
+]

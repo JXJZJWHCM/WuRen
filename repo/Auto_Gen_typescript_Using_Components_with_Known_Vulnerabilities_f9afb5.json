@@ -1,0 +1,17 @@
+[
+  {
+    "name": "typescript_Using_Components_with_Known_Vulnerabilities",
+    "Severity": "HIGH",
+    "Description": "Detects usage of known vulnerable lodash versions (e.g., <4.17.20) susceptible to prototype pollution (CVE-2020-8203) via functions like merge, mergeWith, set, or setWith.",
+    "patterns": [
+      "import\\s+.*lodash",
+      "require\\(['\"]lodash['\"]\\)",
+      "lodash\\.merge\\s*\\(",
+      "lodash\\.mergeWith\\s*\\(",
+      "lodash\\.set\\s*\\(",
+      "lodash\\.setWith\\s*\\("
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]

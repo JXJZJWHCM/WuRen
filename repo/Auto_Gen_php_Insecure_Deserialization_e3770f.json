@@ -1,0 +1,17 @@
+[
+  {
+    "name": "php_Insecure_Deserialization",
+    "Severity": "CRITICAL",
+    "Description": "Insecure deserialization of user input can lead to object injection and arbitrary code execution.",
+    "sources": [
+      "$_POST",
+      "$_GET",
+      "$_REQUEST",
+      "$_COOKIE"
+    ],
+    "sinks": [
+      "unserialize"
+    ],
+    "patterns": []
+  }
+]

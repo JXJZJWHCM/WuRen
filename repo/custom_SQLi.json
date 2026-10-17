@@ -1,0 +1,50 @@
+{
+  "RuleId": "84c97675-a4ae-4fa1-b4dc-6bd7094f0580",
+  "RuleName": "SQLi",
+  "Title": "Detect SQLi",
+  "TitleZh": "检测 SQLi",
+  "Language": "generic",
+  "Severity": "HIGH",
+  "Type": "static_analysis",
+  "StaticConfig": {
+    "patterns": [],
+    "sources": [
+      "request",
+      "input",
+      "argv",
+      "os.getenv",
+      "req",
+      "c.Query",
+      "c.PostForm",
+      "c.Param",
+      "r.URL.Query",
+      "r.FormValue"
+    ],
+    "sinks": [
+      "query",
+      "execute",
+      "db.query",
+      "mysql_query",
+      "pg_query",
+      "db.Exec",
+      "db.Query",
+      "db.QueryRow",
+      "db.ExecContext",
+      "db.QueryContext",
+      "db.QueryRowContext",
+      "gorm.Raw",
+      "gorm.Exec",
+      "sqlite3_query",
+      "mysqli_query",
+      "PDO::query",
+      "Statement.execute",
+      "Statement.executeQuery",
+      "Statement.executeUpdate",
+      "JdbcTemplate.query",
+      "JdbcTemplate.execute"
+    ]
+  },
+  "Description": "Auto-converted rule for SQLi",
+  "Content": "# auto-filled empty content for Detect SQLi\n",
+  "_web_lang_hint": false
+}

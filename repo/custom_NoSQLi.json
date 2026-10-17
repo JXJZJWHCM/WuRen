@@ -1,0 +1,28 @@
+{
+  "RuleId": "3411208a-6b88-4ac8-8c9d-f81b04502d1b",
+  "RuleName": "NoSQLi",
+  "Title": "Detect NoSQLi",
+  "TitleZh": "检测 NoSQLi",
+  "Language": "generic",
+  "Severity": "HIGH",
+  "Type": "static_analysis",
+  "StaticConfig": {
+    "patterns": [],
+    "sources": [
+      "request",
+      "input",
+      "query",
+      "req"
+    ],
+    "sinks": [
+      "db.collection.find",
+      "db.collection.findOne",
+      "Model.find",
+      "Model.findOne",
+      "$where"
+    ]
+  },
+  "Description": "Auto-converted rule for NoSQLi",
+  "Content": "# auto-filled empty content for Detect NoSQLi\n",
+  "_web_lang_hint": false
+}

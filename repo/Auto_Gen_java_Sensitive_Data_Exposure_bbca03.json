@@ -1,0 +1,23 @@
+[
+  {
+    "name": "java_Sensitive_Data_Exposure_in_Logs",
+    "Severity": "HIGH",
+    "Description": "Detects when sensitive data such as passwords is exposed through logging statements, leading to potential information disclosure.",
+    "sources": [
+      "password",
+      "pwd",
+      "secret",
+      "key",
+      "token",
+      "credential"
+    ],
+    "sinks": [
+      "info",
+      "warn",
+      "error",
+      "debug",
+      "log"
+    ],
+    "patterns": []
+  }
+]

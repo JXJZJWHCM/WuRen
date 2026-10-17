@@ -1,0 +1,13 @@
+[
+  {
+    "name": "go_Buffer_Overflow_Unsafe_Pointer",
+    "Severity": "CRITICAL",
+    "Description": "Detects buffer overflow vulnerabilities caused by unsafe memory writes using pointer arithmetic without boundary checks.",
+    "patterns": [
+      "unsafe\\.Pointer\\(uintptr\\(.*\\)\\s*\\+\\s*uintptr\\(.*\\)\\)",
+      "\\*\\(.*\\)\\(unsafe\\.Pointer.*\\)\\s*="
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]

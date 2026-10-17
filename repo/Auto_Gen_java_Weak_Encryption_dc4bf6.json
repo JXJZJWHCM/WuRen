@@ -1,0 +1,14 @@
+[
+  {
+    "name": "java_Weak_Encryption",
+    "Severity": "HIGH",
+    "Description": "Detects the use of weak encryption algorithms like DES or insecure modes like ECB.",
+    "patterns": [
+      "new\\s+SecretKeySpec\\s*\\([^,]*,\\s*[\\\"']DES[\\\"']",
+      "Cipher\\.getInstance\\s*\\(\\s*[\\\"'][^\\\"']*DES[^\\\"']*[\\\"']",
+      "Cipher\\.getInstance\\s*\\(\\s*[\\\"'][^\\\"']*ECB[^\\\"']*[\\\"']"
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]

@@ -1,0 +1,33 @@
+[
+  {
+    "name": "php_SQL_Injection",
+    "Severity": "CRITICAL",
+    "Description": "Detects SQL injection vulnerabilities where user input is directly concatenated into SQL queries without sanitization.",
+    "sources": [
+      "$_GET",
+      "$_POST",
+      "$_REQUEST",
+      "$_COOKIE",
+      "$_SERVER",
+      "$_FILES",
+      "php://input"
+    ],
+    "sinks": [
+      "mysqli::query",
+      "mysqli_query",
+      "mysqli::multi_query",
+      "mysqli_multi_query",
+      "mysqli::prepare",
+      "mysqli_prepare",
+      "mysqli::real_query",
+      "mysqli_real_query",
+      "PDO::query",
+      "PDO::exec",
+      "PDO::prepare",
+      "mysql_query",
+      "mysql_db_query",
+      "mysql_unbuffered_query"
+    ],
+    "patterns": []
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "name": "c_XXE",
+    "Severity": "CRITICAL",
+    "Description": "Detection of XML parsing with external entity expansion enabled (XXE vulnerability).",
+    "patterns": [
+      "xmlReadMemory\\([^)]*XML_PARSE_NOENT",
+      "xmlReadDoc\\([^)]*XML_PARSE_NOENT",
+      "xmlReadFile\\([^)]*XML_PARSE_NOENT",
+      "xmlCtxtReadMemory\\([^)]*XML_PARSE_NOENT",
+      "xmlCtxtReadDoc\\([^)]*XML_PARSE_NOENT",
+      "xmlCtxtReadFile\\([^)]*XML_PARSE_NOENT"
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]

@@ -1,0 +1,23 @@
+[
+  {
+    "name": "java_Server-Side_Template_Injection_(SSTI)",
+    "Severity": "CRITICAL",
+    "Description": "Detects potential Server-Side Template Injection (SSTI) vulnerabilities where user-controlled input is passed directly to template processing engines without proper sanitization.",
+    "sources": [
+      "request.getParameter",
+      "request.getParameterValues",
+      "request.getParameterMap",
+      "@RequestParam",
+      "@PathVariable",
+      "HttpServletRequest.getParameter"
+    ],
+    "sinks": [
+      "org.thymeleaf.TemplateEngine.process",
+      "org.springframework.web.servlet.view.AbstractTemplateView.render",
+      "org.apache.velocity.Template.merge",
+      "freemarker.template.Template.process",
+      "org.thymeleaf.ITemplateEngine.process"
+    ],
+    "patterns": []
+  }
+]

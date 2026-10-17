@@ -1,0 +1,13 @@
+[
+  {
+    "name": "go_Weak_Encryption",
+    "Severity": "HIGH",
+    "Description": "Detects weak encryption practices such as using XOR with single-byte or hardcoded keys, which are insecure and easily breakable.",
+    "patterns": [
+      "\\bkey\\s*:=\\s*byte\\(0x[0-9A-Fa-f]{2}\\)",
+      "\\[\\s*i\\s*\\]\\s*\\^\\s*key\\b"
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]

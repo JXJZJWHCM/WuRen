@@ -1,0 +1,12 @@
+[
+  {
+    "name": "typescript_CSRF",
+    "Severity": "HIGH",
+    "Description": "Detects Express POST routes without CSRF token validation, indicating potential CSRF vulnerability.",
+    "patterns": [
+      "\\.post\\s*\\(\\s*['\"][^'\"]*['\"]\\s*,\\s*\\([^)]*\\)\\s*=>\\s*{[\\s\\S]*?}"
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]

@@ -1,0 +1,24 @@
+[
+  {
+    "name": "php_SSRF",
+    "Severity": "HIGH",
+    "Description": "Detects potential Server-Side Request Forgery (SSRF) vulnerabilities where user-controlled input flows into functions that make HTTP requests.",
+    "sources": [
+      "$_GET",
+      "$_POST",
+      "$_REQUEST",
+      "$_COOKIE",
+      "$_SERVER",
+      "input",
+      "file_get_contents"
+    ],
+    "sinks": [
+      "file_get_contents",
+      "fopen",
+      "curl_exec",
+      "fsockopen",
+      "socket_create"
+    ],
+    "patterns": []
+  }
+]

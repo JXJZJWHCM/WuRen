@@ -1,0 +1,29 @@
+{
+  "RuleId": "690cb64f-30b1-4ac4-9e78-bff9c7400293",
+  "RuleName": "LDAPInjection",
+  "Title": "Detect LDAPInjection",
+  "TitleZh": "检测 LDAPInjection",
+  "Language": "generic",
+  "Severity": "HIGH",
+  "Type": "static_analysis",
+  "StaticConfig": {
+    "patterns": [],
+    "sources": [
+      "request",
+      "input",
+      "user",
+      "req"
+    ],
+    "sinks": [
+      "ldap.search",
+      "DirContext.search",
+      "LdapTemplate.search",
+      "ldap_search",
+      "ldap_list",
+      "ldap_read"
+    ]
+  },
+  "Description": "Auto-converted rule for LDAPInjection",
+  "Content": "# auto-filled empty content for Detect LDAPInjection\n",
+  "_web_lang_hint": false
+}

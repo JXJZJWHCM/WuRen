@@ -1,0 +1,13 @@
+[
+  {
+    "name": "java_XXE",
+    "Severity": "CRITICAL",
+    "Description": "Detects XML parsing with external entities enabled, leading to XXE vulnerabilities.",
+    "patterns": [
+      "\\.setFeature\\(\\s*[\"']http://xml\\.org/sax/features/external-general-entities[\"']\\s*,\\s*true\\s*\\)",
+      "\\.setFeature\\(\\s*[\"']http://xml\\.org/sax/features/external-parameter-entities[\"']\\s*,\\s*true\\s*\\)"
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]

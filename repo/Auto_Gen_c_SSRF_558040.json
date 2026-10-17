@@ -1,0 +1,14 @@
+[
+  {
+    "name": "c_SSRF",
+    "Severity": "HIGH",
+    "Description": "Detects SSRF vulnerabilities where untrusted input is passed to libcurl's curl_easy_setopt for URL configuration without validation.",
+    "sources": [
+      "argv"
+    ],
+    "sinks": [
+      "curl_easy_setopt"
+    ],
+    "patterns": []
+  }
+]

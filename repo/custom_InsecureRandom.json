@@ -1,0 +1,28 @@
+{
+  "RuleId": "3b1406d2-0dff-47e9-a7d3-9ac568077ed9",
+  "RuleName": "InsecureRandom",
+  "Title": "Detect InsecureRandom",
+  "TitleZh": "检测 InsecureRandom",
+  "Language": "generic",
+  "Severity": "HIGH",
+  "Type": "static_analysis",
+  "StaticConfig": {
+    "patterns": [],
+    "sources": [],
+    "sinks": [
+      "math/rand.Int",
+      "math/rand.Intn",
+      "math/rand.Float64",
+      "math.random",
+      "random.randint",
+      "random.random",
+      "rand",
+      "srand",
+      "Random.nextInt",
+      "Math.random"
+    ]
+  },
+  "Description": "Auto-converted rule for InsecureRandom",
+  "Content": "# auto-filled empty content for Detect InsecureRandom\n",
+  "_web_lang_hint": false
+}

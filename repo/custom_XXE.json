@@ -1,0 +1,32 @@
+{
+  "RuleId": "09106e4f-04e5-4251-b3e5-f4ef959ce2ef",
+  "RuleName": "XXE",
+  "Title": "Detect XXE",
+  "TitleZh": "检测 XXE",
+  "Language": "generic",
+  "Severity": "HIGH",
+  "Type": "static_analysis",
+  "StaticConfig": {
+    "patterns": [],
+    "sources": [
+      "request",
+      "input",
+      "xml",
+      "req"
+    ],
+    "sinks": [
+      "xml.parse",
+      "lxml.etree.parse",
+      "DocumentBuilder.parse",
+      "SAXParser.parse",
+      "XMLReader.parse",
+      "simplexml_load_string",
+      "simplexml_load_file",
+      "DOMDocument::load",
+      "DOMDocument::loadXML"
+    ]
+  },
+  "Description": "Auto-converted rule for XXE",
+  "Content": "# auto-filled empty content for Detect XXE\n",
+  "_web_lang_hint": false
+}

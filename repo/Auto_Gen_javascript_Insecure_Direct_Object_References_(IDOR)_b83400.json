@@ -1,0 +1,19 @@
+[
+  {
+    "name": "javascript_Insecure_Direct_Object_References_(IDOR)",
+    "Severity": "HIGH",
+    "Description": "Detects potential IDOR vulnerabilities where user-controlled input (e.g., URL parameters) is used to directly access or modify resources without proper authorization checks.",
+    "sources": [
+      "req.params",
+      "req.query",
+      "req.body"
+    ],
+    "sinks": [
+      "res.json",
+      "res.send",
+      "res.status",
+      "res.redirect"
+    ],
+    "patterns": []
+  }
+]

@@ -1,0 +1,1 @@
+{"ID":0,"DeletedAt":null,"part":"","vendor":"","product":"","version":"","update":"","edition":"","language":"","指纹名称":"huawei-esight","web路径":"","ExtInfo":"","指纹规则":"body=\"location.replace('login.action?_='+ new date().gettime());\" \u0026\u0026 body=\"\u003cbody onload=\\\"gotologin()\\\"\u003e\" \u0026\u0026 body=\"esight_login_copy_right_font\"","Groups":null}

@@ -1,0 +1,31 @@
+{
+  "RuleId": "feb8a24e-fd09-49bf-bcd7-bc9495cedc5a",
+  "RuleName": "BufferOverflow",
+  "Title": "Detect BufferOverflow",
+  "TitleZh": "检测 BufferOverflow",
+  "Language": "generic",
+  "Severity": "HIGH",
+  "Type": "static_analysis",
+  "StaticConfig": {
+    "patterns": [],
+    "sources": [
+      "input",
+      "argv",
+      "read",
+      "recv"
+    ],
+    "sinks": [
+      "strcpy",
+      "strcat",
+      "sprintf",
+      "gets",
+      "scanf",
+      "vsprintf",
+      "memcpy",
+      "memmove"
+    ]
+  },
+  "Description": "Auto-converted rule for BufferOverflow",
+  "Content": "# auto-filled empty content for Detect BufferOverflow\n",
+  "_web_lang_hint": false
+}

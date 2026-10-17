@@ -1,0 +1,57 @@
+{
+  "ID": 0,
+  "DeletedAt": null,
+  "RuleId": "e1315696-3f1e-404c-9906-06c1db41a6b0",
+  "Version": "20251230.0001",
+  "hash": "91ae3b00095420e8dafa0f3e95cf08986e306e512174703737bbbf3e214b1145",
+  "RuleName": "审计Java 使用System.out输出流",
+  "Title": "Audit Java Usage of System.out Output Stream",
+  "TitleZh": "审计Java 使用System.out输出流",
+  "Language": "java",
+  "Purpose": "audit",
+  "Tag": "java|code-style|poor-logging-practices",
+  "cwe": [
+    "CWE-532",
+    "CWE-215"
+  ],
+  "CVE": "",
+  "RiskType": "代码风格",
+  "Type": "sf",
+  "Severity": "INFO",
+  "IsBuildInRule": true,
+  "Verified": false,
+  "NeedUpdate": false,
+  "Content": "desc(\r\n\ttitle_zh: \"审计Java 使用System.out输出流\"\r\n\ttitle: \"Audit Java Usage of System.out Output Stream\"\r\n\trisk:\"代码风格\",\r\n\treference: <<<REFERENCE\r\nhttps://docs.oracle.com/javase/8/docs/api/java/io/PrintStream.html\r\nREFERENCE\r\n\tdescription: <<<DESCRIPTION\r\n该规则用于检测Java项目中是否使用了System.out输出流。System.out是Java中的标准输出流，通常用于打印调试信息或日志。然而，在生产环境中使用System.out输出流可能会导致性能问题和安全隐患。建议使用日志框架（如Log4j、SLF4J等）来替代System.out输出流，以便更好地管理日志记录和输出。\r\nDESCRIPTION\r\n\tsolution: <<<SOLUTION\r\n### 安全建议\r\n建议使用日志框架（如Log4j、SLF4J等）来替代`System.out`输出流，以便更好地管理日志记录和输出。\r\n```java\r\n// 示例：使用SLF4J记录日志\r\nimport org.slf4j.Logger;\r\nimport org.slf4j.LoggerFactory;\r\n\r\npublic class Example {\r\n    private static final Logger logger = LoggerFactory.getLogger(Example.class);\r\n\r\n    public static void main(String[] args) {\r\n        logger.info(\"This is an info message\");\r\n        logger.debug(\"This is a debug message\");\r\n    }\r\n}\r\n```\r\nSOLUTION\r\n\trule_id: \"e1315696-3f1e-404c-9906-06c1db41a6b0\"\r\n\tcwe: 532\r\n\tcwe: 215\r\n)\r\n\r\nSystem.out.print*() as $out;\r\ncheck $out;\r\nalert $out for {\r\n\ttitle_zh: \"检测到Java使用System.out输出流\",\r\n\tlevel: \"info\",\r\n\tmessage: \"检测到Java项目中使用了System.out输出流\",\r\n\ttitle: \"Java System.out Usage Detected\",\r\n\tsolution: <<<SOLUTION\r\n### 安全建议\r\n建议使用日志框架（如Log4j、SLF4J等）来替代System.out输出流，以便更好地管理日志记录和输出。\r\n```java\r\n// 示例：使用SLF4J记录日志\r\nimport org.slf4j.Logger;\r\nimport org.slf4j.LoggerFactory;\r\npublic class Example {\r\nprivate static final Logger logger = LoggerFactory.getLogger(Example.class);\r\npublic static void main(String[] args) {\r\nlogger.info(\"This is an info message\");\r\nlogger.debug(\"This is a debug message\");\r\n}\r\n}\r\n```\r\nSOLUTION\r\n\trisk: \"代码风格\",\r\n\tdesc: <<<DESC\r\n### 规则目的\r\n该规则用于检测Java项目中是否使用了System.out输出流。System.out是Java中的标准输出流，通常用于打印调试信息或日志。\r\n### 风险与影响\r\n1. **风险原理**\r\n在生产环境中使用System.out输出流可能会导致性能问题和安全隐患。例如，频繁的日志输出可能会影响应用程序的运行速度，同时敏感信息可能被直接打印到控制台。\r\n2. **触发场景**\r\n```java\r\npublic class Main {\r\npublic static void main(String[] args) {\r\nSystem.out.println(\"Debugging information\");\r\n}\r\n}\r\n```\r\n上述代码展示了如何通过System.out输出调试信息，这种方式不适合生产环境。\r\n3. **潜在影响**\r\n- 可能暴露敏感数据（如密码、用户信息等）。\r\n- 影响系统整体性能，尤其是在高并发环境下。\r\n- 不便于集中管理日志内容，难以追踪和排查问题。\r\nDESC\r\n\tname: \"out\",\r\n}\r\n\r\n",
+  "Description": "该规则用于检测Java项目中是否使用了System.out输出流。System.out是Java中的标准输出流，通常用于打印调试信息或日志。然而，在生产环境中使用System.out输出流可能会导致性能问题和安全隐患。建议使用日志框架（如Log4j、SLF4J等）来替代System.out输出流，以便更好地管理日志记录和输出。",
+  "AlertDesc": {
+    "out": {
+      "rule_id": "",
+      "title": "Java System.out Usage Detected",
+      "title_zh": "检测到Java使用System.out输出流",
+      "description": "### 规则目的\r\n该规则用于检测Java项目中是否使用了System.out输出流。System.out是Java中的标准输出流，通常用于打印调试信息或日志。\r\n### 风险与影响\r\n1. **风险原理**\r\n在生产环境中使用System.out输出流可能会导致性能问题和安全隐患。例如，频繁的日志输出可能会影响应用程序的运行速度，同时敏感信息可能被直接打印到控制台。\r\n2. **触发场景**\r\n```java\r\npublic class Main {\r\npublic static void main(String[] args) {\r\nSystem.out.println(\"Debugging information\");\r\n}\r\n}\r\n```\r\n上述代码展示了如何通过System.out输出调试信息，这种方式不适合生产环境。\r\n3. **潜在影响**\r\n- 可能暴露敏感数据（如密码、用户信息等）。\r\n- 影响系统整体性能，尤其是在高并发环境下。\r\n- 不便于集中管理日志内容，难以追踪和排查问题。",
+      "solution": "### 安全建议\r\n建议使用日志框架（如Log4j、SLF4J等）来替代System.out输出流，以便更好地管理日志记录和输出。\r\n```java\r\n// 示例：使用SLF4J记录日志\r\nimport org.slf4j.Logger;\r\nimport org.slf4j.LoggerFactory;\r\npublic class Example {\r\nprivate static final Logger logger = LoggerFactory.getLogger(Example.class);\r\npublic static void main(String[] args) {\r\nlogger.info(\"This is an info message\");\r\nlogger.debug(\"This is a debug message\");\r\n}\r\n}\r\n```",
+      "tag": "",
+      "severity": "info",
+      "purpose": "",
+      "only_msg": false,
+      "msg": "检测到Java项目中使用了System.out输出流",
+      "cve": "",
+      "cwe": null,
+      "RiskType": "代码风格",
+      "extra_info": {
+        "name": "out"
+      }
+    }
+  },
+  "Solution": "### 安全建议\r\n建议使用日志框架（如Log4j、SLF4J等）来替代`System.out`输出流，以便更好地管理日志记录和输出。\r\n```java\r\n// 示例：使用SLF4J记录日志\r\nimport org.slf4j.Logger;\r\nimport org.slf4j.LoggerFactory;\r\n\r\npublic class Example {\r\n    private static final Logger logger = LoggerFactory.getLogger(Example.class);\r\n\r\n    public static void main(String[] args) {\r\n        logger.info(\"This is an info message\");\r\n        logger.debug(\"This is a debug message\");\r\n    }\r\n}\r\n```",
+  "AllowIncluded": false,
+  "IncludedName": "",
+  "OpCodes": "{\"version\":\"1.4.5-beta11\",\"opcode\":[{\"op_code\":1,\"unary_int\":1,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":2,\"unary_int\":1,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":0,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":15,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":49,\"unary_int\":0,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":13,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":4,\"unary_int\":1,\"unary_str\":\"System\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":4,\"unary_int\":2,\"unary_str\":\"out\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":5,\"unary_int\":2,\"unary_str\":\"print*\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":10,\"unary_int\":0,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":26,\"unary_int\":0,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":23,\"unary_int\":0,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":49,\"unary_int\":0,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":2,\"unary_int\":13,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":18,\"unary_int\":0,\"unary_str\":\"out\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":2,\"unary_int\":15,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":0,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":19,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":43,\"unary_int\":0,\"unary_str\":\"out\",\"unary_bool\":false,\"values\":[\"\",\"\"],\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":2,\"unary_int\":19,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":0,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":23,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":42,\"unary_int\":0,\"unary_str\":\"out\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":2,\"unary_int\":23,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":0,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null}]}",
+  "Groups": null,
+  "StaticConfig": {
+    "patterns": [],
+    "sources": [],
+    "sinks": []
+  },
+  "_web_lang_hint": false
+}

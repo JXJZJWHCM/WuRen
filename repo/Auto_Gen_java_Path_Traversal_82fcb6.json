@@ -1,0 +1,23 @@
+[
+  {
+    "name": "java_Path_Traversal",
+    "Severity": "HIGH",
+    "Description": "Detects path traversal vulnerability where user-controlled input is used to construct file paths without proper sanitization.",
+    "sources": [
+      "request.getParameter",
+      "request.getHeader",
+      "request.getQueryString",
+      "request.getPathInfo",
+      "request.getRequestURI"
+    ],
+    "sinks": [
+      "new File",
+      "FileInputStream",
+      "FileOutputStream",
+      "RandomAccessFile",
+      "Paths.get",
+      "FileSystem.getPath"
+    ],
+    "patterns": []
+  }
+]

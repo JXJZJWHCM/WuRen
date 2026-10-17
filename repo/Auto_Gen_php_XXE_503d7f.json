@@ -1,0 +1,13 @@
+[
+  {
+    "name": "php_xxe",
+    "Severity": "CRITICAL",
+    "Description": "Detects XML external entity (XXE) injection via libxml_disable_entity_loader(false) and LIBXML_NOENT option",
+    "patterns": [
+      "libxml_disable_entity_loader\\(false\\)",
+      "LIBXML_NOENT"
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]

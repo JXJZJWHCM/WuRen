@@ -1,0 +1,28 @@
+[
+  {
+    "name": "go_SQL_Injection",
+    "Severity": "CRITICAL",
+    "Description": "Detects potential SQL injection vulnerabilities where user-controlled data flows into database queries without proper sanitization.",
+    "sources": [
+      "r.URL.Query().Get",
+      "r.FormValue",
+      "r.PostFormValue",
+      "r.Header.Get",
+      "r.Cookie"
+    ],
+    "sinks": [
+      "(*sql.DB).Query",
+      "(*sql.DB).QueryRow",
+      "(*sql.DB).Exec",
+      "(*sql.DB).Prepare",
+      "(*sql.Stmt).Query",
+      "(*sql.Stmt).QueryRow",
+      "(*sql.Stmt).Exec",
+      "(*sql.Tx).Query",
+      "(*sql.Tx).QueryRow",
+      "(*sql.Tx).Exec",
+      "(*sql.Tx).Prepare"
+    ],
+    "patterns": []
+  }
+]

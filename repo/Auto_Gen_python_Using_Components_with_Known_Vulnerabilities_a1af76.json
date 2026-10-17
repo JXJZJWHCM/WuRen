@@ -1,0 +1,18 @@
+[
+  {
+    "name": "python_Using_Components_with_Known_Vulnerabilities",
+    "Severity": "HIGH",
+    "Description": "Detects unsafe usage of yaml.load() without a safe loader, which can lead to remote code execution due to known vulnerabilities in PyYAML.",
+    "sources": [
+      "input",
+      "sys.argv",
+      "open",
+      "raw_input",
+      "file"
+    ],
+    "sinks": [
+      "yaml.load"
+    ],
+    "patterns": []
+  }
+]

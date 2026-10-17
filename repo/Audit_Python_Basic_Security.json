@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Python_Hardcoded_Secret_Key",
+    "patterns": [
+      "(?i)(SECRET_KEY|FLASK_SECRET|JWT_SECRET)\\s*=\\s*['\"][a-zA-Z0-9_\\-]{5,}['\"]",
+      "(?i)app\\.secret_key\\s*=\\s*['\"]"
+    ],
+    "Severity": "HIGH",
+    "Description": "Hardcoded secret key detected in Python code.",
+    "sources": [],
+    "sinks": []
+  },
+  {
+    "name": "Python_Debug_Mode_Enabled",
+    "patterns": [
+      "(?i)DEBUG\\s*=\\s*True",
+      "(?i)app\\.run\\(.*debug\\s*=\\s*True.*\\)",
+      "(?i)app\\.config\\['DEBUG'\\]\\s*=\\s*True"
+    ],
+    "Severity": "MEDIUM",
+    "Description": "Debug mode enabled in production code.",
+    "sources": [],
+    "sinks": []
+  },
+  {
+    "name": "Python_Dangerous_Eval",
+    "sources": [
+      "request",
+      "input",
+      "sys.argv"
+    ],
+    "sinks": [
+      "eval",
+      "exec",
+      "os.system"
+    ],
+    "Severity": "CRITICAL",
+    "Description": "Use of dangerous eval/exec function with potential user input.",
+    "patterns": []
+  },
+  {
+    "name": "Python_Unsafe_Deserialization",
+    "sources": [
+      "request",
+      "input"
+    ],
+    "sinks": [
+      "pickle.load",
+      "pickle.loads",
+      "yaml.load"
+    ],
+    "Severity": "CRITICAL",
+    "Description": "Unsafe deserialization detected.",
+    "patterns": []
+  },
+  {
+    "name": "Python_Raw_SQL_Injection",
+    "sources": [
+      "request",
+      "input"
+    ],
+    "sinks": [
+      "execute",
+      "raw",
+      "RawSQL"
+    ],
+    "patterns": [
+      "(?i)execute\\s*\\(\\s*['\"].*%s.*['\"]\\s*%\\s*",
+      "(?i)execute\\s*\\(\\s*f['\"].*\\{.*\\}.*['\"]"
+    ],
+    "Severity": "HIGH",
+    "Description": "Potential SQL Injection via raw query formatting."
+  }
+]

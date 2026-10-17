@@ -1,0 +1,13 @@
+[
+  {
+    "name": "typescript_Using_Components_with_Known_Vulnerabilities",
+    "Severity": "HIGH",
+    "Description": "Detects usage of known vulnerable packages (e.g., lodash versions before 4.17.20 with prototype pollution).",
+    "patterns": [
+      "import\\s+.*\\s+from\\s+['\"]lodash['\"]",
+      "import\\s+.*\\s+from\\s+['\"]lodash\\.*['\"]"
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]

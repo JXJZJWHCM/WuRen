@@ -1,0 +1,13 @@
+[
+  {
+    "name": "go_XXE",
+    "Severity": "HIGH",
+    "Description": "XML parsing with external entity expansion enabled, which can lead to XXE attacks.",
+    "patterns": [
+      "xml\\.NewDecoder\\s*\\([^)]*\\)",
+      "decoder\\.Entity\\s*="
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]

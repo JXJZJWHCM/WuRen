@@ -1,0 +1,25 @@
+[
+  {
+    "name": "php_Server-Side_Template_Injection_(SSTI)",
+    "Severity": "CRITICAL",
+    "Description": "Detects Server-Side Template Injection vulnerabilities where user input is used as template content",
+    "sources": [
+      "$_GET",
+      "$_POST",
+      "$_REQUEST",
+      "$_COOKIE",
+      "$_SERVER",
+      "file_get_contents"
+    ],
+    "sinks": [
+      "Twig\\Environment::render",
+      "Twig_Environment::render",
+      "Twig\\Environment::createTemplate",
+      "Smarty::display",
+      "Smarty::fetch",
+      "Illuminate\\View\\View::render",
+      "Blade::compileString"
+    ],
+    "patterns": []
+  }
+]

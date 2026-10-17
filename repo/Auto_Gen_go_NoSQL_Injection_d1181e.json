@@ -1,0 +1,32 @@
+[
+  {
+    "name": "go_NoSQL_Injection",
+    "Severity": "HIGH",
+    "Description": "Detects potential NoSQL injection vulnerabilities where user input is directly used in MongoDB query filters without sanitization.",
+    "sources": [
+      "r.URL.Query().Get",
+      "r.FormValue",
+      "r.PostFormValue",
+      "r.Header.Get",
+      "r.Cookie"
+    ],
+    "sinks": [
+      "bson.M",
+      "bson.D",
+      "bson.E",
+      "bson.A",
+      "collection.Find",
+      "collection.FindOne",
+      "collection.FindOneAndDelete",
+      "collection.FindOneAndReplace",
+      "collection.FindOneAndUpdate",
+      "collection.UpdateOne",
+      "collection.UpdateMany",
+      "collection.ReplaceOne",
+      "collection.DeleteOne",
+      "collection.DeleteMany",
+      "collection.Aggregate"
+    ],
+    "patterns": []
+  }
+]

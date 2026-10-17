@@ -1,0 +1,20 @@
+[
+  {
+    "name": "typescript_Insecure_Deserialization",
+    "Severity": "HIGH",
+    "Description": "Detects insecure deserialization using eval function with untrusted input, which can lead to arbitrary code execution.",
+    "sources": [
+      "input",
+      "req.body",
+      "req.query",
+      "req.params",
+      "process.argv",
+      "localStorage.getItem",
+      "sessionStorage.getItem"
+    ],
+    "sinks": [
+      "eval"
+    ],
+    "patterns": []
+  }
+]

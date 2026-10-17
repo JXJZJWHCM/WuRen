@@ -1,0 +1,21 @@
+[
+  {
+    "name": "typescript_XXE_libxmljs",
+    "Severity": "HIGH",
+    "Description": "Detects XML parsing with libxmljs that does not disable external entity processing, potentially leading to XXE attacks.",
+    "sources": [
+      "xmlData",
+      "req.body",
+      "req.query",
+      "req.params",
+      "input",
+      "userInput"
+    ],
+    "sinks": [
+      "libxmljs.SaxParser.parseString",
+      "libxmljs.parseXml",
+      "libxmljs.parseXmlString"
+    ],
+    "patterns": []
+  }
+]

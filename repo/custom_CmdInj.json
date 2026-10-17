@@ -1,0 +1,51 @@
+{
+  "RuleId": "a2b34259-0988-48d2-8ccd-9867b646f92d",
+  "RuleName": "CmdInj",
+  "Title": "Detect CmdInj",
+  "TitleZh": "检测 CmdInj",
+  "Language": "generic",
+  "Severity": "HIGH",
+  "Type": "static_analysis",
+  "StaticConfig": {
+    "patterns": [],
+    "sources": [
+      "input",
+      "request.GET",
+      "request.POST",
+      "argv",
+      "os.getenv",
+      "req.query",
+      "req.body",
+      "c.Query",
+      "c.PostForm",
+      "c.Param",
+      "r.URL.Query",
+      "r.FormValue",
+      "sys.argv",
+      "os.environ"
+    ],
+    "sinks": [
+      "exec",
+      "os.system",
+      "subprocess.call",
+      "subprocess.Popen",
+      "subprocess.run",
+      "Runtime.exec",
+      "system",
+      "child_process.exec",
+      "exec.Command",
+      "os/exec.Command",
+      "exec.CommandContext",
+      "syscall.Exec",
+      "popen",
+      "passthru",
+      "shell_exec",
+      "ProcessBuilder",
+      "Process",
+      "Process.Start"
+    ]
+  },
+  "Description": "Auto-converted rule for CmdInj",
+  "Content": "# auto-filled empty content for Detect CmdInj\n",
+  "_web_lang_hint": false
+}

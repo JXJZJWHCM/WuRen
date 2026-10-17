@@ -1,0 +1,25 @@
+[
+  {
+    "name": "java_Path_Traversal",
+    "Severity": "HIGH",
+    "Description": "Detects path traversal vulnerability where user-controlled input is used in file operations without validation",
+    "sources": [
+      "args",
+      "request.getParameter",
+      "getParameter",
+      "getQueryString",
+      "getHeader",
+      "ServletRequest.getParameter"
+    ],
+    "sinks": [
+      "new File",
+      "FileReader",
+      "FileInputStream",
+      "FileOutputStream",
+      "RandomAccessFile",
+      "Paths.get",
+      "FileSystem.getPath"
+    ],
+    "patterns": []
+  }
+]

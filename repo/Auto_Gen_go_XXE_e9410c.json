@@ -1,0 +1,16 @@
+[
+  {
+    "name": "go_XXE",
+    "Severity": "CRITICAL",
+    "Description": "XML External Entity (XXE) vulnerability due to unsafe external entity resolution in xml.Decoder",
+    "patterns": [],
+    "sources": [
+      "os.ReadFile",
+      "strings.TrimPrefix"
+    ],
+    "sinks": [
+      "xml.NewDecoder",
+      "decoder.Entity"
+    ]
+  }
+]

@@ -1,0 +1,42 @@
+{
+  "RuleId": "c143e19f-10ae-43c9-8d01-c03c88c8e7e3",
+  "RuleName": "SSRF",
+  "Title": "Detect SSRF",
+  "TitleZh": "检测 SSRF",
+  "Language": "generic",
+  "Severity": "HIGH",
+  "Type": "static_analysis",
+  "StaticConfig": {
+    "patterns": [],
+    "sources": [
+      "request",
+      "url",
+      "req",
+      "c.Query",
+      "c.PostForm",
+      "c.Param",
+      "r.URL.Query",
+      "r.FormValue"
+    ],
+    "sinks": [
+      "requests.get",
+      "requests.post",
+      "curl_exec",
+      "urllib.request.urlopen",
+      "http.Get",
+      "axios.get",
+      "http.Post",
+      "http.NewRequest",
+      "http.Head",
+      "file_get_contents",
+      "fopen",
+      "fsockopen",
+      "URL.openStream",
+      "HttpURLConnection",
+      "HttpClient"
+    ]
+  },
+  "Description": "Auto-converted rule for SSRF",
+  "Content": "# auto-filled empty content for Detect SSRF\n",
+  "_web_lang_hint": false
+}

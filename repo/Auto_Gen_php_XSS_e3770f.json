@@ -1,0 +1,20 @@
+[
+  {
+    "name": "php_XSS",
+    "Severity": "CRITICAL",
+    "Description": "Detects Cross-Site Scripting (XSS) vulnerabilities where user input from sources like $_GET is directly outputted using echo or similar functions without proper escaping.",
+    "sources": [
+      "$_GET",
+      "$_POST",
+      "$_REQUEST",
+      "$_COOKIE",
+      "$_SERVER"
+    ],
+    "sinks": [
+      "echo",
+      "print",
+      "printf"
+    ],
+    "patterns": []
+  }
+]

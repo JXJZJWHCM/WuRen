@@ -1,0 +1,2432 @@
+{
+  "count": 302,
+  "relationship": [
+    {
+      "group_names": [
+        "c",
+        "high",
+        "audit"
+      ],
+      "rule_id": "f8b2d4c9-1e5a-4f7b-8c3d-9a6e2b4f8d1c"
+    },
+    {
+      "group_names": [
+        "c",
+        "high",
+        "audit"
+      ],
+      "rule_id": "e02361da-8cd0-4c3d-bcce-db14caabe70e"
+    },
+    {
+      "group_names": [
+        "c",
+        "audit",
+        "middle"
+      ],
+      "rule_id": "a7f9c2e1-3b8d-4f6e-9c2a-1e5f8d3b7c9a"
+    },
+    {
+      "group_names": [
+        "c",
+        "audit",
+        "low"
+      ],
+      "rule_id": "bcac7b40-eb5e-4cab-ae45-96a3e38c0ce4"
+    },
+    {
+      "group_names": [
+        "c",
+        "audit",
+        "low"
+      ],
+      "rule_id": "f3464649-d789-464e-8394-82135485717e"
+    },
+    {
+      "group_names": [
+        "c",
+        "high",
+        "audit"
+      ],
+      "rule_id": "c8e1f4b2-9d3a-4c7e-8f2b-1a6d9e4c7b8f"
+    },
+    {
+      "group_names": [
+        "c",
+        "high",
+        "audit"
+      ],
+      "rule_id": "b9f7e3a1-2c8d-4e6f-9b1a-7d5c8e2f4a9b"
+    },
+    {
+      "group_names": [
+        "c",
+        "high",
+        "audit"
+      ],
+      "rule_id": "364b224d-5ed5-4fe8-8edc-43f318dd7d9d"
+    },
+    {
+      "group_names": [
+        "c",
+        "high",
+        "audit"
+      ],
+      "rule_id": "0cd61cd7-0085-4152-80e9-9d934386e27c"
+    },
+    {
+      "group_names": [
+        "c",
+        "high",
+        "audit"
+      ],
+      "rule_id": "254bbfe6-c356-421e-a3e1-a6662e0abb7e"
+    },
+    {
+      "group_names": [
+        "c",
+        "high",
+        "audit"
+      ],
+      "rule_id": "a83edb46-428e-481d-af2b-e5ac45db032e"
+    },
+    {
+      "group_names": [
+        "c",
+        "audit",
+        "info"
+      ],
+      "rule_id": "a9784e29-29cd-44eb-992b-fe914e58476e"
+    },
+    {
+      "group_names": [
+        "c",
+        "audit",
+        "info"
+      ],
+      "rule_id": "5b44af50-f3c8-4a40-b411-86cf65ee656b"
+    },
+    {
+      "group_names": [
+        "c",
+        "high",
+        "audit"
+      ],
+      "rule_id": "49b36a64-d6d1-4a78-a5a7-c97fbb9c8bfa"
+    },
+    {
+      "group_names": [
+        "c",
+        "audit",
+        "low"
+      ],
+      "rule_id": "e9c7f2a4-1d8b-4e3f-9a6c-2b5e8d1f4a7c"
+    },
+    {
+      "group_names": [
+        "c",
+        "audit",
+        "middle"
+      ],
+      "rule_id": "d3f8c1e7-4b9a-4d2e-8f1c-6a7b5e9d2c4f"
+    },
+    {
+      "group_names": [
+        "c",
+        "audit",
+        "middle"
+      ],
+      "rule_id": "f1e8d3b7-4c9a-4f2e-8b1d-6a5c9e2f7b4d"
+    },
+    {
+      "group_names": [
+        "critical",
+        "vuln",
+        "general"
+      ],
+      "rule_id": "48c2c107-024f-4abc-a940-ed637847f22c"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "5b485362-1df1-40df-afc4-a3252bee0150"
+    },
+    {
+      "group_names": [
+        "high",
+        "vuln",
+        "golang"
+      ],
+      "rule_id": "085048db-7a44-4478-a3e7-64872486f239"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "golang"
+      ],
+      "rule_id": "b3a1227f-5d9b-4840-91c4-43a0eef85c32"
+    },
+    {
+      "group_names": [
+        "high",
+        "vuln",
+        "golang"
+      ],
+      "rule_id": "f8e9a1b2-c3d4-5e6f-a7b8-c9d0e1f2a3b4"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "1bec797b-053e-4774-a36e-b4241402895e"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "c12cbcab-12de-4e6a-8715-4143224a36ed"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "25ad0819-cae4-408f-ab71-3174d8f1679c"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "d47f5ca9-7bab-441d-bc3b-8c642bac9e97"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "a284316a-5ca8-4f87-a325-fbf8e487d27e"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "c56c4a74-1d8a-4f91-a10f-11394b58506a"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "4ba61a38-efec-4cf2-9d38-f77352e05185"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "cc977fdf-90b8-44e5-a80d-468e05c15276"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "e5a96a40-e3fb-4903-8d27-281d77a5b753"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "0f451c28-265e-4e72-af5b-c50c7006848f"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "5b66527b-f4e9-4784-ae3b-167983d77675"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "8031a101-c500-4444-ac4d-193be6ed6e0f"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "f52f9e0f-536d-42e1-ba70-93c89149b97b"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "9e76eebf-5e33-4b13-811d-613a9846fa6d"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "72e2d1ff-51a4-4033-817a-435108c306ca"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "f163be89-aa0c-4f6c-a045-8ea9c8b93a0a"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "785265e2-bc75-48f6-9e9b-1d329dc75f87"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "58ce930c-65fc-4045-b511-904bcddeb4ed"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "e329969f-7a20-489b-ba66-7033bb57d446"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "8fa1347d-c895-4652-8fc7-08b5f022eab2"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "f2b7e07c-b395-4638-97d2-5010fe410ae3"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "b96da337-9ec5-41a9-9c43-fcc6a7043c45"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "7c85dcea-a0f0-e8bb-3a35-1a059ed05d04"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "79d5f8c5-1c60-445f-bd25-08de89391e6e"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "ed507ba1-538b-7c40-98b3-f82e7ba8af9c"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "1103769b-8b69-48f5-a8a3-64b109940f1a"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "46cba5f6-bb9e-492e-9842-980cc8514dbd"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "a41bacfd-ec4d-4cbc-94cc-f189e2630d06"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "d2580919-8b45-444e-9f93-55633c0311e4"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "96d04555-9e4b-4e41-882a-82ec887c0a4c"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "356ed721-2c96-4bfb-a8e2-6709292ae036"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "21f220e7-4e85-4113-ada9-a3c1cffae028"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "130d8178-f5c8-49ad-a7a3-ba47da0e50f9"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "b7b4503b-03ff-4c54-a942-155d18621e75"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "5a878cb7-49c0-45e7-9689-ed17055f8544"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "98e2fca4-960c-4e90-8f1a-00098a97c2c8"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "ff1e08f0-1c18-43bb-920b-436a6bfa8dcd"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "0243f5ea-a5c8-4e03-a06d-78a2c9c8ff82"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "golang"
+      ],
+      "rule_id": "db7e72fa-79c2-42a8-bcd3-8418ad3136af"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "golang"
+      ],
+      "rule_id": "dfb88d4d-1459-4045-a0f3-5a98083fee81"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "938d8c18-e87e-4ff2-85a4-5e2370a88feb"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "7b106696-307d-42f3-a41d-3aae2e4233dd"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "e33342d8-541e-4aa6-b638-f2d0748913f2"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "301bcf22-2cbe-484d-a328-2b232146e1da"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "c13ec0d1-e9bd-447b-9307-daf87528bd3e"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "golang"
+      ],
+      "rule_id": "97bfc6e2-1e57-4329-87f7-5d61ca92b26b"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "golang"
+      ],
+      "rule_id": "e4420d8f-b1f9-4c46-8de7-f4998091d973"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "golang"
+      ],
+      "rule_id": "b46ed5a9-041f-470a-8823-980191db0a2f"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "golang"
+      ],
+      "rule_id": "74414f8f-e984-483c-bfb5-d8bea158ff3a"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "golang"
+      ],
+      "rule_id": "594bc621-80a3-4f25-81f9-9b7840bdf4f9"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "155bfb0e-379f-485a-a10c-cfec1109de1e"
+    },
+    {
+      "group_names": [
+        "middle",
+        "vuln",
+        "golang"
+      ],
+      "rule_id": "c7872ddf-bab4-4cd5-8e12-d470a889dbd1"
+    },
+    {
+      "group_names": [
+        "middle",
+        "vuln",
+        "golang"
+      ],
+      "rule_id": "023f453d-7d0c-4ef8-a105-a53188c9a31e"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "f8fd1761-df87-496b-9aef-9a78b1566642"
+    },
+    {
+      "group_names": [
+        "middle",
+        "vuln",
+        "golang"
+      ],
+      "rule_id": "bfb17df9-f448-49b8-9201-fe85843a86d8"
+    },
+    {
+      "group_names": [
+        "audit",
+        "middle",
+        "golang"
+      ],
+      "rule_id": "d151f41e-648c-45dd-b5e7-eebe64f59225"
+    },
+    {
+      "group_names": [
+        "middle",
+        "vuln",
+        "golang"
+      ],
+      "rule_id": "c0a39d53-a8ab-4c1f-be60-ab20e0f19f34"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "ca510247-27ae-4a3b-8048-9d6433b26653"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "56ab7848-f020-4e02-baba-9b2d92a2be78"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "2b4b5d82-965c-4e2c-ac36-72d950f9143e"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "golang"
+      ],
+      "rule_id": "4c742090-cd2c-456b-b8e5-4cb2740abbbd"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "golang"
+      ],
+      "rule_id": "80849d1b-19fd-44ca-91be-9fdbd4af1fe3"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "golang"
+      ],
+      "rule_id": "a549400b-af87-4955-b792-5dbb1fcce409"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "golang"
+      ],
+      "rule_id": "838bdd38-5913-46ed-88f7-8eced02db2bd"
+    },
+    {
+      "group_names": [
+        "high",
+        "vuln",
+        "golang"
+      ],
+      "rule_id": "dc8b9d04-3d71-4ca3-9820-95d21c57b945"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "34545e88-e64d-4534-9e96-261ff984b6ba"
+    },
+    {
+      "group_names": [
+        "high",
+        "vuln",
+        "golang"
+      ],
+      "rule_id": "0bf612c9-cfcc-4f26-b41d-6d0dffb525e8"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "4a6e5ac2-d5d8-4f27-9844-35b5153f5944"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "2a752b37-c0ec-4098-813d-c0a685e36541"
+    },
+    {
+      "group_names": [
+        "high",
+        "vuln",
+        "golang"
+      ],
+      "rule_id": "a9f2254c-7a3d-4ea9-9830-6ca98bde8cd8"
+    },
+    {
+      "group_names": [
+        "high",
+        "vuln",
+        "golang"
+      ],
+      "rule_id": "462d438a-5955-47c7-a0f9-1940a7f387c3"
+    },
+    {
+      "group_names": [
+        "low",
+        "vuln",
+        "golang"
+      ],
+      "rule_id": "017cae33-9b73-4470-9e98-adbdd10dbc3a"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "215e8ad8-2977-4cd4-9446-d0040ffec286"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "golang"
+      ],
+      "rule_id": "e1587647-f746-41ea-8a3d-4d760e1413f8"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "137a07c6-00e9-443a-9c2c-f892782d5176"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "1c99dff2-ccc4-452a-8a95-2594dd2340d8"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "56f41530-4175-41ec-96ac-198315171c10"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "b06e92a2-0ff3-40a0-966e-7f0e4fe05480"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "cdc66b17-36b4-4436-813e-9d121964224b"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "2edbaa7b-0cfb-4d71-9e9e-0e8771ba70cb"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "cc9054ac-2c71-4641-84dd-ba12578093b0"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "b89f27b3-35ee-48ae-ba75-415da669f60d"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "golang"
+      ],
+      "rule_id": "278c2a17-1b81-49d1-a4a9-d881fba1a0e9"
+    },
+    {
+      "group_names": [
+        "audit",
+        "middle",
+        "golang"
+      ],
+      "rule_id": "f1f1a062-fcba-4e12-bf59-64a3bf38269d"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "java"
+      ],
+      "rule_id": "761c9e67-552c-44bf-a241-e90829057c88"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "5a5c7d06-ece9-4a26-879c-e6e91d73b01e"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "2e6a2485-77c7-4b0e-a421-476b5804a941"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "56a91b23-787c-4c35-a4b9-dcf51521c20f"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "java"
+      ],
+      "rule_id": "44c752d4-9249-49af-8d0a-e6ad3d767e07"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "31093d24-ee2b-448b-ba5a-111d99bbf77c"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "java"
+      ],
+      "rule_id": "afdd05fc-a8f6-4e5c-9b72-d32c47ba0a7a"
+    },
+    {
+      "group_names": [
+        "low",
+        "java",
+        "config"
+      ],
+      "rule_id": "438dca31-c7d9-46d7-b194-ddff932ad209"
+    },
+    {
+      "group_names": [
+        "low",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "08636dc3-aa6e-473f-ad31-3fac651af77d"
+    },
+    {
+      "group_names": [
+        "low",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "e334c491-5e84-4f45-b13a-7b16e6d26e35"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "6bb49996-bb3b-4bd5-bb33-8c9ca0e912ce"
+    },
+    {
+      "group_names": [
+        "middle",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "eece5652-e36e-413a-a657-abdd4ae55bbd"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "cbf59495-e46c-45aa-9a10-e7c90559a17c"
+    },
+    {
+      "group_names": [
+        "middle",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "44cc5217-5e06-4b5a-b726-d41bc725e934"
+    },
+    {
+      "group_names": [
+        "info",
+        "java",
+        "config"
+      ],
+      "rule_id": "bc50fb1a-9e00-46f8-985e-39f3a01a5853"
+    },
+    {
+      "group_names": [
+        "info",
+        "java",
+        "config"
+      ],
+      "rule_id": "084c0adc-69ef-42ed-aeb4-5c24603634af"
+    },
+    {
+      "group_names": [
+        "high",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "a4abf901-de0e-4959-a310-5b0adbef046b"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "98a8cf55-3355-463f-ad5d-9bbe8349e6c6"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "815144fa-b327-4842-b75d-a7bcc9e6ea6a"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "java"
+      ],
+      "rule_id": "70226437-3bb9-4902-b30a-da4e2820bd63"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "java"
+      ],
+      "rule_id": "d2434f8f-e41c-447d-a900-3823e56248c8"
+    },
+    {
+      "group_names": [
+        "audit",
+        "middle",
+        "java"
+      ],
+      "rule_id": "dc04c45c-e7e3-484e-8683-2682f0ece312"
+    },
+    {
+      "group_names": [
+        "audit",
+        "middle",
+        "java"
+      ],
+      "rule_id": "e93cec31-3449-4339-9cd2-b09745affe96"
+    },
+    {
+      "group_names": [
+        "high",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "cd3632dd-a25c-49c4-bf53-7f53fc7610ae"
+    },
+    {
+      "group_names": [
+        "info",
+        "java",
+        "security"
+      ],
+      "rule_id": "833b8047-ac75-4834-adc9-d36a2216357f"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "7501f545-a313-4bb7-b6bb-48aab80cb284"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "5a737536-4f00-45e7-aa92-75ab7f4bd971"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "be6b4a42-40ed-42c9-9f8e-9ad6e41820d3"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "76220d53-28f1-45e2-bc45-b059e76739dd"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "1b231ae8-df9a-4430-89e4-534620e984bf"
+    },
+    {
+      "group_names": [
+        "audit",
+        "middle",
+        "java"
+      ],
+      "rule_id": "2672e2d2-77c4-44a4-8685-816fdf55f72d"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "java"
+      ],
+      "rule_id": "ed4ad93d-071c-467f-b688-259938c261d9"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "e39dd33c-1224-4b9c-b8c9-06c5a3fa6251"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "90d07a66-fa5c-43f0-a203-1b4c9dcf5c70"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "13ffa65e-263b-44d1-842c-52419fbea084"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "5472c76a-afe4-4abf-b19d-dce382ff1b4a"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "22d585c5-0182-4b2e-b137-05e30b26f2b0"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "2e9c5be0-2c5b-44fc-8928-e16d740bb0bf"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "0786672a-de59-4a19-8896-206bbded3cf0"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "1da9ad25-714b-440a-8187-76b85d8c6341"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "fa7f6bb4-ca33-4080-af72-5a9e56eb0993"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "f271da26-f78a-4a0d-84f0-0dc539a5f5ca"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "2e7fd1d6-962f-48ac-a8dd-369272833d06"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "3ffebcee-b93d-4a61-a78b-42ab110c0639"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "6d175fef-cc6a-49a2-8ab1-4c0e20a94230"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "b1dde704-ebb1-4f6e-b95c-b50670da230f"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "392903f4-bed5-47fc-b913-03821fb22093"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "ed3c8646-d1f0-43ca-9288-6ac03751dcfd"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "219b8265-213b-474f-8a71-a86bfb3d3929"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "a6d1d49b-6bd2-4097-a3c9-dfaabe042d54"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "8e009f30-c716-4c22-b4c4-9d394e88c824"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "e1315696-3f1e-404c-9906-06c1db41a6b0"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "4ada07d0-74e5-4d76-9d7d-4576610ee88e"
+    },
+    {
+      "group_names": [
+        "high",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "0d552b29-dc8b-4f92-86f9-22badc7b5a87"
+    },
+    {
+      "group_names": [
+        "audit",
+        "middle",
+        "java"
+      ],
+      "rule_id": "0257563a-689d-4f55-9aa7-6ffcbb4df95f"
+    },
+    {
+      "group_names": [
+        "high",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "09226a17-d449-4965-98c6-0ff02d802605"
+    },
+    {
+      "group_names": [
+        "audit",
+        "middle",
+        "java"
+      ],
+      "rule_id": "79bb6b64-7a3f-4bdc-9af9-9f68341d16cd"
+    },
+    {
+      "group_names": [
+        "high",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "718cb86d-8629-4382-be43-03ce36c07a3b"
+    },
+    {
+      "group_names": [
+        "low",
+        "java",
+        "security"
+      ],
+      "rule_id": "6f1eb106-9ac3-440f-817d-3701282b74f7"
+    },
+    {
+      "group_names": [
+        "low",
+        "java",
+        "security"
+      ],
+      "rule_id": "5cecf8dd-4ba1-4de2-9b7c-2cb55bc7b0cd"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "fa6435fb-0def-4db7-9201-6223941859d4"
+    },
+    {
+      "group_names": [
+        "low",
+        "java",
+        "security"
+      ],
+      "rule_id": "225be977-0ab7-4f04-af7f-b8ba50fb529f"
+    },
+    {
+      "group_names": [
+        "low",
+        "java",
+        "security"
+      ],
+      "rule_id": "f6e60690-fd58-4130-bef5-ff86b1fd3ec4"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "99bd33d2-7b63-4980-b70f-33ea3b69f553"
+    },
+    {
+      "group_names": [
+        "low",
+        "java",
+        "security"
+      ],
+      "rule_id": "195c4be8-ab65-4755-9369-67df5911d6b3"
+    },
+    {
+      "group_names": [
+        "info",
+        "java",
+        "config"
+      ],
+      "rule_id": "50d74e0f-2353-4367-a53c-18e8d48d22e1"
+    },
+    {
+      "group_names": [
+        "info",
+        "java",
+        "security"
+      ],
+      "rule_id": "b717bf17-1dee-4b38-b048-61aaaf1957a1"
+    },
+    {
+      "group_names": [
+        "info",
+        "java",
+        "config"
+      ],
+      "rule_id": "1220e13b-8030-4ee5-8886-32ecbff51dbc"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "java"
+      ],
+      "rule_id": "8b5be577-f8ad-45a4-ab1f-5f50188fa33b"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "8577b8ff-aeab-4830-a21c-b5a342f0cbe3"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "a8705f0b-2e87-4a81-99da-2f2d0c7c25ea"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "8d3da580-d25b-48d7-9e50-1087ea447522"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "0a74334a-844f-46ea-88a5-b1091d02ee89"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "63713c0b-d9c9-4720-a270-e4832cfd8dc5"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "b6bad1ee-f94a-4a92-a060-90c10b5de529"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "6e39de24-d79a-4475-98b8-f1842417bca1"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "4db64163-7c7a-4bc3-a627-c63dd1e8abde"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "ec23bb9d-7756-4c8a-86ff-ce140f205209"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "105b3dd0-6ac1-4e00-a38d-464e17e3e7fc"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "43b46725-0b30-4e2f-9559-0d7a30e6b668"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "a1303bce-27c7-490b-a7c6-23a53f367f15"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "586fced3-7b78-42b4-a5e2-4b79298b7875"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "9323ce34-f898-40ca-b03d-4e4ffcc16dc8"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "d6dc4b9c-84a7-4cce-9e8e-b423a92d5a3c"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "ce4c5050-30c9-472b-b42e-96794478d3df"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "ac4cd901-cba2-4e21-86fa-7eb6d68c834c"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "d884f15e-5dc5-4fe2-8d62-49e0b7874a13"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "169acfeb-d24a-4f93-ab9e-9c0f38ce77e4"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "d7419d7a-debf-403d-b581-7cd5f997590b"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "78903daf-72e2-454b-8275-91771836659b"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "a258e671-339e-4d8f-af91-e2493a4e91dd"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "1314089e-e030-4436-89d2-2aabe2758683"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "0018c56b-b5f7-49fc-80f4-d1b9a5f718e5"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "f72c0172-5edc-4436-901f-c33606c18899"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "fd447447-8e65-4813-bc14-4da80c21f0f2"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "737c2b12-e8ac-4c72-a4e6-44196847059d"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "c34fd04b-1d76-4756-91c3-45c63ff1c054"
+    },
+    {
+      "group_names": [
+        "low",
+        "java",
+        "security"
+      ],
+      "rule_id": "235e953b-955c-43bc-9ef8-0e87715330a3"
+    },
+    {
+      "group_names": [
+        "info",
+        "java",
+        "security"
+      ],
+      "rule_id": "93b522c2-9ead-4ad8-b81c-bf5219793594"
+    },
+    {
+      "group_names": [
+        "info",
+        "java",
+        "security"
+      ],
+      "rule_id": "11d8d5f5-900b-4d88-82f7-88f8b3c67fcd"
+    },
+    {
+      "group_names": [
+        "info",
+        "java",
+        "security"
+      ],
+      "rule_id": "a3cccdec-1f7c-4392-81fc-a28ad6cfccd2"
+    },
+    {
+      "group_names": [
+        "info",
+        "java",
+        "security"
+      ],
+      "rule_id": "7c76f377-c1b8-4ee7-96fd-895515d4302c"
+    },
+    {
+      "group_names": [
+        "info",
+        "java",
+        "security"
+      ],
+      "rule_id": "dc9276ba-671d-4160-9544-51849fc6b72d"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "d45a6fba-7221-4750-8ad5-4566be060827"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "java"
+      ],
+      "rule_id": "0ec1f11c-7559-4d8f-b711-40e9e7b4338a"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "2446f3b6-3db3-4414-b593-4219073220c4"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "44a473d8-3763-44c3-9819-17100cf17ad6"
+    },
+    {
+      "group_names": [
+        "audit",
+        "middle",
+        "java"
+      ],
+      "rule_id": "74115441-8b30-4f9c-98d5-491b13b80713"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "92f18dd1-d726-4c0a-abbc-fb36ede1db4d"
+    },
+    {
+      "group_names": [
+        "middle",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "d8a2e488-f0d9-4e74-b2fb-3d9e41c198d5"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "b139c1f5-00ba-415d-ad4f-0f6c4df9b344"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "4b416d51-56a5-4424-a7e3-79514d453483"
+    },
+    {
+      "group_names": [
+        "info",
+        "java",
+        "security"
+      ],
+      "rule_id": "310b2358-73f4-4be5-863c-0acbcf06c66b"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "c4ad6405-a9bc-468a-87be-06742472b623"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "e6095554-52ef-4935-abc4-f9b9774d0671"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "b97c29a5-9d04-4234-8cec-f58115c2b44b"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "91546005-80bf-4320-9273-1df7155f61a7"
+    },
+    {
+      "group_names": [
+        "middle",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "bac3b5b7-9ff9-4534-ae1d-4ff2128c6e57"
+    },
+    {
+      "group_names": [
+        "high",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "00b097ac-f408-4a9b-b2e3-88b5c2a0fe3e"
+    },
+    {
+      "group_names": [
+        "middle",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "91441632-5409-4bfe-8c54-cb49e21c870d"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "0a730078-cd82-4dc4-8bc9-b19b8a10fee9"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "cad09b46-5b0f-4c43-9b43-2b786b9c625f"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "java"
+      ],
+      "rule_id": "c44e3929-2379-46d2-ad00-b30fece5e2e1"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "200aa9fd-172e-4099-9016-a4a88ef7bdb9"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "faa71bd7-8156-4997-b0c3-aa53f6b71d5a"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "1a99e8b1-3911-447c-8f92-d13eee1afa70"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "java"
+      ],
+      "rule_id": "0f9bad23-cac6-4ec9-8509-5c96c2b72175"
+    },
+    {
+      "group_names": [
+        "audit",
+        "middle",
+        "java"
+      ],
+      "rule_id": "99ae5b5c-905a-412c-bbbf-a14bfd488563"
+    },
+    {
+      "group_names": [
+        "audit",
+        "middle",
+        "java"
+      ],
+      "rule_id": "eb8a8bf3-96d4-4d35-b953-3efa848c4aaa"
+    },
+    {
+      "group_names": [
+        "high",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "cf5bbdfd-fd95-4e50-8adc-119e7629fd38"
+    },
+    {
+      "group_names": [
+        "low",
+        "java",
+        "security"
+      ],
+      "rule_id": "238e7158-0746-4178-9d00-36ff473eeafd"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "9f04beb1-fc2d-40b3-b75f-9ea63e9a4338"
+    },
+    {
+      "group_names": [
+        "low",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "b381b01b-98e3-44f4-b046-7712dcacbe72"
+    },
+    {
+      "group_names": [
+        "low",
+        "java",
+        "config"
+      ],
+      "rule_id": "df1af403-0bc8-4d7e-bcd6-6bb863559f02"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "52765bd8-011f-49f1-a492-c8f172b3acdc"
+    },
+    {
+      "group_names": [
+        "middle",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "41bfcaa6-f47e-4843-8bf0-9575eea4ee7a"
+    },
+    {
+      "group_names": [
+        "audit",
+        "middle",
+        "java"
+      ],
+      "rule_id": "15815212-0f58-413f-ad8e-a514778eea85"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "4dd5053f-36a9-4f35-83a9-aeb40fc43094"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "java"
+      ],
+      "rule_id": "7691bedd-84dd-44bd-a403-d8c72e9d5378"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "java"
+      ],
+      "rule_id": "4dc8d2a1-6cca-4025-a219-7c52ac3a5fd7"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "java"
+      ],
+      "rule_id": "195768f2-de1d-4e9f-9a72-7244efbc0abf"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "java"
+      ],
+      "rule_id": "8a2c763a-d909-4dd4-a44c-cad0f46b7041"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "40fc9df0-6e95-4b7a-b9f6-202b0356fef4"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "java"
+      ],
+      "rule_id": "b70c9711-31ed-4147-a982-35a6b5605078"
+    },
+    {
+      "group_names": [
+        "audit",
+        "middle",
+        "java"
+      ],
+      "rule_id": "1c9a0032-1723-49f1-a0c2-047069ec7a21"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "java"
+      ],
+      "rule_id": "21d79f98-a435-4c84-81be-055ac21b94ef"
+    },
+    {
+      "group_names": [
+        "audit",
+        "middle",
+        "java"
+      ],
+      "rule_id": "b8ede24d-8ff0-4d81-ab97-903495a6cb61"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "java"
+      ],
+      "rule_id": "e53aa369-2d16-445a-a9e9-fb2155791246"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "java"
+      ],
+      "rule_id": "3c87f027-8ccb-487d-8183-b2773ceba895"
+    },
+    {
+      "group_names": [
+        "middle",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "5323c275-713f-4b22-a1cc-d22db1655fb2"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "java"
+      ],
+      "rule_id": "b86d3bfb-98d4-437d-bf7b-d5c43e012425"
+    },
+    {
+      "group_names": [
+        "low",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "e0e6ed1e-aa60-4522-a5c0-ae8f0b121b7e"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "7b798768-13e1-4dcd-8ab5-99a6f9635605"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "java"
+      ],
+      "rule_id": "0539f4d4-14b9-4b9d-8a7b-8c72decdf400"
+    },
+    {
+      "group_names": [
+        "high",
+        "vuln",
+        "php"
+      ],
+      "rule_id": "20b78d2c-a8a9-47d0-b932-610c8f67cb97"
+    },
+    {
+      "group_names": [
+        "high",
+        "audit",
+        "php"
+      ],
+      "rule_id": "bf975bf6-f601-4eb3-9961-7b2ff7b6bacd"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "php"
+      ],
+      "rule_id": "6b1ca25b-cf9a-456f-b0aa-77b9cfec1b58"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "php"
+      ],
+      "rule_id": "d54faf3f-f4a3-4d19-a882-c29abf9b7901"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "php"
+      ],
+      "rule_id": "43175d39-14f0-42bc-a054-3e29998a802a"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "php"
+      ],
+      "rule_id": "30e74fdd-c346-4db2-a124-f0b04dfd55e1"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "php"
+      ],
+      "rule_id": "62323f1d-76c2-40da-9058-f497ae7cfc60"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "php"
+      ],
+      "rule_id": "df78b6fe-a4ca-4ef0-91ee-d9f23b651e3f"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "php"
+      ],
+      "rule_id": "746fdb55-f824-4633-a6f4-4d71fb471ea3"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "php"
+      ],
+      "rule_id": "61cd3ee5-20d0-4457-8e5f-f442e36296f6"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "php"
+      ],
+      "rule_id": "f0c086d0-c004-4367-abd7-d16ca50de3d9"
+    },
+    {
+      "group_names": [
+        "low",
+        "vuln",
+        "php"
+      ],
+      "rule_id": "4e4aa781-f02e-48f2-9d71-2e17b89b218c"
+    },
+    {
+      "group_names": [
+        "low",
+        "vuln",
+        "php"
+      ],
+      "rule_id": "205248b2-d141-4e53-882b-ca29d2a49653"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "php"
+      ],
+      "rule_id": "bf141248-59ef-4fb0-b521-ff7c8339d44d"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "php"
+      ],
+      "rule_id": "7e2c4412-9a6f-4095-a84f-beb680e56fbf"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "php"
+      ],
+      "rule_id": "7962164f-28ca-4570-9660-07a2a274a0c7"
+    },
+    {
+      "group_names": [
+        "low",
+        "vuln",
+        "php"
+      ],
+      "rule_id": "b9d4a55d-8805-4955-a4d2-d58439fc6ead"
+    },
+    {
+      "group_names": [
+        "low",
+        "vuln",
+        "php"
+      ],
+      "rule_id": "43694a01-6ffc-4839-bd32-69d612484ddc"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "php"
+      ],
+      "rule_id": "a6f3be4b-5f16-46d8-8e0b-9182e5078345"
+    },
+    {
+      "group_names": [
+        "audit",
+        "middle",
+        "php"
+      ],
+      "rule_id": "0528aab2-8f17-40d9-a58a-fb83a632d377"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "php"
+      ],
+      "rule_id": "43d98bb1-1f90-4582-9a43-8570852c2d5b"
+    },
+    {
+      "group_names": [
+        "middle",
+        "vuln",
+        "php"
+      ],
+      "rule_id": "c773c9e1-71f1-4aed-b71f-68b8e468786f"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "php"
+      ],
+      "rule_id": "83318452-912f-4761-9874-e3a10c4e8716"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "php"
+      ],
+      "rule_id": "83111614-77e4-4376-996f-734c017a6e0a"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "php"
+      ],
+      "rule_id": "4d56af61-28a4-48fd-812c-d28171f4ada7"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "php"
+      ],
+      "rule_id": "7d0ddbae-c283-456e-94d3-2ede4b4865ac"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "php"
+      ],
+      "rule_id": "cdc4481e-2a74-4711-9eb6-cf4d2d1898c0"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "php"
+      ],
+      "rule_id": "7fd490e1-ce5a-42f0-8bf6-cb7c2f2cddce"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "php"
+      ],
+      "rule_id": "ce83fe54-a8de-4794-abf7-f3476892bdec"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "php"
+      ],
+      "rule_id": "e34d9140-393e-4774-9793-118ea6cc54aa"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "php"
+      ],
+      "rule_id": "2161eeef-aab5-486a-a94e-e8750d37f332"
+    },
+    {
+      "group_names": [
+        "low",
+        "vuln",
+        "php"
+      ],
+      "rule_id": "dbe0c15c-9321-4281-b9a1-937077a41efa"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "php"
+      ],
+      "rule_id": "fa195860-525b-4e35-b2a1-358f76db51ad"
+    },
+    {
+      "group_names": [
+        "low",
+        "vuln",
+        "php"
+      ],
+      "rule_id": "87df2d7a-5473-4438-aa85-706657accf5f"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "php"
+      ],
+      "rule_id": "8bf5c4b5-51c2-49b5-b30c-c7552a7be29b"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "php"
+      ],
+      "rule_id": "082ac5f8-c196-4312-8c0f-0244f7ffa8d1"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "php"
+      ],
+      "rule_id": "7138efeb-bd0b-4dd1-a728-a5d84c3bfa61"
+    },
+    {
+      "group_names": [
+        "info",
+        "vuln",
+        "php"
+      ],
+      "rule_id": "1265a300-b3a3-4f8f-acac-731ec80c5906"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "php"
+      ],
+      "rule_id": "65934f87-f276-44cc-826a-3480b5a57ff5"
+    },
+    {
+      "group_names": [
+        "audit",
+        "low",
+        "php"
+      ],
+      "rule_id": "c290ad96-9b08-4adf-811e-74f059d2c75e"
+    },
+    {
+      "group_names": [
+        "low",
+        "vuln",
+        "php"
+      ],
+      "rule_id": "51cb7fc1-9432-40d3-86ec-cb4c14cd52fc"
+    },
+    {
+      "group_names": [
+        "audit",
+        "info",
+        "php"
+      ],
+      "rule_id": "b072f796-18df-495b-b705-68be589a0e2c"
+    }
+  ],
+  "Title": "meta",
+  "RuleName": "meta",
+  "Severity": "INFO",
+  "Content": "# auto-filled empty content for meta\n",
+  "Type": "sf",
+  "StaticConfig": {
+    "patterns": [],
+    "sources": [],
+    "sinks": []
+  },
+  "Description": "Auto-fixed rule description for meta"
+}

@@ -1,0 +1,1 @@
+{"ID":0,"DeletedAt":null,"part":"","vendor":"","product":"","version":"","update":"","edition":"","language":"","指纹名称":"sangfor-sip","web路径":"","ExtInfo":"","指纹规则":"body=\"window.sessionstorage.removeitem('serialcheckobj')\" \u0026\u0026 body=\"src=\\\"/apps/secvisual/static/js/runtime.js?\" \u0026\u0026 body=\"url: '../auth_manage/auth_manage/on_login'\"","Groups":null}

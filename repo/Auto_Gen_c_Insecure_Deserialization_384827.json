@@ -1,0 +1,12 @@
+[
+  {
+    "name": "c_Insecure_Deserialization",
+    "Severity": "CRITICAL",
+    "Description": "Detects insecure deserialization patterns where untrusted data is directly copied into memory structures without validation",
+    "patterns": [
+      "memcpy\\([^,]+,[^,]+,\\s*sizeof\\s*\\([^)]+\\)\\)"
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]

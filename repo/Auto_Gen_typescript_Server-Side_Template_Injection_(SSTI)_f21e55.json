@@ -1,0 +1,17 @@
+[
+  {
+    "name": "typescript_Server-Side_Template_Injection_(SSTI)",
+    "Severity": "HIGH",
+    "Description": "Detects Server-Side Template Injection where user input is directly passed to EJS template rendering with unescaped tags (<%-), potentially leading to remote code execution.",
+    "sources": [
+      "req.query",
+      "req.body",
+      "req.params",
+      "req.headers"
+    ],
+    "sinks": [
+      "ejs.render"
+    ],
+    "patterns": []
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "name": "java_XXE",
+    "Severity": "HIGH",
+    "Description": "Detects XML parsing without disabling external entity expansion, which can lead to XXE attacks.",
+    "sources": [
+      "DocumentBuilder.parse",
+      "SAXParser.parse",
+      "XMLReader.parse",
+      "Transformer.transform",
+      "SchemaFactory.newSchema",
+      "Validator.validate",
+      "Unmarshaller.unmarshal",
+      "XPath.evaluate"
+    ],
+    "sinks": [
+      "DocumentBuilderFactory.setFeature",
+      "SAXParserFactory.setFeature",
+      "XMLReader.setFeature",
+      "TransformerFactory.setAttribute",
+      "SchemaFactory.setProperty",
+      "DocumentBuilderFactory.setXIncludeAware",
+      "DocumentBuilderFactory.setExpandEntityReferences"
+    ],
+    "patterns": []
+  }
+]

@@ -1,0 +1,47 @@
+{
+  "RuleId": "60ecf21e-d873-473b-b70a-2ba56bf6aef8",
+  "RuleName": "PathTraversal",
+  "Title": "Detect PathTraversal",
+  "TitleZh": "检测 PathTraversal",
+  "Language": "generic",
+  "Severity": "HIGH",
+  "Type": "static_analysis",
+  "StaticConfig": {
+    "patterns": [],
+    "sources": [
+      "request",
+      "input",
+      "filename",
+      "req",
+      "c.Query",
+      "c.PostForm",
+      "c.Param",
+      "r.URL.Query",
+      "r.FormValue"
+    ],
+    "sinks": [
+      "open",
+      "file_get_contents",
+      "FileReader",
+      "os.open",
+      "fs.readFile",
+      "os.Open",
+      "os.OpenFile",
+      "ioutil.ReadFile",
+      "os.ReadFile",
+      "http.ServeFile",
+      "fopen",
+      "readfile",
+      "include",
+      "require",
+      "FileInputStream",
+      "File",
+      "Path",
+      "Files.readAllBytes",
+      "Files.readAllLines"
+    ]
+  },
+  "Description": "Auto-converted rule for PathTraversal",
+  "Content": "# auto-filled empty content for Detect PathTraversal\n",
+  "_web_lang_hint": false
+}

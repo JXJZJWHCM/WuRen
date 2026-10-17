@@ -1,0 +1,14 @@
+[
+  {
+    "name": "java_CSRF_missing_protection",
+    "Severity": "HIGH",
+    "Description": "Detects Java servlets that handle POST requests without CSRF token validation, making them vulnerable to Cross-Site Request Forgery attacks.",
+    "patterns": [
+      "class\\s+\\w+\\s+extends\\s+HttpServlet",
+      "protected\\s+void\\s+doPost\\s*\\([^)]*\\)\\s*\\{",
+      "request\\.getParameter\\("
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]

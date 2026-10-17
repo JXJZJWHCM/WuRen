@@ -1,0 +1,13 @@
+[
+  {
+    "name": "javascript_Using_Components_with_Known_Vulnerabilities",
+    "Severity": "HIGH",
+    "Description": "Detects usage of known vulnerable versions of lodash (e.g., versions before 4.17.20 with CVE-2020-8203) via require statements and vulnerable function calls like merge.",
+    "patterns": [
+      "require\\(['\"]lodash['\"]\\)",
+      "lodash\\.merge\\("
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]

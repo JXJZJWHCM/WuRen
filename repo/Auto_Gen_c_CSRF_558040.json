@@ -1,0 +1,14 @@
+[
+  {
+    "name": "c_CSRF",
+    "Severity": "HIGH",
+    "Description": "Detects CGI POST handlers without CSRF token validation or Referer checking",
+    "patterns": [
+      "getenv\\(\\s*\"REQUEST_METHOD\"\\s*\\)",
+      "getenv\\(\\s*\"CONTENT_LENGTH\"\\s*\\)",
+      "fread.*stdin"
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]

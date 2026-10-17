@@ -1,0 +1,17 @@
+[
+  {
+    "name": "typescript_Weak_Encryption",
+    "Severity": "HIGH",
+    "Description": "Use of weak encryption algorithms (DES, RC2, RC4) or insecure modes (ECB)",
+    "patterns": [
+      "createCipher.*['\"](des|rc2|rc4)[^'\"]*['\"]",
+      "createDecipher.*['\"](des|rc2|rc4)[^'\"]*['\"]",
+      "algorithm.*=.*['\"](des|rc2|rc4)[^'\"]*['\"]",
+      "['\"](des|rc2|rc4)-(ecb|cbc|cfb|ofb)['\"]",
+      "createCipheriv.*['\"](des|rc2|rc4)[^'\"]*['\"]",
+      "createDecipheriv.*['\"](des|rc2|rc4)[^'\"]*['\"]"
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]

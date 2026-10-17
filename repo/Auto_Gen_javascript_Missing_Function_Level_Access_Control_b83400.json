@@ -1,0 +1,13 @@
+[
+  {
+    "name": "javascript_Missing_Function_Level_Access_Control",
+    "Severity": "HIGH",
+    "Description": "Detects Express.js route handlers that perform authentication (checking user existence) but lack authorization checks (e.g., verifying user roles like 'admin') before performing sensitive operations.",
+    "patterns": [
+      "app\\.(get|post|put|delete|patch)\\s*\\([^)]*?\\s*,\\s*\\([^)]*?\\)\\s*=>\\s*{[^}]*?if\\s*\\([^)]*?!\\s*req\\.user[^)]*?\\)[^}]*?}[^)]*\\)",
+      "app\\.(get|post|put|delete|patch)\\s*\\([^)]*?\\s*,\\s*function\\s*\\([^)]*?\\)\\s*{[^}]*?if\\s*\\([^)]*?!\\s*req\\.user[^)]*?\\)[^}]*?}[^)]*\\)"
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]

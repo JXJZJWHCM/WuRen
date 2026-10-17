@@ -1,0 +1,18 @@
+[
+  {
+    "name": "php_Buffer_Overflow_str_pad",
+    "Severity": "HIGH",
+    "Description": "Buffer overflow vulnerability due to unchecked user input flowing into str_pad function, potentially causing memory exhaustion.",
+    "sources": [
+      "$_GET",
+      "$_POST",
+      "$_REQUEST",
+      "$_COOKIE",
+      "$_SERVER"
+    ],
+    "sinks": [
+      "str_pad"
+    ],
+    "patterns": []
+  }
+]

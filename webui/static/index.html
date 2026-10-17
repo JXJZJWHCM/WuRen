@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雾刃AI自动化渗透测试平台</title>
+    <link rel="icon" type="image/png" href="/assets/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="/styles/tailwind.generated.css">
+    <link rel="stylesheet" href="/styles/app.css">
+</head>
+<body class="bg-bg-canvas text-text-main font-sans antialiased overflow-hidden">
+    <div id="app" class="enterprise-shell" v-cloak>
+        <!-- Mobile Sidebar Backdrop -->
+        <div class="sidebar-backdrop" :class="{ 'is-open': mobileNavOpen }" @click="closeMobileNav"></div>
+
+        <!-- Sidebar -->
+        <aside class="app-sidebar" :class="{ 'is-open': mobileNavOpen }">
+            <div class="sidebar-brand">
+                <img src="/assets/logo.png" alt="雾刃标识">
+                <span class="sidebar-brand-text">雾刃AI自动化渗透平台</span>
+            </div>
+            
+            <div class="px-3 py-4 overflow-y-auto scroll-light flex-1">
+                <div v-for="group in viewGroups" :key="group.id" class="mb-4">
+                    <p class="nav-group-title">{{ group.label }}</p>
+                    <button
+                        v-for="view in group.items"
+                        :key="view.id"
+                        @click="switchView(view.id); closeMobileNav()"
+                        class="nav-item"
+                        :class="{ 'active': activeView === view.id }"
+                    >
+                        {{ view.label }}
+                    </button>
+                </div>
+            </div>
+            
+            <div class="sidebar-footer">
+                <span>当前目标</span>
+                <span class="font-mono font-medium">{{ selectedProjectId ? shortId(selectedProjectId) : '未选择' }}</span>
+            </div>
+        </aside>
+        <button
+            type="button"
+            class="sidebar-backdrop"
+            :class="{ 'is-open': mobileNavOpen }"
+            @click="closeMobileNav"
+            aria-label="关闭导航"
+        ></button>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Header -->
+            <header class="header-bar sticky top-0">
+                <div class="header-title-wrap">
+                    <h1>{{ currentViewLabel }}</h1>
+                </div>
+                <div class="toolbar-shell">
+                    <!-- Server Status Indicator -->
+                    <div class="status-indicator">
+                        <div class="status-dot" 
+                             :class="serverStatus === 'online' ? 'status-dot-glow-success' : (serverStatus === 'offline' ? 'status-dot-glow-danger' : 'status-dot-glow-warning')"></div>
+                        <span :class="serverStatus === 'online' ? 'text-emerald-700' : (serverStatus === 'offline' ? 'text-red-700' : 'text-amber-700')">
+                            {{ serverStatus === 'online' ? '平台在线' : (serverStatus === 'offline' ? '平台离线' : '状态检测中...') }}
+                        </span>
+                    </div>
+                    <select v-model="selectedProjectId" @change="onSelectedProjectChange" class="input-field min-w-[260px]">
+                        <option value="">-- 请选择目标项目 --</option>
+                        <option v-for="p in projects" :key="p.id" :value="p.id">{{ p.target }} (#{{ shortId(p.id) }})</option>
+                    </select>
+                    <button @click="fetchProjects" class="btn btn-secondary">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        <span>刷新</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Notification Toast -->
+            <transition name="toast-pop">
+                <div
+                    v-if="notice.message"
+                    class="notice-toast"
+                    :class="notice.type==='error' ? 'notice-error' : (notice.type==='warning' ? 'notice-warning' : 'notice-success')"
+                >
+                    <svg v-if="notice.type==='success'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <svg v-if="notice.type==='error'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    <svg v-if="notice.type==='warning'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    {{ notice.message }}
+                </div>
+            </transition>
+
+            <!-- Content Area -->
+            <div class="flex-1 overflow-y-auto scroll-light p-5 lg:p-6 content-scroll">
+                <!-- 1. Project Control -->
+                <section v-if="activeView==='project-control'" class="flex flex-col gap-6 h-full">
+                    <div class="panel-card flex-shrink-0">
+                        <h2 class="section-title">初始化目标</h2>
+                        <div class="flex gap-4 flex-wrap items-start">
+                            <div class="flex-1 min-w-[260px]">
+                                <input
+                                    v-model="newProject.target"
+                                    class="input-field w-full"
+                                    :maxlength="PROJECT_TARGET_MAX_LENGTH"
+                                    placeholder="目标域名或 IP（例如：example.com 或 192.168.1.10）"
+                                    :style="projectDraftValidation.target.level === 'error' ? { borderColor: 'var(--danger)', boxShadow: '0 0 0 2px rgba(239, 68, 68, 0.12)' } : null"
+                                    @blur="normalizeProjectField('target')"
+                                    @keydown.enter.prevent="createProject"
+                                >
+                                <p
+                                    class="mt-2 text-xs leading-5"
+                                    :class="projectDraftValidation.target.level === 'error' ? 'text-rose-600' : (projectDraftValidation.target.level === 'success' ? 'text-emerald-700' : 'text-textSub')"
+                                >
+                                    {{ projectDraftValidation.target.message }}
+                                </p>
+                            </div>
+                            <div class="flex-1 min-w-[260px]">
+                                <input
+                                    v-model="newProject.description"
+                                    class="input-field w-full"
+                                    :maxlength="PROJECT_DESCRIPTION_MAX_LENGTH"
+                                    placeholder="目标描述（可选，例如：生产环境只读验证、云上测试节点）"
+                                    :style="projectDraftValidation.description.level === 'error' ? { borderColor: 'var(--danger)', boxShadow: '0 0 0 2px rgba(239, 68, 68, 0.12)' } : null"
+                                    @blur="normalizeProjectField('description')"
+                                    @keydown.enter.prevent="createProject"
+                                >
+                                <div class="mt-2 flex items-center justify-between gap-3 text-xs leading-5">
+                                    <p :class="projectDraftValidation.description.level === 'error' ? 'text-rose-600' : (projectDraftValidation.description.level === 'warning' ? 'text-amber-700' : (projectDraftValidation.description.level === 'success' ? 'text-emerald-700' : 'text-textSub'))">
+                                        {{ projectDraftValidation.description.message }}
+                                    </p>
+                                    <span class="shrink-0 text-textSub">{{ projectDraftValidation.description.length }} / {{ PROJECT_DESCRIPTION_MAX_LENGTH }}</span>
+                                </div>
+                            </div>
+                            <button @click="createProject" :disabled="projectDraftValidation.submitDisabled" class="btn btn-primary whitespace-nowrap px-6 min-w-[120px] self-start">创建项目</button>
+                        </div>
+                    </div>
+
+                    <div class="panel-card flex-shrink-0">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="section-title mb-0">项目实例</h2>
+                            <span class="text-sm text-slate-700 font-medium metric-chip px-3 py-1">共 {{ projects.length }} 个</span>
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
+                            <div v-for="project in projects" :key="'project-card-'+project.id" class="project-card" :class="{ active: selectedProjectId===project.id }">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <p class="font-bold text-slate-800 text-lg truncate max-w-[200px]" :title="project.target">{{ project.target || '-' }}</p>
+                                        <p class="text-[0.75rem] text-brand-600 font-mono mt-1 bg-brand-50 inline-block px-2 py-0.5 rounded">编号：{{ shortId(project.id) }}</p>
+                                    </div>
+                                    <span class="badge" :class="'badge-' + (normalizeProjectStatus(project).includes('run') ? 'running' : normalizeProjectStatus(project).includes('fail') ? 'failed' : normalizeProjectStatus(project).includes('complete') ? 'completed' : normalizeProjectStatus(project).includes('pause') ? 'paused' : 'default')">
+                                        {{ displayProjectStatus(project) }}
+                                    </span>
+                                </div>
+                                <div class="text-[0.85rem] text-textSub mb-5 flex-1 line-clamp-2 leading-relaxed">{{ project.description || '暂无描述。' }}</div>
+                                <div class="flex items-center justify-between text-[0.8rem] text-textSub mb-5 bg-slate-50 p-2 rounded">
+                                    <div class="flex items-center gap-2 font-medium">
+                                        <span class="status-dot" :class="statusDotClass(project)"></span>
+                                        <span>进度：{{ displayProgress(project.progress || project.current_progress || 0) }}</span>
+                                    </div>
+                                    <span class="font-mono text-[0.75rem] text-slate-500 font-semibold">{{ formatInt(projectUsage(project).total_tokens || 0) }} 令牌</span>
+                                </div>
+                                <div class="grid grid-cols-5 gap-2 mt-auto">
+                                    <button @click="selectProject(project.id)" class="btn btn-secondary text-[0.75rem] px-0 font-semibold">选择</button>
+                                    <button @click="runProjectAction(project.id, 'start')" class="btn btn-success text-[0.75rem] px-0">启动</button>
+                                    <button @click="runProjectAction(project.id, 'pause')" class="btn btn-warning text-[0.75rem] px-0">暂停</button>
+                                    <button @click="runProjectAction(project.id, 'stop')" class="btn btn-danger text-[0.75rem] px-0">停止</button>
+                                    <button @click="removeProject(project.id)" class="btn btn-secondary text-[0.75rem] px-0 text-slate-600 hover:text-danger">删除</button>
+                                </div>
+                            </div>
+                            <div v-if="projects.length===0" class="col-span-full py-10 text-center text-sm text-slate-600 border-2 border-dashed border-border rounded-xl bg-slate-50 font-medium">
+                                暂无可用项目，请先初始化目标后开始分析。
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-card flex-[2] min-h-[500px] flex flex-col">
+                        <div class="flex items-center justify-between mb-3 flex-shrink-0">
+                            <h2 class="section-title mb-0">实时遥测</h2>
+                            <div class="flex items-center gap-3">
+                                <span class="text-xs font-mono text-brand-600 bg-brand-50 px-2 py-1 rounded">{{ selectedProjectId ? shortId(selectedProjectId) : '空闲中' }}</span>
+                                <button @click="restoreLiveLogs" class="btn btn-secondary text-xs py-1.5">恢复历史</button>
+                                <button @click="clearLiveLogs" class="btn btn-secondary text-xs py-1.5">清空缓冲</button>
+                            </div>
+                        </div>
+                        <div ref="logStreamRef" class="terminal-box log-stream flex-1 min-h-[300px] min-h-0">
+                            <div v-for="(line, idx) in liveLogs" :key="line.id || ('ll-'+idx)" class="terminal-line">
+                                <div class="terminal-meta">
+                                    <span class="terminal-time">[{{ formatLogTimestamp(line.timestamp) }}]</span>
+                                    <span class="terminal-level" :class="logLevelClass(line.level)">[{{ line.level || 'INFO' }}]</span>
+                                    <span class="terminal-phase">[{{ line.phase || 'runtime' }}]</span>
+                                </div>
+                                <div class="terminal-message">{{ line.message || '-' }}</div>
+                                <div v-if="line.thinking" class="terminal-block terminal-thinking">
+                                    <span class="terminal-label">AI思考（完整）</span>
+                                    <pre>{{ line.thinking }}</pre>
+                                </div>
+                                <div v-if="line.finalAnswer" class="terminal-block terminal-answer">
+                                    <span class="terminal-label">AI最终输出（中文）</span>
+                                    <pre>{{ line.finalAnswer }}</pre>
+                                </div>
+                                <div v-if="line.toolName" class="terminal-block terminal-tool">
+                                    <span class="terminal-label">工具调用</span>
+                                    <div>工具：{{ line.toolName }}</div>
+                                    <div v-if="line.toolArguments">参数：
+                                        <pre>{{ line.toolArguments }}</pre>
+                                    </div>
+                                    <div v-if="line.toolCommand">命令：{{ line.toolCommand }}</div>
+                                </div>
+                                <div v-if="line.toolEcho" class="terminal-block terminal-echo">
+                                    <span class="terminal-label">执行回显（过滤后）</span>
+                                    <pre>{{ line.toolEcho }}</pre>
+                                </div>
+                            </div>
+                            <div v-if="liveLogs.length===0" class="text-textSub italic flex h-full items-center justify-center font-medium">等待遥测数据流...</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. Attack Chain -->
+                <section v-if="activeView==='attack-chain'" class="flex flex-col gap-5 h-full">
+                    <div class="overview-grid">
+                        <article v-for="card in attackChainOverviewCards" :key="card.key" class="overview-card" :class="'tone-' + card.tone">
+                            <span class="overview-label">{{ card.label }}</span>
+                            <strong class="overview-value">{{ card.value }}</strong>
+                            <span class="overview-help">{{ card.help }}</span>
+                        </article>
+                    </div>
+                    <div class="attack-chain-layout">
+                        <div class="panel-card min-w-0 flex flex-col">
+                            <div class="flex items-center justify-between mb-4 gap-4 flex-wrap flex-shrink-0">
+                                <div>
+                                    <h2 class="section-title mb-0">攻击链态势</h2>
+                                    <p class="text-sm text-textSub mt-1">展示阶段推进、证据门禁与当前阻断位置。</p>
+                                </div>
+                                <button @click="loadAttackChain" class="btn btn-secondary">刷新拓扑</button>
+                            </div>
+                            <div class="attack-chain-strip scroll-light">
+                                <div class="attack-chain-row">
+                                    <template v-for="(stage, idx) in attackChainStages" :key="'stage-node-'+idx">
+                                        <button
+                                            type="button"
+                                            class="chain-node text-left"
+                                            :class="[
+                                                'status-' + (String(stage.status||'').toLowerCase()),
+                                                { active: selectedAttackStage && selectedAttackStage.phase === stage.phase }
+                                            ]"
+                                            @click="selectAttackStage(stage.phase)"
+                                        >
+                                            <div class="chain-node-head">
+                                                <div>
+                                                    <p class="chain-node-index">Stage {{ stage.order || (idx + 1) }}</p>
+                                                    <p class="font-bold text-slate-800">{{ stageTitle(stage) }}</p>
+                                                </div>
+                                                <span class="badge" :class="'badge-' + (String(stage.status||'').toLowerCase())">{{ displayStageStatus(stage.status) }}</span>
+                                            </div>
+                                            <p class="chain-node-summary">{{ stage.summary || '暂无摘要。' }}</p>
+                                            <div class="chain-node-progress">
+                                                <span>阶段完成度</span>
+                                                <strong>{{ stage.progress_percent || 0 }}%</strong>
+                                            </div>
+                                            <div class="chain-node-progressbar">
+                                                <span :style="{ width: `${stage.progress_percent || 0}%` }"></span>
+                                            </div>
+                                            <div class="chain-node-meta">
+                                                <span>事件 {{ stage.event_count || 0 }}</span>
+                                                <span>工具 {{ (stage.tools || []).length }}</span>
+                                                <span>Shell {{ stage.evidence?.active_shell_count || 0 }}</span>
+                                            </div>
+                                            <div v-if="stage.unlock_state?.blocked_by?.length" class="chain-node-blocked">
+                                                阻断：{{ stage.unlock_state.blocked_by[0] }}
+                                            </div>
+                                        </button>
+                                        <div v-if="idx < attackChainStages.length - 1" class="chain-arrow flex items-center">
+                                            <svg class="w-6 h-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                                        </div>
+                                    </template>
+                                </div>
+                                <div v-if="attackChainStages.length===0" class="empty-inline-state">暂无攻击链数据。</div>
+                            </div>
+                        </div>
+                        <div class="attack-chain-sidebar">
+                            <div class="panel-card flex flex-col">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h2 class="section-title mb-0">阶段细节</h2>
+                                    <span v-if="selectedAttackStage" class="badge badge-default">{{ selectedAttackStage.phase }}</span>
+                                </div>
+                                <template v-if="selectedAttackStage">
+                                    <div class="detail-kicker">
+                                        <span>MITRE</span>
+                                        <strong>{{ selectedAttackStage.attack?.tactic_id || 'TA0000' }}</strong>
+                                        <em>{{ selectedAttackStage.attack?.tactic_name || '未定义' }}</em>
+                                    </div>
+                                    <p class="detail-summary">{{ selectedAttackStage.attack?.description || selectedAttackStage.summary }}</p>
+                                    <div class="detail-grid">
+                                        <div class="detail-item">
+                                            <span>事件数</span>
+                                            <strong>{{ selectedAttackStage.event_count || 0 }}</strong>
+                                        </div>
+                                        <div class="detail-item">
+                                            <span>最近活动</span>
+                                            <strong>{{ formatDateTime(selectedAttackStage.last_event_at) }}</strong>
+                                        </div>
+                                        <div class="detail-item">
+                                            <span>验证漏洞</span>
+                                            <strong>{{ selectedAttackStage.evidence?.validated_vulnerability_count || 0 }}</strong>
+                                        </div>
+                                        <div class="detail-item">
+                                            <span>有效 Shell</span>
+                                            <strong>{{ selectedAttackStage.evidence?.active_shell_count || 0 }}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <span class="detail-section-title">前置条件</span>
+                                        <div class="detail-tag-list">
+                                            <span v-for="item in (selectedAttackStage.prerequisites || [])" :key="`${selectedAttackStage.phase}-pre-${item.stage}`" class="detail-tag" :class="item.satisfied ? 'is-ok' : 'is-blocked'">
+                                                {{ item.stage }} / {{ item.satisfied ? '满足' : displayStageStatus(item.status) }}
+                                            </span>
+                                            <span v-if="!(selectedAttackStage.prerequisites || []).length" class="detail-tag is-muted">无需前置阶段</span>
+                                        </div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <span class="detail-section-title">阻断项</span>
+                                        <ul v-if="selectedAttackStage.unlock_state?.blocked_by?.length" class="detail-list">
+                                            <li v-for="item in selectedAttackStage.unlock_state.blocked_by" :key="`${selectedAttackStage.phase}-blocked-${item}`">{{ item }}</li>
+                                        </ul>
+                                        <div v-else class="detail-inline-ok">当前阶段已满足解锁条件。</div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <span class="detail-section-title">工具与证据</span>
+                                        <div class="detail-tag-list">
+                                            <span v-for="tool in (selectedAttackStage.tools || [])" :key="`${selectedAttackStage.phase}-${tool}`" class="detail-tag is-muted">{{ tool }}</span>
+                                            <span v-if="!(selectedAttackStage.tools || []).length" class="detail-tag is-muted">暂无工具回执</span>
+                                        </div>
+                                    </div>
+                                </template>
+                                <div v-else class="empty-inline-state">请选择一个阶段查看细节。</div>
+                            </div>
+                            <div class="panel-card flex flex-col">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h2 class="section-title mb-0">已攻陷主机</h2>
+                                    <span class="badge badge-default">{{ recentShellSessions.length }}</span>
+                                </div>
+                                <div v-if="recentShellSessions.length" class="compromised-host-list">
+                                    <article
+                                        v-for="shell in recentShellSessions"
+                                        :key="`shell-host-${shell.id}`"
+                                        class="host-card"
+                                        :class="{ active: shellState.selectedShellId === shell.id }"
+                                    >
+                                        <div class="host-card-head">
+                                            <div>
+                                                <strong>{{ shellHostLabel(shell) }}</strong>
+                                                <p>{{ shellUserLabel(shell) }} / {{ shellTypeLabel(shell) }}</p>
+                                            </div>
+                                            <span class="badge" :class="shellStatusLabel(shell.status) === '可用' ? 'badge-completed' : 'badge-failed'">{{ shellStatusLabel(shell.status) }}</span>
+                                        </div>
+                                        <div class="host-card-meta">
+                                            <span>ID {{ shortId(shell.id) }}</span>
+                                            <span>最近活动 {{ formatRelativeTime(shell.last_seen) }}</span>
+                                        </div>
+                                        <div class="host-card-actions">
+                                            <button @click="selectShell(shell.id)" class="btn btn-secondary">选中</button>
+                                            <button @click="bindShellToSessionDraft(shell)" class="btn btn-primary">建立连接</button>
+                                        </div>
+                                    </article>
+                                </div>
+                                <div v-else class="empty-inline-state">当前尚未发现可用 Shell / 立足点。</div>
+                            </div>
+                            <div class="panel-card flex flex-col">
+                                <h2 class="section-title mb-4">资源消耗</h2>
+                                <div class="detail-grid">
+                                    <div class="detail-item">
+                                        <span>总阶段数</span>
+                                        <strong>{{ attackChainStages.length }}</strong>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span>已完成</span>
+                                        <strong>{{ attackChainMetrics.completed }}</strong>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span>提示词令牌</span>
+                                        <strong>{{ formatInt(attackChainUsage.prompt_tokens || 0) }}</strong>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span>补全令牌</span>
+                                        <strong>{{ formatInt(attackChainUsage.completion_tokens || 0) }}</strong>
+                                    </div>
+                                </div>
+                                <div class="detail-section mt-4">
+                                    <span class="detail-section-title">链路异常</span>
+                                    <ul v-if="attackChainViolations.length" class="detail-list">
+                                        <li v-for="item in attackChainViolations" :key="`${item.stage}-${item.status}`">
+                                            {{ item.stage }}：{{ item.blocked_by?.join('；') || '存在未满足条件' }}
+                                        </li>
+                                    </ul>
+                                    <div v-else class="detail-inline-ok">暂无阶段越序执行问题。</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. Sessions -->
+                <section v-if="activeView==='sessions'" class="flex flex-col gap-5">
+                    <div class="panel-card">
+                        <div class="flex items-center justify-between gap-4 flex-wrap mb-4">
+                            <div>
+                                <h2 class="section-title mb-0">Shell 连接策略</h2>
+                                <p class="text-sm text-textSub mt-1">将已攻陷主机转化为可控制的工作会话，再执行命令与文件操作。</p>
+                            </div>
+                            <div class="settings-action-row">
+                                <button @click="loadShells" class="btn btn-secondary">刷新 Shell</button>
+                                <button @click="loadSessions" class="btn btn-secondary">刷新会话</button>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 flex-wrap items-center">
+                            <select v-model="sessionBackend.mode" class="input-field w-64 font-medium">
+                                <option value="workspace">本地工作空间模式</option>
+                                <option value="msf">渗透会话模式</option>
+                            </select>
+                            <input v-model="sessionBackend.msf_binary" class="input-field flex-1 min-w-[200px]" placeholder="渗透会话程序路径（默认：msfconsole）">
+                            <button @click="saveSessionBackend" class="btn btn-primary px-6">应用配置</button>
+                        </div>
+                        <div class="flex gap-3 mt-5 pt-5 border-t border-border-soft flex-wrap">
+                            <button @click="probeMsfSessions" class="btn btn-warning">探测 MSF</button>
+                            <button @click="syncMsfSessions" class="btn btn-success">同步 MSF -> 项目</button>
+                            <button @click="checkSessionHealth" class="btn btn-secondary font-medium">健康检查</button>
+                            <button @click="refreshSelectedSessionStatus" class="btn btn-secondary font-medium">刷新状态</button>
+                        </div>
+                    </div>
+                    <div class="session-layout">
+                        <div class="panel-card">
+                            <div class="flex items-center justify-between mb-4">
+                                <h2 class="section-title mb-0">可连接 Shell</h2>
+                                <span class="badge badge-default">{{ recentShellSessions.length }}</span>
+                            </div>
+                            <div v-if="recentShellSessions.length" class="session-list">
+                                <article
+                                    v-for="shell in recentShellSessions"
+                                    :key="'sess-shell-'+shell.id"
+                                    class="session-card"
+                                    :class="{ active: shellState.selectedShellId === shell.id }"
+                                >
+                                    <div class="session-card-head">
+                                        <div>
+                                            <strong>{{ shellHostLabel(shell) }}</strong>
+                                            <p>{{ shellUserLabel(shell) }} / {{ shellTypeLabel(shell) }}</p>
+                                        </div>
+                                        <span class="badge" :class="shellStatusLabel(shell.status) === '可用' ? 'badge-completed' : 'badge-failed'">{{ shellStatusLabel(shell.status) }}</span>
+                                    </div>
+                                    <div class="session-card-meta">
+                                        <span>Shell ID {{ shell.id }}</span>
+                                        <span>最近活动 {{ formatRelativeTime(shell.last_seen) }}</span>
+                                    </div>
+                                    <div class="host-card-actions">
+                                        <button @click="selectShell(shell.id)" class="btn btn-secondary">绑定到表单</button>
+                                        <button @click="bindShellToSessionDraft(shell)" class="btn btn-primary">创建会话</button>
+                                    </div>
+                                </article>
+                            </div>
+                            <div v-else class="empty-inline-state">暂无可用于连接的 Shell。</div>
+                        </div>
+                        <div class="panel-card">
+                            <div class="flex items-center justify-between mb-4">
+                                <h2 class="section-title mb-0">工作会话</h2>
+                                <span class="badge badge-default">{{ managedSessions.length }}</span>
+                            </div>
+                            <div class="session-form-grid">
+                                <input v-model="sessionDraft.name" class="input-field" placeholder="会话名称，例如：web-foothold-01">
+                                <input v-model="sessionDraft.cwd" class="input-field" placeholder="工作目录（相对路径，例如：ops）">
+                                <select v-model="sessionDraft.shellId" class="input-field">
+                                    <option value="">不绑定 Shell，创建纯工作区会话</option>
+                                    <option v-for="shell in recentShellSessions" :key="'draft-shell-'+shell.id" :value="shell.id">
+                                        {{ shellHostLabel(shell) }} / {{ shellUserLabel(shell) }} / {{ shell.id }}
+                                    </option>
+                                </select>
+                                <div class="settings-action-row">
+                                    <button @click="openSession" class="btn btn-primary">创建会话</button>
+                                    <button @click="closeSession" class="btn btn-danger" :disabled="!sessionState.selectedSessionId">终止当前会话</button>
+                                </div>
+                            </div>
+                            <div class="mt-5">
+                                <label class="block text-sm font-semibold text-textSub mb-2">当前控制会话</label>
+                                <select v-model="sessionState.selectedSessionId" class="input-field w-full font-medium">
+                                    <option value="">-- 请选择工作会话 --</option>
+                                    <option v-for="item in managedSessions" :key="'managed-'+item.session_id" :value="item.session_id">
+                                        [{{ item.backend_mode || sessionBackend.mode }}] {{ item.name || item.session_id }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div v-if="selectedManagedSession" class="session-status-board">
+                                <div class="detail-item">
+                                    <span>健康状态</span>
+                                    <strong :class="sessionHealthClass(selectedSessionHealth.status)">{{ sessionHealthLabel(selectedSessionHealth.status) }}</strong>
+                                </div>
+                                <div class="detail-item">
+                                    <span>最近命令</span>
+                                    <strong>{{ sessionState.status.last_command || '无' }}</strong>
+                                </div>
+                                <div class="detail-item">
+                                    <span>执行耗时</span>
+                                    <strong>{{ formatDuration(sessionState.status.last_duration_seconds) }}</strong>
+                                </div>
+                                <div class="detail-item">
+                                    <span>工作区</span>
+                                    <strong>{{ sessionState.status.workspace_root || selectedManagedSession.workspace_root || '-' }}</strong>
+                                </div>
+                            </div>
+                            <div v-if="selectedManagedSession" class="detail-section mt-4">
+                                <span class="detail-section-title">健康说明</span>
+                                <div class="detail-inline-ok" :class="sessionHealthClass(selectedSessionHealth.status)">
+                                    {{ selectedSessionHealth.reason || '暂无异常说明' }}
+                                </div>
+                            </div>
+                            <div v-if="sessionCommandHistory.length" class="detail-section mt-4">
+                                <span class="detail-section-title">最近命令</span>
+                                <div class="history-list">
+                                    <button
+                                        v-for="item in sessionCommandHistory.slice(0, 5)"
+                                        :key="`${item.timestamp}-${item.command}`"
+                                        type="button"
+                                        class="history-item"
+                                        @click="reuseHistoryCommand(item)"
+                                    >
+                                        <strong>{{ item.command }}</strong>
+                                        <span>{{ formatDateTime(item.timestamp) }} / {{ item.returncode ?? '-' }}</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. Files -->
+                <section v-if="activeView==='files'" class="flex flex-col gap-5 h-full">
+                    <div class="panel-card flex-shrink-0">
+                        <div class="flex items-center justify-between gap-4 flex-wrap mb-4">
+                            <div>
+                                <h2 class="section-title mb-0">文件管理工作台</h2>
+                                <p class="text-sm text-textSub mt-1">面向工作会话的浏览、读取、写入、下载与上传。</p>
+                            </div>
+                            <button @click="refreshSelectedSessionStatus" class="btn btn-secondary font-medium">刷新会话</button>
+                        </div>
+                        <div class="flex gap-4 mb-5 flex-wrap">
+                            <select v-model="sessionState.selectedSessionId" class="input-field flex-1 font-medium min-w-[280px]">
+                                <option value="">-- 请选择工作会话 --</option>
+                                <option v-for="item in managedSessions" :key="'sess-file-'+item.session_id" :value="item.session_id">
+                                    {{ item.name || item.session_id }} ({{ item.backend_mode || sessionBackend.mode }})
+                                </option>
+                            </select>
+                            <div class="status-indicator">
+                                <div class="status-dot" :class="sessionHealthClass(selectedSessionHealth.status) === 'tone-success' ? 'status-running' : sessionHealthClass(selectedSessionHealth.status) === 'tone-danger' ? 'status-failed' : 'status-stopped'"></div>
+                                <span>{{ sessionHealthLabel(selectedSessionHealth.status) }}</span>
+                            </div>
+                        </div>
+                        <div class="file-toolbar">
+                            <select v-model="fileOps.action" class="input-field w-40 font-medium">
+                                <option value="list">列出目录</option>
+                                <option value="read">读取文件</option>
+                                <option value="write">写入文件</option>
+                                <option value="delete">删除</option>
+                            </select>
+                            <input v-model="fileOps.path" class="input-field flex-[2]" placeholder="目标路径，例如：logs/output.txt 或 .">
+                            <input v-model.number="fileOps.max_entries" type="number" class="input-field w-32" placeholder="最大条目">
+                            <label class="flex items-center gap-2 text-sm font-medium text-textSub bg-bg-soft px-4 py-2 border border-border-strong rounded-lg cursor-pointer hover:border-brand-400 transition-colors">
+                                <input type="checkbox" v-model="fileOps.recursive" class="accent-brand-600 w-4 h-4"> 递归
+                            </label>
+                            <button @click="runFileOps" class="btn btn-primary px-8">执行</button>
+                        </div>
+                        <textarea v-if="fileOps.action==='write'" v-model="fileOps.content" rows="8" class="input-field w-full mt-5 font-mono text-sm bg-bg-soft" placeholder="待写入的文件内容..."></textarea>
+                    </div>
+                    <div class="panel-card flex-shrink-0">
+                        <h2 class="section-title mb-4">数据传输</h2>
+                        <div class="flex gap-4 items-center bg-bg-soft p-4 rounded-lg border border-border-soft flex-wrap">
+                            <input type="file" @change="onUploadFileChange" class="text-sm text-textSub file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-surface file:text-brand-600 file:shadow-sm hover:file:bg-brand-50 transition-all cursor-pointer">
+                            <button @click="uploadFile" class="btn btn-success font-medium">上传到目标</button>
+                            <div class="w-px h-8 bg-border-strong mx-2"></div>
+                            <button @click="downloadFile" class="btn btn-secondary font-medium text-brand-600 border-brand-200">从目标下载（使用上方路径）</button>
+                        </div>
+                    </div>
+                    <div class="file-workbench">
+                        <div class="panel-card flex flex-col p-0 overflow-hidden">
+                            <div class="workbench-head">
+                                <span>目录结果</span>
+                                <span class="badge badge-default">{{ fileResultEntries.length }}</span>
+                            </div>
+                            <div class="flex-1 overflow-y-auto scroll-light bg-surface">
+                                <table class="table-custom">
+                                    <thead>
+                                        <tr>
+                                            <th>名称</th>
+                                            <th width="100">类型</th>
+                                            <th width="140">大小</th>
+                                            <th width="180">修改时间</th>
+                                            <th width="120">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="item in fileResultEntries" :key="`file-item-${item.path || item.name}`">
+                                            <td class="font-mono break-all">{{ basename(item.path || item.name) }}</td>
+                                            <td><span class="badge" :class="item.is_dir ? 'badge-default' : 'badge-completed'">{{ item.is_dir ? '目录' : '文件' }}</span></td>
+                                            <td>{{ formatBytes(item.size) }}</td>
+                                            <td>{{ formatDateTime(item.modified_at) }}</td>
+                                            <td class="flex gap-2">
+                                                <button @click="pickFileEntry(item)" class="text-brand-600 hover:text-brand-800 text-xs font-bold uppercase tracking-wider">定位</button>
+                                                <button v-if="!item.is_dir" @click="loadFileEntry(item)" class="text-slate-700 hover:text-slate-900 text-xs font-bold uppercase tracking-wider">读取</button>
+                                            </td>
+                                        </tr>
+                                        <tr v-if="!fileResultEntries.length">
+                                            <td colspan="5" class="text-center text-text-muted py-10 font-medium italic border-b-0">暂无目录结果，请先执行列出目录。</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="panel-card flex flex-col p-0 overflow-hidden">
+                            <div class="workbench-head">
+                                <span>文件回显</span>
+                                <span class="badge badge-default">{{ fileOpsResult.action || 'idle' }}</span>
+                            </div>
+                            <div class="file-preview-meta">
+                                <span>路径：{{ fileOpsResult.path || fileOps.path || '-' }}</span>
+                                <span v-if="fileOpsResult.bytes !== undefined">字节：{{ formatBytes(fileOpsResult.bytes) }}</span>
+                                <span v-if="fileOpsResult.deleted !== undefined">删除：{{ fileOpsResult.deleted ? '成功' : '未删除' }}</span>
+                            </div>
+                            <pre class="terminal-box flex-1 m-0 border-0 rounded-none bg-brand-900 text-brand-50">{{ fileOpsResult.content || pretty(fileOpsResult) }}</pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. CLI Sandbox -->
+                <section v-if="activeView==='cli'" class="flex flex-col gap-5 h-full">
+                    <div class="panel-card flex-shrink-0">
+                        <div class="flex items-center justify-between gap-4 flex-wrap mb-4">
+                            <div>
+                                <h2 class="section-title mb-0">命令控制台</h2>
+                                <p class="text-sm text-textSub mt-1">针对选中的工作会话执行命令，并复用最近执行历史。</p>
+                            </div>
+                            <select v-model="sessionState.selectedSessionId" class="input-field min-w-[320px] font-medium">
+                                <option value="">-- 请选择工作会话 --</option>
+                                <option v-for="item in managedSessions" :key="'cli-'+item.session_id" :value="item.session_id">
+                                    {{ item.name || item.session_id }} / {{ item.backend_mode || sessionBackend.mode }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="cli-toolbar">
+                            <input v-model="cliForm.command" class="input-field flex-[3] font-mono text-brand-600 font-semibold text-base py-3" placeholder="输入命令（例如：whoami、ls -la）">
+                            <input v-model="cliForm.cwd" class="input-field w-56" placeholder="工作目录（可选）">
+                            <input v-model.number="cliForm.timeout" type="number" class="input-field w-32" placeholder="超时">
+                            <button @click="executeCli" class="btn btn-primary px-8 text-base">执行</button>
+                        </div>
+                        <div class="detail-tag-list mt-4">
+                            <button
+                                v-for="item in commandPresets"
+                                :key="`preset-${item.command}`"
+                                type="button"
+                                class="detail-tag is-muted hover:border-brand-400"
+                                @click="applyCommandPreset(item.command)"
+                            >
+                                {{ item.label }}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="overview-grid">
+                        <article class="overview-card tone-primary">
+                            <span class="overview-label">返回码</span>
+                            <strong class="overview-value">{{ cliResult.returncode ?? '-' }}</strong>
+                            <span class="overview-help">最近一次执行结果</span>
+                        </article>
+                        <article class="overview-card tone-success">
+                            <span class="overview-label">耗时</span>
+                            <strong class="overview-value">{{ formatDuration(cliResult.duration_seconds) }}</strong>
+                            <span class="overview-help">{{ cliResult.command || '尚未执行命令' }}</span>
+                        </article>
+                        <article class="overview-card tone-muted">
+                            <span class="overview-label">工作目录</span>
+                            <strong class="overview-value text-sm">{{ cliResult.cwd || cliForm.cwd || '-' }}</strong>
+                            <span class="overview-help">会话上下文路径</span>
+                        </article>
+                        <article class="overview-card" :class="sessionHealthClass(selectedSessionHealth.status)">
+                            <span class="overview-label">会话健康</span>
+                            <strong class="overview-value">{{ sessionHealthLabel(selectedSessionHealth.status) }}</strong>
+                            <span class="overview-help">{{ selectedSessionHealth.reason || '等待心跳信息' }}</span>
+                        </article>
+                    </div>
+                    <div class="command-layout">
+                        <div class="panel-card flex-[2] min-h-0 flex flex-col p-0 overflow-hidden shadow-sm border-border-strong">
+                            <div class="bg-bg-soft px-5 py-3 border-b border-border-soft text-xs font-bold text-textSub uppercase tracking-wider flex-shrink-0">标准输出</div>
+                            <pre class="terminal-box flex-1 m-0 border-0 rounded-none bg-brand-900 text-brand-50">{{ cliResult.stdout || '等待执行结果...' }}</pre>
+                        </div>
+                        <div class="command-sidebar">
+                            <div class="panel-card min-h-[150px] flex flex-col p-0 overflow-hidden shadow-sm border-danger-bg">
+                                <div class="bg-danger-bg px-5 py-3 border-b border-danger text-xs font-bold text-danger uppercase tracking-wider flex-shrink-0">标准错误</div>
+                                <pre class="terminal-box flex-1 m-0 border-0 rounded-none bg-brand-900 text-danger">{{ cliResult.stderr || '无错误输出' }}</pre>
+                            </div>
+                            <div class="panel-card flex flex-col">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-sm font-bold text-text-main">最近命令</h3>
+                                    <span class="badge badge-default">{{ sessionCommandHistory.length }}</span>
+                                </div>
+                                <div v-if="sessionCommandHistory.length" class="history-list">
+                                    <button
+                                        v-for="item in sessionCommandHistory.slice(0, 8)"
+                                        :key="`${item.timestamp}-${item.command}`"
+                                        type="button"
+                                        class="history-item"
+                                        @click="reuseHistoryCommand(item)"
+                                    >
+                                        <strong>{{ item.command }}</strong>
+                                        <span>{{ formatDateTime(item.timestamp) }} / {{ item.returncode ?? '-' }}</span>
+                                    </button>
+                                </div>
+                                <div v-else class="empty-inline-state">当前会话还没有命令历史。</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6. Report -->
+                <section v-if="activeView==='report'" class="flex flex-col gap-5 h-full">
+                    <div class="panel-card flex-shrink-0">
+                        <h2 class="section-title mb-4">渗透测试报告</h2>
+                        <div class="flex gap-4 flex-wrap bg-bg-soft p-4 rounded-lg border border-border-soft">
+                            <button @click="generateReport" class="btn btn-primary">生成新报告</button>
+                            <button @click="loadLatestReport" class="btn btn-secondary font-medium">加载最新报告</button>
+                            <div class="w-px h-8 bg-border-strong mx-2"></div>
+                            <span class="text-sm font-semibold text-textSub self-center mr-2">导出格式：</span>
+                            <button @click="downloadReport('md')" :disabled="!latestReportMeta.project_id" class="btn btn-secondary font-semibold">.MD</button>
+                            <button @click="downloadReport('json')" :disabled="!latestReportMeta.project_id" class="btn btn-secondary font-semibold">.JSON</button>
+                            <button @click="downloadReport('html')" :disabled="!latestReportMeta.project_id" class="btn btn-secondary font-semibold text-brand-600">.HTML</button>
+                        </div>
+                    </div>
+                    <div class="flex gap-5 flex-1 min-h-0">
+                        <div class="panel-card flex-[3] flex flex-col p-0 overflow-hidden shadow-sm">
+                            <div class="bg-bg-soft px-5 py-3 border-b border-border-soft text-sm font-bold text-textSub flex justify-between items-center">
+                                <span>报告文档预览</span>
+                                <span v-if="latestReportMeta.project_id" class="text-brand-600 font-mono bg-surface px-2 py-0.5 rounded border border-border-soft">{{ shortId(latestReportMeta.project_id) }}</span>
+                            </div>
+                            <pre class="terminal-box m-0 border-0 rounded-none font-sans text-sm p-8 whitespace-pre-wrap leading-relaxed bg-surface text-text-main">{{ latestReport.content || '尚未生成报告。' }}</pre>
+                        </div>
+                        <div class="panel-card flex-[1] flex flex-col bg-bg-soft">
+                            <h3 class="text-xs font-bold text-textSub uppercase tracking-wider mb-5">报告元数据</h3>
+                            <div class="space-y-4 text-sm text-textSub">
+                                <div class="flex flex-col bg-surface p-4 rounded-lg border border-border-soft shadow-sm">
+                                    <span class="text-xs font-semibold text-text-muted mb-1 uppercase">项目 ID</span>
+                                    <span class="text-text-main font-mono font-bold">{{ latestReportMeta.project_id ? shortId(latestReportMeta.project_id) : '无' }}</span>
+                                </div>
+                                <div class="flex flex-col bg-surface p-4 rounded-lg border border-border-soft shadow-sm">
+                                    <span class="text-xs font-semibold text-text-muted mb-1 uppercase">内容长度</span>
+                                    <span class="text-brand-600 font-mono font-bold">{{ formatInt(latestReportMeta.content_length || 0) }} 字符</span>
+                                </div>
+                                <div v-if="latestReportMeta.evidence_gate_active" class="p-4 rounded-lg border border-warning bg-warning-bg text-warning text-sm shadow-sm">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <svg class="w-5 h-5 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                        <strong class="font-bold">证据门禁已阻断</strong>
+                                    </div>
+                                    由于证据不足，后渗透流程已中止。请检查证据缺口清单。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 7. Libraries -->
+                <section v-if="isLibraryView" class="flex flex-col gap-5 h-full">
+                    <div class="panel-card flex-shrink-0">
+                        <div class="flex items-center justify-between mb-5">
+                            <h2 class="section-title mb-0">资源库管理：<span class="text-brand-600 ml-1">{{ currentLibTypeLabel }}</span></h2>
+                            <select v-if="currentLibCandidates.length > 1" v-model="selectedLibType" @change="listLibFiles" class="input-field w-64 font-medium bg-bg-soft">
+                                <option v-for="type in currentLibCandidates" :key="'lib-type-'+type" :value="type">{{ libTypeLabelMap[type] || type }}</option>
+                            </select>
+                        </div>
+                        <div class="flex gap-4 mb-5">
+                            <input v-model="libraryState.path" class="input-field flex-1" placeholder="目录路径（相对根目录）">
+                            <input v-model="libraryState.filePath" class="input-field flex-1" placeholder="文件路径（用于读/写/删）">
+                            <label class="flex items-center gap-2 text-sm font-medium text-textSub bg-bg-soft px-4 py-2 border border-border-strong rounded-lg cursor-pointer hover:border-brand-400 transition-colors">
+                                <input type="checkbox" v-model="libraryState.recursive" class="accent-brand-600 w-4 h-4"> 递归
+                            </label>
+                        </div>
+                        <div class="flex gap-3">
+                            <button @click="listLibFiles" class="btn btn-secondary font-medium">列出目录</button>
+                            <button @click="readLibFile" class="btn btn-primary">读取文件</button>
+                            <button @click="saveLibFile" class="btn btn-success">写入文件</button>
+                            <button @click="deleteLibFile" class="btn btn-danger">删除</button>
+                        </div>
+                        <div v-if="currentLibType === 'custom_tools'" class="mt-5 pt-5 border-t border-border-soft flex gap-4 items-center bg-brand-50 p-4 rounded-lg">
+                            <input type="file" id="mtool-upload-file-lib" accept=".py,.java,.go,.php,.zip" class="text-sm text-textSub file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-surface file:text-brand-600 file:shadow-sm hover:file:bg-brand-100 cursor-pointer">
+                            <button @click="uploadMTool" class="btn btn-primary shadow-sm">上传自定义工具</button>
+                        </div>
+                    </div>
+                    <div class="flex gap-5 flex-1 min-h-0">
+                        <div class="panel-card flex-[1] flex flex-col p-0 overflow-hidden shadow-sm">
+                            <div class="bg-bg-soft px-5 py-3 border-b border-border-soft text-xs font-bold text-textSub uppercase tracking-wider flex justify-between">
+                                <span>目录列表</span>
+                                <span class="bg-surface px-2 py-0.5 rounded text-brand-600">{{ libraryResultMeta.count || 0 }} 项</span>
+                            </div>
+                            <div class="flex-1 overflow-y-auto scroll-light bg-surface">
+                                <table class="table-custom">
+                                    <thead><tr><th>名称</th><th width="80">类型</th><th width="80">操作</th></tr></thead>
+                                    <tbody>
+                                        <tr v-for="(item, idx) in libraryItems" :key="'lib-'+idx">
+                                            <td class="font-mono text-text-main font-medium break-all">{{ basename(item.path) }}</td>
+                                            <td><span class="badge" :class="item.is_dir ? 'badge-default' : 'badge-completed'">{{ item.is_dir ? '目录' : '文件' }}</span></td>
+                                            <td><button @click="selectLibItem(item)" class="text-brand-600 hover:text-brand-800 text-xs font-bold uppercase tracking-wider">选择</button></td>
+                                        </tr>
+                                        <tr v-if="libraryItems.length===0"><td colspan="3" class="text-center text-text-muted py-10 font-medium italic border-b-0">未找到任何条目。</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="panel-card flex-[2] flex flex-col p-0 overflow-hidden shadow-sm">
+                            <div class="bg-bg-soft px-5 py-3 border-b border-border-soft text-xs font-bold text-textSub uppercase tracking-wider">文件编辑器</div>
+                            <textarea v-model="libraryState.content" class="flex-1 bg-surface text-text-main p-6 font-mono text-sm leading-relaxed resize-none outline-none focus:ring-2 focus:ring-inset focus:ring-brand-200 scroll-light" placeholder="选择文件进行编辑，或输入新的内容..."></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 8. Settings & Ext -->
+                <section v-if="activeView==='settings'" class="flex flex-col gap-5">
+                    <div class="panel-card">
+                        <div class="settings-minimal-shell">
+                            <div class="settings-minimal-header">
+                                <div>
+                                    <h2 class="section-title mb-0">AI模型配置</h2>
+                                </div>
+                                <div class="settings-status-chip">{{ settingsResult.api_key_masked ? '已保存密钥' : '待保存密钥' }}</div>
+                            </div>
+
+                            <div class="settings-minimal-grid">
+                                <div class="settings-field">
+                                    <label class="settings-label">厂家</label>
+                                    <select v-model="settingsForm.provider" @change="handleSettingsProviderChange" class="input-field w-full font-medium">
+                                        <option v-for="provider in providerOptions" :key="provider.id" :value="provider.id">{{ displayProviderLabel(provider.id, provider.label) }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="settings-field">
+                                    <label class="settings-label">请求源</label>
+                                    <select v-if="showEndpointSelector" v-model="settingsForm.endpoint_key" class="input-field w-full font-medium">
+                                        <option
+                                            v-for="endpoint in currentProviderEndpoints"
+                                            :key="`${settingsForm.provider}-${endpoint.key}`"
+                                            :value="endpoint.key"
+                                        >
+                                            {{ displayEndpointLabel(endpoint.label, endpoint.key) }}
+                                        </option>
+                                    </select>
+                                    <div v-else class="settings-static-field">{{ currentEndpointDisplayLabel }}</div>
+                                    <p v-if="currentEndpointNote" class="text-xs text-text-muted mt-2 leading-5">{{ currentEndpointNote }}</p>
+                                </div>
+
+                                <div class="settings-field settings-field-span-2">
+                                    <div class="settings-inline-head">
+                                        <label class="settings-label">模型</label>
+                                        <button @click="loadProviderModels(settingsForm.provider, settingsForm.endpoint_key, false)" class="btn btn-secondary text-xs font-medium">刷新模型</button>
+                                    </div>
+                                    <input
+                                        v-model="settingsForm.model"
+                                        :list="`provider-models-${settingsForm.provider}-${settingsForm.endpoint_key || 'default'}`"
+                                        class="input-field w-full font-mono"
+                                        :placeholder="currentModelInputPlaceholder"
+                                    >
+                                    <datalist :id="`provider-models-${settingsForm.provider}-${settingsForm.endpoint_key || 'default'}`">
+                                        <option v-for="model in currentProviderModels" :key="`model-${model}`" :value="model">{{ model }}</option>
+                                    </datalist>
+                                </div>
+
+                                <div class="settings-field settings-field-span-2">
+                                    <label class="settings-label">接口</label>
+                                    <input
+                                        v-if="currentProviderAllowsCustomBaseUrl"
+                                        v-model="settingsForm.base_url"
+                                        type="text"
+                                        class="input-field w-full font-mono"
+                                        :placeholder="currentBaseUrlInputPlaceholder"
+                                    >
+                                    <input
+                                        v-else
+                                        :value="currentProviderBaseUrl"
+                                        type="text"
+                                        class="input-field w-full font-mono bg-slate-50 text-textSub"
+                                        readonly
+                                        placeholder="系统自动读取官方接口地址"
+                                    >
+                                </div>
+
+                                <div v-if="currentProviderAllowsCustomProtocol" class="settings-field">
+                                    <label class="settings-label">协议</label>
+                                    <select v-model="settingsForm.protocol" class="input-field w-full font-medium">
+                                        <option
+                                            v-for="protocol in currentProtocolOptions"
+                                            :key="`${settingsForm.provider}-protocol-${protocol.id}`"
+                                            :value="protocol.id"
+                                        >
+                                            {{ displayProtocolLabel(protocol.id) }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="settings-field" :class="{ 'settings-field-span-2': !currentProviderAllowsCustomProtocol }">
+                                    <label class="settings-label">密钥</label>
+                                    <input
+                                        v-model="settingsForm.api_key"
+                                        type="password"
+                                        class="input-field w-full"
+                                        :placeholder="currentApiKeyInputPlaceholder"
+                                    >
+                                    <p v-if="currentApiKeyStatusText" class="settings-help">{{ currentApiKeyStatusText }}</p>
+                                </div>
+
+                                <div class="settings-field settings-field-span-2">
+                                    <label class="settings-label">同厂商备选模型</label>
+                                    <div v-if="!currentProviderFreeformModels">
+                                        <div class="settings-checkbox-grid">
+                                            <label
+                                                v-for="model in currentSelectableFailoverModels"
+                                                :key="`failover-${model}`"
+                                                class="settings-checkbox-item"
+                                            >
+                                                <input
+                                                    :checked="settingsForm.failover_models.includes(model)"
+                                                    type="checkbox"
+                                                    @change="toggleFailoverModel(model)"
+                                                >
+                                                <span class="font-mono text-sm text-text-main break-all">{{ model }}</span>
+                                            </label>
+                                            <div v-if="!currentSelectableFailoverModels.length" class="settings-empty-state">当前厂家没有可选的同厂商备选模型。</div>
+                                        </div>
+                                        <div v-if="settingsForm.failover_models.length" class="settings-tag-list mt-3">
+                                            <span class="settings-help">保存顺序：</span>
+                                            <span v-for="model in settingsForm.failover_models" :key="`selected-${model}`" class="settings-tag">{{ model }}</span>
+                                        </div>
+                                    </div>
+                                    <div v-else>
+                                        <textarea
+                                            v-model="settingsForm.failover_models_text"
+                                            class="input-field w-full min-h-[132px] font-mono"
+                                            placeholder="每行一个备选模型，也可用逗号分隔"
+                                        ></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="settings-strategy-card">
+                                <div class="settings-strategy-item">
+                                    <span class="settings-summary-label">保存后主厂商</span>
+                                    <span class="settings-summary-value">{{ currentProviderDisplayLabel }}</span>
+                                </div>
+                                <div class="settings-strategy-item settings-strategy-item-wide">
+                                    <span class="settings-summary-label">跨厂商回退顺序</span>
+                                    <span class="settings-summary-value">{{ providerSaveStrategyText }}</span>
+                                </div>
+                            </div>
+
+                            <div v-if="currentMigrationWarnings.length" class="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-700">
+                                <div v-for="warning in currentMigrationWarnings" :key="warning">系统已自动迁移旧配置：{{ warning }}</div>
+                            </div>
+
+                            <div class="settings-action-row">
+                                <button @click="saveApiKey" class="btn btn-primary">保存并重载引擎</button>
+                                <button @click="loadApiKeyStatus()" class="btn btn-secondary font-medium">读取当前状态</button>
+                            </div>
+
+                            <div class="settings-card settings-result-card">
+                                <div class="settings-card-head">
+                                    <div>
+                                        <h3 class="settings-card-title">已加载模型</h3>
+                                    </div>
+                                </div>
+                                <div v-if="loadedAiSummary.checked" class="text-xs text-textSub mb-3">
+                                    已配置有效模型 {{ loadedAiSummary.configured_count }} 个，成功加载 {{ loadedAiSummary.loaded_count }} 个。
+                                </div>
+                                <div v-if="loadedAiModelRows.length" class="overflow-x-auto mb-3">
+                                    <table class="w-full text-sm">
+                                        <thead>
+                                            <tr class="text-left text-textSub border-b border-border-soft">
+                                                <th class="py-2 pr-3">厂家</th>
+                                                <th class="py-2 pr-3">协议</th>
+                                                <th class="py-2 pr-3">接口</th>
+                                                <th class="py-2 pr-3">模型</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="row in loadedAiModelRows" :key="`${row.provider}-${row.model}`" class="border-b border-border-soft last:border-b-0">
+                                                <td class="py-2 pr-3 font-medium text-text-main">{{ displayProviderLabel(row.provider) }}</td>
+                                                <td class="py-2 pr-3 text-textSub">{{ displayProtocolLabel(row.protocol) }}</td>
+                                                <td class="py-2 pr-3 text-textSub">{{ row.base_url || '-' }}</td>
+                                                <td class="py-2 pr-3 text-text-main">{{ row.model || '-' }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div v-else class="text-xs text-textSub">暂无结果</div>
+                                <div v-if="failedAiModelRows.length" class="overflow-x-auto mt-3">
+                                    <label class="block text-xs font-bold text-textSub tracking-wider mb-2">加载失败</label>
+                                    <table class="w-full text-sm">
+                                        <thead>
+                                            <tr class="text-left text-textSub border-b border-border-soft">
+                                                <th class="py-2 pr-3">厂家</th>
+                                                <th class="py-2 pr-3">接口</th>
+                                                <th class="py-2 pr-3">模型</th>
+                                                <th class="py-2 pr-3">失败原因</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="row in failedAiModelRows" :key="`failed-${row.provider}-${row.model}`" class="border-b border-border-soft last:border-b-0">
+                                                <td class="py-2 pr-3 font-medium text-text-main">{{ displayProviderLabel(row.provider) }}</td>
+                                                <td class="py-2 pr-3 text-textSub">{{ row.base_url || '-' }}</td>
+                                                <td class="py-2 pr-3 text-text-main">{{ row.model || '-' }}</td>
+                                                <td class="py-2 pr-3 text-rose-600">{{ row.error || '请求失败' }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section v-if="activeView==='learning'" class="flex flex-col gap-5">
+                    <div class="panel-card">
+                        <h2 class="section-title mb-6">自进化（知识库）</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="space-y-5 bg-bg-soft p-6 rounded-xl border border-border-soft">
+                                <div>
+                                    <label class="block text-sm font-semibold text-text-main mb-2">主题</label>
+                                    <input v-model="learningForm.topic" class="input-field w-full bg-surface" placeholder="例如：WMI 横向移动">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-text-main mb-2">直接内容（可选）</label>
+                                    <textarea v-model="learningForm.content" rows="5" class="input-field w-full font-mono text-sm bg-surface"></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-text-main mb-2">来源 URL（每行一个）</label>
+                                    <textarea v-model="learningForm.urlsText" rows="3" class="input-field w-full font-mono text-sm bg-surface"></textarea>
+                                </div>
+                                <button @click="submitLearningSync" class="btn btn-primary w-full py-2.5 text-base">写入知识库</button>
+                            </div>
+                            <div class="flex flex-col bg-surface p-6 rounded-xl border border-border-soft shadow-sm">
+                                <h3 class="text-sm font-bold text-text-main mb-4 flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                    检索历史
+                                </h3>
+                                <div class="flex gap-3 mb-4">
+                                    <input v-model="learningHistory.keyword" class="input-field flex-1" placeholder="关键词">
+                                    <select v-model="learningHistory.item_type" class="input-field w-32 font-medium">
+                                        <option value="">全部类型</option>
+                                        <option value="knowledge">知识</option>
+                                        <option value="skills">技能</option>
+                                    </select>
+                                    <button @click="loadLearningHistory" class="btn btn-secondary font-medium px-5">搜索</button>
+                                </div>
+                                <div class="terminal-box text-sm flex-1 bg-bg-soft border-border-soft"><pre class="text-text-main">{{ pretty(learningHistoryResult) }}</pre></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section v-if="activeView==='web-audit'" class="flex flex-col gap-5 h-full">
+                    <div class="panel-card flex-shrink-0">
+                        <h2 class="section-title mb-5">网页源码审计</h2>
+                        <div class="flex gap-4 flex-wrap items-center bg-slate-50 p-4 rounded-lg border border-slate-100">
+                            <input v-model="webAuditForm.target" class="input-field flex-[2] min-w-[300px] font-medium" placeholder="目标 URL（例如：http://example.com）">
+                            <input v-model.number="webAuditForm.timeout_seconds" type="number" class="input-field w-32" placeholder="超时（秒）">
+                            <label class="flex items-center gap-2 text-sm font-medium text-slate-700 bg-white px-4 py-2 border border-slate-200 rounded-lg cursor-pointer hover:border-brand-300 transition-colors shadow-sm">
+                                <input type="checkbox" v-model="webAuditForm.auto_fix_rules" class="accent-brand-600 w-4 h-4"> 自动修复规则
+                            </label>
+                            <label class="flex items-center gap-2 text-sm font-medium text-slate-700 bg-white px-4 py-2 border border-slate-200 rounded-lg cursor-pointer hover:border-brand-300 transition-colors shadow-sm">
+                                <input type="checkbox" v-model="webAuditForm.use_yak" class="accent-brand-600 w-4 h-4"> Yak 引擎
+                            </label>
+                            <div class="w-px h-8 bg-slate-200 mx-2"></div>
+                            <button @click="validateWebAuditRules" class="btn btn-secondary font-medium">校验规则</button>
+                            <button @click="runWebAudit" class="btn btn-primary px-6">开始审计</button>
+                        </div>
+                    </div>
+                    <div class="flex gap-5 flex-1 min-h-0">
+                        <div class="panel-card flex-1 flex flex-col p-0 overflow-hidden shadow-sm">
+                            <div class="bg-slate-100 px-5 py-3 border-b border-slate-200 text-xs font-bold text-slate-600 uppercase tracking-wider">规则校验结果</div>
+                            <pre class="terminal-box m-0 border-0 rounded-none bg-white text-slate-700 p-6">{{ pretty(webAuditValidationResult) }}</pre>
+                        </div>
+                        <div class="panel-card flex-1 flex flex-col p-0 overflow-hidden shadow-sm border-brand-200">
+                            <div class="bg-brand-50 px-5 py-3 border-b border-brand-100 text-xs font-bold text-brand-600 uppercase tracking-wider">审计结果</div>
+                            <pre class="terminal-box m-0 border-0 rounded-none bg-white text-slate-800 p-6">{{ pretty(webAuditRunResult) }}</pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section v-if="activeView==='about'" class="flex flex-col gap-5 max-w-4xl mx-auto h-full justify-center pb-20">
+                    <div class="panel-card text-center py-16 px-8 relative overflow-hidden">
+                        <div class="absolute -top-24 -right-24 w-64 h-64 bg-brand-50 rounded-full blur-3xl opacity-50"></div>
+                        <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-brand-50 rounded-full blur-3xl opacity-50"></div>
+                        
+                        <div class="relative z-10 flex flex-col items-center">
+                            <div class="w-24 h-24 mb-8 bg-surface rounded-2xl shadow-md border border-border-soft p-4 flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
+                                <img src="/assets/logo.png" alt="Logo" class="w-full h-full object-contain">
+                            </div>
+                            <h2 class="text-3xl font-bold text-text-main tracking-tight mb-3">雾刃 AI 自动化渗透测试平台</h2>
+                            <p class="text-brand-600 font-semibold tracking-widest uppercase text-sm mb-8">企业级安全运营工作台</p>
+                            
+                            <div class="bg-bg-soft rounded-xl p-6 border border-border-soft max-w-lg mx-auto mb-10 shadow-sm">
+                                <p class="text-textSub leading-relaxed text-sm">
+                                    基于大语言模型（LLM）构建的新一代自动化安全评估系统。深度集成 Kali Linux 工具链，通过多智能体协同架构，实现从信息收集、漏洞探测到后渗透利用的全流程自动化。
+                                </p>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-2xl mx-auto mb-10">
+                                <div class="bg-surface border border-border-soft p-4 rounded-lg shadow-sm">
+                                    <div class="text-2xl font-bold text-brand-600 mb-1">AI</div>
+                                    <div class="text-[11px] text-text-muted uppercase font-semibold">智能驱动</div>
+                                </div>
+                                <div class="bg-surface border border-border-soft p-4 rounded-lg shadow-sm">
+                                    <div class="text-2xl font-bold text-success mb-1">RAG</div>
+                                    <div class="text-[11px] text-text-muted uppercase font-semibold">知识增强</div>
+                                </div>
+                                <div class="bg-surface border border-border-soft p-4 rounded-lg shadow-sm">
+                                    <div class="text-2xl font-bold text-warning mb-1">MSF</div>
+                                    <div class="text-[11px] text-text-muted uppercase font-semibold">深度集成</div>
+                                </div>
+                                <div class="bg-surface border border-border-soft p-4 rounded-lg shadow-sm">
+                                    <div class="text-2xl font-bold text-brand-800 mb-1">Auto</div>
+                                    <div class="text-[11px] text-text-muted uppercase font-semibold">全自动化</div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-xs text-text-muted font-mono">
+                                <div>版本：v1.0.4</div>
+                                <div class="mt-1">© 2026 玄坤信安科技有限公司 保留所有权利</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+    <script src="/scripts/app.js"></script>
+</body>
+</html>

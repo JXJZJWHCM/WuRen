@@ -1,0 +1,54 @@
+{
+  "ID": 0,
+  "DeletedAt": null,
+  "RuleId": "43b46725-0b30-4e2f-9559-0d7a30e6b668",
+  "Version": "20251230.0001",
+  "hash": "cc8031fe344122268ed59d4bc523ae77a36e918e1d18a13f55ad9bbe9d58123e",
+  "RuleName": "查找Java含有contain方法的过滤器",
+  "Title": "is-contain-sanitizer",
+  "TitleZh": "查找Java含有contain方法的过滤器",
+  "Language": "java",
+  "Purpose": "audit",
+  "Tag": "java|lib|filter",
+  "cwe": [],
+  "CVE": "",
+  "RiskType": "",
+  "Type": "sf",
+  "Severity": "INFO",
+  "IsBuildInRule": true,
+  "Verified": false,
+  "NeedUpdate": false,
+  "Content": "desc(\r\n\ttitle: \"Find Java Contain Sanitizer\"\r\n\ttitle_zh: \"查找Java含有contain方法的过滤器\"\r\n\ttype: audit\r\n\tlib: 'is-contain-sanitizer'\r\n\tdesc: <<<DESC\r\n### 1. 规则目的\r\n该规则用于查找Java代码中是否存在包含\"contain\"关键字的方法调用。此规则期望输入参数的操作码为`call`，如果该调用名称包含\"contain\"，则返回调用的原始值。该规则常用于确认数据流分析中是否涉及白名单校验、字符串校验等操作。\r\n\r\n### 2. 规则详细\r\n该规则属于查找类规则，主要用于辅助数据流分析，识别代码中可能存在的字符串包含校验或白名单过滤操作。通过识别包含\"contain\"关键字的方法调用，可以进一步分析这些方法是否用于实现安全过滤或输入验证机制，从而判断数据流是否经过了适当的净化处理。\r\n\r\n例如，在以下场景中，该规则能够检测到相关调用：\r\n```java\r\npublic class Demo {\r\n    public static void main(String[] args) {\r\n        String str = \"hello\";\r\n        if (str.contains(\"he\")) { // 包含\"contain\"关键字的调用\r\n            System.out.println(\"ok\");\r\n        }\r\n    }\r\n}\r\n```\r\n上述代码中的`str.contains(\"he\")`调用会被匹配并返回。\r\nDESC\r\n\trule_id: \"43b46725-0b30-4e2f-9559-0d7a30e6b668\"\r\n\tsolution: <<<SOLUTION\r\nnone\r\nSOLUTION\r\n\treference: <<<REFERENCE\r\nnone\r\nREFERENCE\r\n)\r\n$input?{opcode:call && have:\"contain\"} as $output;\r\nalert $output for {\r\n\tlevel: \"info\",\r\n\ttitle: \"Find Java Contain Sanitizer\",\r\n\ttitle_zh: \"查找Java含有contain方法的过滤器\",\r\n\tmessage: \"发现Java代码中存在包含'contain'关键字的方法调用，建议审计人员关注其具体使用场景以确认是否符合安全要求。\",\r\n\tsolution: <<<SOLUTION\r\n无明确修复方式，但建议审计人员对匹配到的代码进行深入分析，确保其使用场景符合安全需求。\r\nSOLUTION\r\n\trisk: \"信息\",\r\n\tdesc: <<<DESC\r\n### 1. 规则目的\r\n该规则用于查找Java代码中是否存在包含\"contain\"关键字的方法调用。此规则期望输入参数的操作码为`call`，如果该调用名称包含\"contain\"，则返回调用的原始值。该规则常用于确认数据流分析中是否涉及白名单校验、字符串校验等操作。\r\n\r\n### 2. 规则详细\r\n该规则属于查找类规则，主要用于辅助数据流分析，识别代码中可能存在的字符串包含校验或白名单过滤操作。通过识别包含\"contain\"关键字的方法调用，可以进一步分析这些方法是否用于实现安全过滤或输入验证机制，从而判断数据流是否经过了适当的净化处理。\r\n\r\n例如，在以下场景中，该规则能够检测到相关调用：\r\n```java\r\npublic class Demo {\r\npublic static void main(String[] args) {\r\nString str = \"hello\";\r\nif (str.contains(\"he\")) { // 包含\"contain\"关键字的调用\r\nSystem.out.println(\"ok\");\r\n}\r\n}\r\n}\r\n```\r\n上述代码中的`str.contains(\"he\")`调用会被匹配并返回。\r\nDESC\r\n\tname: \"output\",\r\n}\r\n\r\n\r\ndesc(\r\n\tlang:\"java\"\r\n\talert_num:1\r\n\t\"file://demo.java\":<<<EOF\r\n    public class demo {\r\n        public static void main(String[] args) {\r\n            String str = \"hello\";\r\n            if (str.contains(\"he\")) {\r\n                System.out.println(\"ok\");\r\n            }\r\n        }\r\n    }\r\nEOF\r\n\t\"safefile://SafeStringOperation.java\": <<<CODE\r\n// 该代码不包含任何名为'contain'或包含'contain'子串的方法调用。\r\n// 这是一个安全的字符串操作示例，不会触发规则告警。\r\npublic class SafeStringOperation {\r\n    public static void main(String[] args) {\r\n        String text = \"Hello, World!\";\r\n        // 使用equals方法比较字符串，不含'contain'关键字\r\n        if (text.equals(\"Hello, World!\")) {\r\n            System.out.println(\"String matches.\");\r\n        }\r\n        // 使用indexOf方法查找子串，不含'contain'关键字\r\n        if (text.indexOf(\"World\") != -1) {\r\n            System.out.println(\"Substring found.\");\r\n        }\r\n    }\r\n}\r\nCODE\r\n\t\"safefile://NoContainMethod.java\": <<<CODE\r\n// 此类中定义的方法名称都不包含'contain'字样，因此不会被规则匹配。\r\npublic class NoContainMethod {\r\n\r\n    public boolean checkIfValid(String input) {\r\n        // 这是一个通用的验证方法，不涉及'contain'关键字\r\n        return input != null && input.length() > 0;\r\n    }\r\n\r\n    public String processData(byte[] data) {\r\n        // 这是一个数据处理方法，不包含'contain'关键字\r\n        return new String(data);\r\n    }\r\n\r\n    public static void main(String[] args) {\r\n        NoContainMethod obj = new NoContainMethod();\r\n        String testString = \"sample data\";\r\n        if (obj.checkIfValid(testString)) {\r\n            System.out.println(\"Input is valid.\");\r\n        }\r\n    }\r\n}\r\nCODE\r\n)\r\n\r\n",
+  "Description": "### 1. 规则目的\r\n该规则用于查找Java代码中是否存在包含\"contain\"关键字的方法调用。此规则期望输入参数的操作码为`call`，如果该调用名称包含\"contain\"，则返回调用的原始值。该规则常用于确认数据流分析中是否涉及白名单校验、字符串校验等操作。\r\n\r\n### 2. 规则详细\r\n该规则属于查找类规则，主要用于辅助数据流分析，识别代码中可能存在的字符串包含校验或白名单过滤操作。通过识别包含\"contain\"关键字的方法调用，可以进一步分析这些方法是否用于实现安全过滤或输入验证机制，从而判断数据流是否经过了适当的净化处理。\r\n\r\n例如，在以下场景中，该规则能够检测到相关调用：\r\n```java\r\npublic class Demo {\r\n    public static void main(String[] args) {\r\n        String str = \"hello\";\r\n        if (str.contains(\"he\")) { // 包含\"contain\"关键字的调用\r\n            System.out.println(\"ok\");\r\n        }\r\n    }\r\n}\r\n```\r\n上述代码中的`str.contains(\"he\")`调用会被匹配并返回。",
+  "AlertDesc": {
+    "output": {
+      "rule_id": "",
+      "title": "Find Java Contain Sanitizer",
+      "title_zh": "查找Java含有contain方法的过滤器",
+      "description": "### 1. 规则目的\r\n该规则用于查找Java代码中是否存在包含\"contain\"关键字的方法调用。此规则期望输入参数的操作码为`call`，如果该调用名称包含\"contain\"，则返回调用的原始值。该规则常用于确认数据流分析中是否涉及白名单校验、字符串校验等操作。\r\n\r\n### 2. 规则详细\r\n该规则属于查找类规则，主要用于辅助数据流分析，识别代码中可能存在的字符串包含校验或白名单过滤操作。通过识别包含\"contain\"关键字的方法调用，可以进一步分析这些方法是否用于实现安全过滤或输入验证机制，从而判断数据流是否经过了适当的净化处理。\r\n\r\n例如，在以下场景中，该规则能够检测到相关调用：\r\n```java\r\npublic class Demo {\r\npublic static void main(String[] args) {\r\nString str = \"hello\";\r\nif (str.contains(\"he\")) { // 包含\"contain\"关键字的调用\r\nSystem.out.println(\"ok\");\r\n}\r\n}\r\n}\r\n```\r\n上述代码中的`str.contains(\"he\")`调用会被匹配并返回。",
+      "solution": "无明确修复方式，但建议审计人员对匹配到的代码进行深入分析，确保其使用场景符合安全需求。",
+      "tag": "",
+      "severity": "info",
+      "purpose": "",
+      "only_msg": false,
+      "msg": "发现Java代码中存在包含'contain'关键字的方法调用，建议审计人员关注其具体使用场景以确认是否符合安全要求。",
+      "cve": "",
+      "cwe": null,
+      "RiskType": "信息",
+      "extra_info": {
+        "name": "output"
+      }
+    }
+  },
+  "Solution": "none",
+  "AllowIncluded": true,
+  "IncludedName": "is-contain-sanitizer",
+  "OpCodes": "{\"version\":\"1.4.5-beta11\",\"opcode\":[{\"op_code\":1,\"unary_int\":1,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":2,\"unary_int\":1,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":11,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":17,\"unary_int\":0,\"unary_str\":\"input\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":9,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":24,\"unary_int\":0,\"unary_str\":\"\",\"unary_bool\":false,\"values\":[\"call\"],\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":25,\"unary_int\":1,\"unary_str\":\"\",\"unary_bool\":false,\"values\":[\"contain\"],\"multi_operator\":[0],\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":36,\"unary_int\":0,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":23,\"unary_int\":0,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":2,\"unary_int\":9,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":18,\"unary_int\":0,\"unary_str\":\"output\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":2,\"unary_int\":11,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":0,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":15,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":42,\"unary_int\":0,\"unary_str\":\"output\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":2,\"unary_int\":15,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":0,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":0,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":19,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":2,\"unary_int\":19,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":0,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null}]}",
+  "Groups": null,
+  "StaticConfig": {
+    "patterns": [],
+    "sources": [],
+    "sinks": []
+  },
+  "_web_lang_hint": false
+}

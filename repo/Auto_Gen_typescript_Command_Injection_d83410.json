@@ -1,0 +1,26 @@
+[
+  {
+    "name": "typescript_Command_Injection",
+    "Severity": "CRITICAL",
+    "Description": "Detects command injection vulnerabilities where user-controlled input flows into child_process.exec() without proper sanitization.",
+    "sources": [
+      "process.argv",
+      "process.env",
+      "req.query",
+      "req.body",
+      "req.params",
+      "req.headers",
+      "document.location",
+      "window.location"
+    ],
+    "sinks": [
+      "exec",
+      "execSync",
+      "spawn",
+      "spawnSync",
+      "execFile",
+      "execFileSync"
+    ],
+    "patterns": []
+  }
+]

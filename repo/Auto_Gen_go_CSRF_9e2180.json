@@ -1,0 +1,18 @@
+[
+  {
+    "name": "go_CSRF",
+    "Severity": "HIGH",
+    "Description": "Detects HTTP handlers that process state-changing requests (POST, PUT, DELETE, PATCH) without CSRF protection.",
+    "sources": [
+      "r.FormValue",
+      "r.PostFormValue",
+      "r.MultipartForm"
+    ],
+    "sinks": [
+      "http.HandleFunc",
+      "http.HandlerFunc",
+      "HandleFunc"
+    ],
+    "patterns": []
+  }
+]

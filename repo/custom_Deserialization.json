@@ -1,0 +1,31 @@
+{
+  "RuleId": "bbe9e254-5f64-4ec1-be63-97970e5b914a",
+  "RuleName": "Deserialization",
+  "Title": "Detect Deserialization",
+  "TitleZh": "检测 Deserialization",
+  "Language": "generic",
+  "Severity": "HIGH",
+  "Type": "static_analysis",
+  "StaticConfig": {
+    "patterns": [],
+    "sources": [
+      "request",
+      "input",
+      "data",
+      "req"
+    ],
+    "sinks": [
+      "pickle.load",
+      "pickle.loads",
+      "yaml.load",
+      "yaml.full_load",
+      "unserialize",
+      "ObjectInputStream.readObject",
+      "JSON.parse",
+      "eval"
+    ]
+  },
+  "Description": "Auto-converted rule for Deserialization",
+  "Content": "# auto-filled empty content for Detect Deserialization\n",
+  "_web_lang_hint": false
+}

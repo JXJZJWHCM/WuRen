@@ -1,0 +1,32 @@
+[
+  {
+    "name": "CSS_Behavior_Property",
+    "patterns": [
+      "(?i)behavior\\s*:"
+    ],
+    "Severity": "LOW",
+    "Description": "Use of 'behavior' property (IE only). Can be used to execute script.",
+    "sources": [],
+    "sinks": []
+  },
+  {
+    "name": "CSS_External_URL_Reference",
+    "patterns": [
+      "(?i)url\\s*\\(['\"]?http"
+    ],
+    "Severity": "INFO",
+    "Description": "Reference to external URL in CSS. Potential data exfiltration vector.",
+    "sources": [],
+    "sinks": []
+  },
+  {
+    "name": "CSS_Import_Rule",
+    "patterns": [
+      "(?i)@import"
+    ],
+    "Severity": "INFO",
+    "Description": "Use of @import. Can affect performance and be used for tracking.",
+    "sources": [],
+    "sinks": []
+  }
+]

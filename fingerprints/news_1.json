@@ -1,0 +1,1 @@
+{"ID":0,"DeletedAt":null,"part":"","vendor":"","product":"","version":"","update":"","edition":"","language":"","指纹名称":"news","web路径":"","ExtInfo":"","指纹规则":"body=\"\u003cimg id=\\\"createcheckcode\\\" src=\\\"login/picturecheckcode\\\" name=\\\"check_code\\\" ng-click=\\\"reloadcheckcode()\" \u0026\u0026 body=\"ng-disabled=\\\"!loginform.$valid\\\"\"","Groups":null}

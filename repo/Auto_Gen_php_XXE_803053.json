@@ -1,0 +1,27 @@
+[
+  {
+    "name": "php_XXE",
+    "Severity": "HIGH",
+    "Description": "Detects XML parsing with external entity loading enabled, which can lead to XXE attacks.",
+    "patterns": [
+      "libxml_disable_entity_loader\\s*\\(\\s*false\\s*\\)",
+      "LIBXML_NOENT",
+      "LIBXML_DTDLOAD"
+    ],
+    "sources": [
+      "$_POST",
+      "$_GET",
+      "$_REQUEST",
+      "$_FILES",
+      "$_COOKIE",
+      "$xmlData"
+    ],
+    "sinks": [
+      "DOMDocument::loadXML",
+      "simplexml_load_string",
+      "simplexml_load_file",
+      "xml_parse",
+      "SimpleXMLElement"
+    ]
+  }
+]

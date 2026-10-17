@@ -1,0 +1,16 @@
+[
+  {
+    "name": "php_Missing_Function_Level_Access_Control",
+    "Severity": "HIGH",
+    "Description": "Detects missing access control checks before executing privileged functionality",
+    "patterns": [
+      "if\\s*\\(\\s*\\$[a-zA-Z_][a-zA-Z0-9_]*\\s*==\\s*['\"]admin['\"]\\s*\\)",
+      "if\\s*\\(\\s*\\$[a-zA-Z_][a-zA-Z0-9_]*\\s*===\\s*['\"]admin['\"]\\s*\\)",
+      "if\\s*\\(\\s*\\$[a-zA-Z_][a-zA-Z0-9_]*\\s*!=?\\s*['\"]admin['\"]\\s*\\)",
+      "case\\s*['\"]admin['\"]",
+      "\\$_(GET|POST|REQUEST|FILES|COOKIE)\\[['\"]page['\"]\\]\\s*==\\s*['\"]admin['\"]"
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]

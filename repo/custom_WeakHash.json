@@ -1,0 +1,28 @@
+{
+  "RuleId": "613454c3-cdd5-4975-867b-5a3935dd24b9",
+  "RuleName": "WeakHash",
+  "Title": "Detect WeakHash",
+  "TitleZh": "检测 WeakHash",
+  "Language": "generic",
+  "Severity": "HIGH",
+  "Type": "static_analysis",
+  "StaticConfig": {
+    "patterns": [],
+    "sources": [],
+    "sinks": [
+      "md5.New",
+      "sha1.New",
+      "crypto/md5",
+      "crypto/sha1",
+      "hashlib.md5",
+      "hashlib.sha1",
+      "MessageDigest.getInstance(\"MD5\")",
+      "MessageDigest.getInstance(\"SHA-1\")",
+      "md5",
+      "sha1"
+    ]
+  },
+  "Description": "Auto-converted rule for WeakHash",
+  "Content": "# auto-filled empty content for Detect WeakHash\n",
+  "_web_lang_hint": false
+}

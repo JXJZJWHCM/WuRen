@@ -1,0 +1,17 @@
+[
+  {
+    "name": "php_Open_Redirect",
+    "Severity": "HIGH",
+    "Description": "Detects open redirect vulnerabilities where user input is directly used in a Location header without validation.",
+    "sources": [
+      "$_GET",
+      "$_POST",
+      "$_REQUEST",
+      "$_COOKIE"
+    ],
+    "sinks": [
+      "header"
+    ],
+    "patterns": []
+  }
+]

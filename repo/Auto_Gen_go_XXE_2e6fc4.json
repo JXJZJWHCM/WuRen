@@ -1,0 +1,19 @@
+[
+  {
+    "name": "go_XXE",
+    "Severity": "HIGH",
+    "Description": "Detects XML parsing from untrusted sources without disabling external entity expansion, which can lead to XXE attacks.",
+    "sources": [
+      "os.Stdin",
+      "ioutil.ReadAll",
+      "ioutil.ReadFile",
+      "http.Response.Body"
+    ],
+    "sinks": [
+      "xml.Unmarshal",
+      "xml.Decoder.Decode",
+      "xml.Decoder.Token"
+    ],
+    "patterns": []
+  }
+]

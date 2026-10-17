@@ -1,0 +1,34 @@
+[
+  {
+    "name": "php_Path_Traversal",
+    "Severity": "HIGH",
+    "Description": "Detects path traversal vulnerabilities where user-controlled input is directly used in file operations without proper validation or sanitization.",
+    "sources": [
+      "$_GET",
+      "$_POST",
+      "$_REQUEST",
+      "$_COOKIE",
+      "$_FILES",
+      "$_SERVER['HTTP_']",
+      "$_SERVER['REQUEST_']"
+    ],
+    "sinks": [
+      "file_get_contents",
+      "fopen",
+      "readfile",
+      "file",
+      "include",
+      "require",
+      "include_once",
+      "require_once",
+      "copy",
+      "rename",
+      "unlink",
+      "rmdir",
+      "mkdir",
+      "file_put_contents",
+      "move_uploaded_file"
+    ],
+    "patterns": []
+  }
+]

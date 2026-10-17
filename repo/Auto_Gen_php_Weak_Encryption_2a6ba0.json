@@ -1,0 +1,12 @@
+[
+  {
+    "name": "php_Weak_Encryption",
+    "Severity": "HIGH",
+    "Description": "Detects the use of weak encryption algorithms or modes, such as DES-ECB, in PHP code, which can lead to data exposure.",
+    "patterns": [
+      "openssl_(encrypt|decrypt)\\s*\\([^)]*['\"]DES-ECB['\"]"
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]

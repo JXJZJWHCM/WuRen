@@ -1,0 +1,54 @@
+{
+  "ID": 0,
+  "DeletedAt": null,
+  "RuleId": "ec23bb9d-7756-4c8a-86ff-ce140f205209",
+  "Version": "20251230.0001",
+  "hash": "9edb41968eabef71f59332b739377b67c7624ea24e1d18798b80cf00f031e619",
+  "RuleName": "查找Java过滤方法",
+  "Title": "java-common-filter",
+  "TitleZh": "查找Java过滤方法",
+  "Language": "java",
+  "Purpose": "audit",
+  "Tag": "java|lib|filter|common",
+  "cwe": [],
+  "CVE": "",
+  "RiskType": "",
+  "Type": "sf",
+  "Severity": "INFO",
+  "IsBuildInRule": true,
+  "Verified": false,
+  "NeedUpdate": false,
+  "Content": "desc(\r\n\ttitle: \"Find Java Common Filter Methods\"\r\n\ttitle_zh: \"查找Java过滤方法\"\r\n\tlib: \"java-common-filter\"\r\n\ttype: audit\r\n\trule_id: \"ec23bb9d-7756-4c8a-86ff-ce140f205209\"\r\n\tdesc: <<<DESC\r\n### 1. 规则目的\r\n该规则旨在识别 Java 代码中可能的安全过滤、验证或净化方法。通过匹配常见的方法命名模式（如 sanitize、filter、escape 等），该规则可以帮助安全审计人员或自动化工具快速定位可能处理用户输入或敏感数据的代码点。\r\n\r\n### 2. 规则详细\r\n1. **作为基础检测库**\r\n属于 `java-common-filter` 库规则 (`lib` 类型)，通常需要与其他规则（如污点跟踪规则）结合使用，以确定这些方法是否被用于有效防御常见的 Web 安全漏洞，例如跨站脚本 (XSS) 或 SQL 注入。\r\n\r\n2. **覆盖常见方法命名模式**\r\n规则通过正则表达式 `/ (?i).*(sanitize|filter|escape|clean|validate|check|secure|scrub|strip|encode|decode|prevent|safe|block|remove|replace|purge|whitelist|blacklist|neutralize|defense|harden|mitigate).*/` 匹配方法名称，覆盖了大量表示过滤、验证或安全处理操作的英文单词。不区分大小写，提高了匹配范围。\r\n\r\n```java\r\n// 示例代码：可能被规则识别的方法名\r\nString safeInput = SecurityUtil.sanitizeHtml(userInput);\r\nboolean isValid = InputValidator.validateEmail(email);\r\nString encodedUrl = URLEncoder.encode(rawUrl, \"UTF-8\");\r\n```\r\n\r\n通过识别这些潜在的安全处理方法，可以进一步分析其实现是否健壮，以及它们是否在关键位置被正确调用。\r\nDESC\r\n\tsolution: <<<SOLUTION\r\nnone\r\nSOLUTION\r\n\treference: <<<REFERENCE\r\n[CWE-20](https://cwe.mitre.org/data/definitions/20.html)\r\nREFERENCE\r\n)\r\n\r\n/(?i).*(sanitize|filter|escape|clean|validate|check|secure|scrub|strip|encode|decode|prevent|safe|block|remove|replace|purge|whitelist|blacklist|neutralize|defense|harden|mitigate).*/ as  $output;\r\nalert $output for {\r\n\ttitle: \"Find Java Common Filter Methods\",\r\n\ttitle_zh: \"查找Java过滤方法\",\r\n\tlevel: \"info\",\r\n\tmessage: \"发现Java代码中可能的安全过滤、验证或净化方法。\",\r\n\tsolution: <<<SOLUTION\r\n### 安全建议\r\n目前该规则仅用于识别潜在的过滤、验证或安全处理方法，无需直接修复。但需进一步分析这些方法的实现是否健壮，以及它们是否在关键位置被正确调用。\r\n\r\n#### 分析建议\r\n1. **检查方法实现**\r\n   确保这些方法对用户输入进行了足够的验证和清理。例如：\r\n   ```java\r\n   public static String sanitizeHtml(String input) {\r\n       if (input == null) return \"\";\r\n       return input.replaceAll(\"<\", \"&lt;\").replaceAll(\">\", \"&gt;\");\r\n   }\r\n   ```\r\n2. **结合上下文审计**\r\n   结合污点跟踪规则，确认这些方法是否有效防御了常见的Web安全漏洞（如XSS或SQL注入）。\r\n3. **关注命名模式**\r\n   检查是否有其他未被规则覆盖的过滤方法，并将其添加到规则中以扩展覆盖率。\r\nSOLUTION\r\n\trisk: \"信息\",\r\n\tdesc: <<<DESC\r\n### 1. 规则目的\r\n该规则旨在识别 Java 代码中可能的安全过滤、验证或净化方法。通过匹配常见的方法命名模式（如 sanitize、filter、escape 等），该规则可以帮助安全审计人员或自动化工具快速定位可能处理用户输入或敏感数据的代码点。\r\n\r\n### 2. 规则详细\r\n1. **作为基础检测库**\r\n属于 `java-common-filter` 库规则 (`lib` 类型)，通常需要与其他规则（如污点跟踪规则）结合使用，以确定这些方法是否被用于有效防御常见的 Web 安全漏洞，例如跨站脚本 (XSS) 或 SQL 注入。\r\n\r\n2. **覆盖常见方法命名模式**\r\n规则通过正则表达式 `/ (?i).*(sanitize|filter|escape|clean|validate|check|secure|scrub|strip|encode|decode|prevent|safe|block|remove|replace|purge|whitelist|blacklist|neutralize|defense|harden|mitigate).*/` 匹配方法名称，覆盖了大量表示过滤、验证或安全处理操作的英文单词。不区分大小写，提高了匹配范围。\r\n\r\n```java\r\n// 示例代码：可能被规则识别的方法名\r\nString safeInput = SecurityUtil.sanitizeHtml(userInput);\r\nboolean isValid = InputValidator.validateEmail(email);\r\nString encodedUrl = URLEncoder.encode(rawUrl, \"UTF-8\");\r\n```\r\n通过识别这些潜在的安全处理方法，可以进一步分析其实现是否健壮，以及它们是否在关键位置被正确调用。\r\nDESC\r\n\tname: \"output\",\r\n}\r\n",
+  "Description": "### 1. 规则目的\r\n该规则旨在识别 Java 代码中可能的安全过滤、验证或净化方法。通过匹配常见的方法命名模式（如 sanitize、filter、escape 等），该规则可以帮助安全审计人员或自动化工具快速定位可能处理用户输入或敏感数据的代码点。\r\n\r\n### 2. 规则详细\r\n1. **作为基础检测库**\r\n属于 `java-common-filter` 库规则 (`lib` 类型)，通常需要与其他规则（如污点跟踪规则）结合使用，以确定这些方法是否被用于有效防御常见的 Web 安全漏洞，例如跨站脚本 (XSS) 或 SQL 注入。\r\n\r\n2. **覆盖常见方法命名模式**\r\n规则通过正则表达式 `/ (?i).*(sanitize|filter|escape|clean|validate|check|secure|scrub|strip|encode|decode|prevent|safe|block|remove|replace|purge|whitelist|blacklist|neutralize|defense|harden|mitigate).*/` 匹配方法名称，覆盖了大量表示过滤、验证或安全处理操作的英文单词。不区分大小写，提高了匹配范围。\r\n\r\n```java\r\n// 示例代码：可能被规则识别的方法名\r\nString safeInput = SecurityUtil.sanitizeHtml(userInput);\r\nboolean isValid = InputValidator.validateEmail(email);\r\nString encodedUrl = URLEncoder.encode(rawUrl, \"UTF-8\");\r\n```\r\n\r\n通过识别这些潜在的安全处理方法，可以进一步分析其实现是否健壮，以及它们是否在关键位置被正确调用。",
+  "AlertDesc": {
+    "output": {
+      "rule_id": "",
+      "title": "Find Java Common Filter Methods",
+      "title_zh": "查找Java过滤方法",
+      "description": "### 1. 规则目的\r\n该规则旨在识别 Java 代码中可能的安全过滤、验证或净化方法。通过匹配常见的方法命名模式（如 sanitize、filter、escape 等），该规则可以帮助安全审计人员或自动化工具快速定位可能处理用户输入或敏感数据的代码点。\r\n\r\n### 2. 规则详细\r\n1. **作为基础检测库**\r\n属于 `java-common-filter` 库规则 (`lib` 类型)，通常需要与其他规则（如污点跟踪规则）结合使用，以确定这些方法是否被用于有效防御常见的 Web 安全漏洞，例如跨站脚本 (XSS) 或 SQL 注入。\r\n\r\n2. **覆盖常见方法命名模式**\r\n规则通过正则表达式 `/ (?i).*(sanitize|filter|escape|clean|validate|check|secure|scrub|strip|encode|decode|prevent|safe|block|remove|replace|purge|whitelist|blacklist|neutralize|defense|harden|mitigate).*/` 匹配方法名称，覆盖了大量表示过滤、验证或安全处理操作的英文单词。不区分大小写，提高了匹配范围。\r\n\r\n```java\r\n// 示例代码：可能被规则识别的方法名\r\nString safeInput = SecurityUtil.sanitizeHtml(userInput);\r\nboolean isValid = InputValidator.validateEmail(email);\r\nString encodedUrl = URLEncoder.encode(rawUrl, \"UTF-8\");\r\n```\r\n通过识别这些潜在的安全处理方法，可以进一步分析其实现是否健壮，以及它们是否在关键位置被正确调用。",
+      "solution": "### 安全建议\r\n目前该规则仅用于识别潜在的过滤、验证或安全处理方法，无需直接修复。但需进一步分析这些方法的实现是否健壮，以及它们是否在关键位置被正确调用。\r\n\r\n#### 分析建议\r\n1. **检查方法实现**\r\n   确保这些方法对用户输入进行了足够的验证和清理。例如：\r\n   ```java\r\n   public static String sanitizeHtml(String input) {\r\n       if (input == null) return \"\";\r\n       return input.replaceAll(\"<\", \"&lt;\").replaceAll(\">\", \"&gt;\");\r\n   }\r\n   ```\r\n2. **结合上下文审计**\r\n   结合污点跟踪规则，确认这些方法是否有效防御了常见的Web安全漏洞（如XSS或SQL注入）。\r\n3. **关注命名模式**\r\n   检查是否有其他未被规则覆盖的过滤方法，并将其添加到规则中以扩展覆盖率。",
+      "tag": "",
+      "severity": "info",
+      "purpose": "",
+      "only_msg": false,
+      "msg": "发现Java代码中可能的安全过滤、验证或净化方法。",
+      "cve": "",
+      "cwe": null,
+      "RiskType": "信息",
+      "extra_info": {
+        "name": "output"
+      }
+    }
+  },
+  "Solution": "none",
+  "AllowIncluded": true,
+  "IncludedName": "java-common-filter",
+  "OpCodes": "{\"version\":\"1.4.5-beta11\",\"opcode\":[{\"op_code\":1,\"unary_int\":1,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":2,\"unary_int\":1,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":0,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":9,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":49,\"unary_int\":0,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":7,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":6,\"unary_int\":1,\"unary_str\":\"(?i).*(sanitize|filter|escape|clean|validate|check|secure|scrub|strip|encode|decode|prevent|safe|block|remove|replace|purge|whitelist|blacklist|neutralize|defense|harden|mitigate).*\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":2,\"unary_int\":7,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":18,\"unary_int\":0,\"unary_str\":\"output\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":2,\"unary_int\":9,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":0,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":1,\"unary_int\":13,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":42,\"unary_int\":0,\"unary_str\":\"output\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null},{\"op_code\":2,\"unary_int\":13,\"unary_str\":\"\",\"unary_bool\":false,\"values\":null,\"multi_operator\":null,\"syntax_flow_config\":null,\"file_filter_method_item\":null,\"iter\":null}]}",
+  "Groups": null,
+  "StaticConfig": {
+    "patterns": [],
+    "sources": [],
+    "sinks": []
+  },
+  "_web_lang_hint": false
+}

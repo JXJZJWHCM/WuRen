@@ -1,0 +1,15 @@
+[
+  {
+    "name": "java_Sensitive_Data_Exposure_in_Logging",
+    "Severity": "HIGH",
+    "Description": "Detects logging of sensitive information such as passwords in error messages or console output, which can lead to data exposure.",
+    "patterns": [
+      "\\.(severe|warning|info|log)\\(.*\\b[Pp]assword\\b.*\\)",
+      "System\\.(out|err)\\.println\\(.*\\b[Pp]assword\\b.*\\)",
+      "\\.(severe|warning|info)\\(.*\\+.*\\b(password|pwd|secret|key|token)\\b.*\\)",
+      "new \\w+Exception\\(.*\\+.*\\b(password|pwd|secret|key|token)\\b.*\\)"
+    ],
+    "sources": [],
+    "sinks": []
+  }
+]
