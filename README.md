@@ -11,6 +11,9 @@
 - 联系方式：客服微信 phenomenal233，微信公众号「玄坤信安」，官网 https://www.xuankunsec.com
 
 ---
+<img width="1115" height="535" alt="image" src="https://github.com/user-attachments/assets/a86652c2-57a6-4672-91c0-d4e58201594e" />
+
+---
 
 ## 1. 项目定位与目标
 
